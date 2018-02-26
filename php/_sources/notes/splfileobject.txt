@@ -1,0 +1,19 @@
+SplFileObject
+=============
+
+``SplFileObject`` allows you to iterate each line in a file using ``foreach``. The flags below result in the most predictable behavior:
+each iteration of the loop outputs a line from the file:
+
+.. code-block:: php
+
+    <?php
+    $file = new \SplFileObject("./some-file.txt");
+
+    $file->setFlags(
+        SplFileObject::READ_AHEAD | SplFileObject::SKIP_EMPTY
+    ); 
+
+    foreach ($file as $line_num => $content) {
+
+       echo $content;
+     }

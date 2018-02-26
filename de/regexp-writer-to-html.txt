@@ -1,0 +1,25 @@
+These regular expressions will stip unnecessary thml tags from a Writer
+document that contains a table of German vocabulary that was saved as .html.
+It will also lowercase all html tags.
+
+Remove all attributes of non-<p> html tags and make the tag lowercase:
+:%s@<\(/\=[^Pp]\w\+\).\{-}>@<\L\1>@g
+
+To remove non-table html tags from lines like
+
+<p><font><font>some text</font></font></p>
+
+do:
+
+:%s@</\=[^/t][^>]*>@@g
+
+The '/' is needed in the first character class. Without it '/' still matches [^t], since it is 
+optional as the first character.
+
+The perl/pcre equivalents of the above would be:
+
+'/<(\/?[^Pp]\w+).*?>/'
+
+and
+
+'/<\/?[^\/t][^>]*>/'

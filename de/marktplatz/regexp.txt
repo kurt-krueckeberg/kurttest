@@ -1,0 +1,31 @@
+regexp to convert non <p> lines to include only the tag without attributes
+and convert them to lowercase:
+
+%s@<\(/\=[^Pp]\w\+\).\{-}>@<\L\1>@g 
+
+OR ???
+
+%s@<\(/\=[^Pp][^>]*\)>@<\L\1>@g  
+
+Note: \= means optional
+
+This regexp strips html other than these -- <table>, <tr>, <td>, </table>, </tr>, </td>, <title>, </title>, etc:
+
+%s@</\=[^t/][^>]*>@@g
+
+To delete all whitespace or empty line, use both of these:
+
+%s@^\s*$@@g
+%s@^\s*\n$@@g
+
+You might need to use a macro to delete blank lines, like this:
+1. qq           -- start to record
+2. /^\s*$/      -- the search
+3. dd           -- the action 
+4. n            -- another action
+5. q            -- stop recording
+6. 20@q         -- run the marco twenty times.
+
+Note: To convert to a PCRE regular expression for use with preg_match() the '/' must be escaped and '\=' becomes '?'. 
+
+$b = preg_match('/<\/?[^t\/][^>]*>/', $subject);

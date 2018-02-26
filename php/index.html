@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PHP Standard Library Notes &mdash; PHP SPL Iterators 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PHP SPL Iterators 1 documentation" href="#" />
+    <link rel="next" title="Arrays" href="notes/array-review.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="notes/array-review.html" title="Arrays"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">PHP SPL Iterators 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="notes/array-review.html"
+                        title="next chapter">Arrays</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="php-standard-library-notes">
+<h1>PHP Standard Library Notes<a class="headerlink" href="#php-standard-library-notes" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notes/array-review.html">Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes/array-review.html#extracting-multiple-values-using-the-list-construct">Extracting Multiple Values Using the <code class="docutils literal"><span class="pre">list()</span></code> construct</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#slicing-an-array">Slicing an Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#splitting-an-array-into-chunks">Splitting an Array into Chunks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#keys-and-values">Keys and Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#checking-whether-an-element-exists">Checking Whether an Element Exists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#removing-and-inserting-elements-in-an-array">Removing and Inserting Elements in an Array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#converting-between-arrays-and-variables">Converting Between Arrays and Variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes/array-review.html#creating-variables-from-an-array">Creating Variables from an Array</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#creating-an-array-from-a-variable">Creating an Array from a Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#traversing-arrays">Traversing Arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes/array-review.html#the-foreach-construct">The foreach Construct</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#iterator-functions">Iterator functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-review.html#array-slice-versus-array-splice"><code class="docutils literal"><span class="pre">array_slice</span></code> versus <code class="docutils literal"><span class="pre">array_splice</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/basic-iter.html">Basic Iterator interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/basic-iter.html#iterator-interface">Iterator interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes/basic-iter.html#example-implementations">Example implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notes/basic-iter.html#iteratoraggregate-interface">IteratorAggregate interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes/basic-iter.html#example-implementation">Example implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/splfileobject.html">SplFileObject</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/empty-iterator.html">EmptyIterator class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/empty-iterator.html#emptyiterator">EmptyIterator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/extends-iter.html">Extended Iterator interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/extends-iter.html#seekableiterator-interface">SeekableIterator interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/extends-iter.html#countable-interface">Countable interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/array-object.html">ArrayObject</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/array-object.html#arrayobject-usage">ArrayObject Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/array-iterator.html">ArrayIterator class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/random-access.html">Random Access interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/random-access.html#arrayaccess-interface">ArrayAccess interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/recursive-iteration.html">Iterating Recursive Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/recursive-iteration.html#recursiveiterator">RecursiveIterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/recursive-iteration.html#recursiveiteratoriterator">RecursiveIteratorIterator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notes/recursive-iteration.html#recursiveiteratoriterator-modes-of-operation">RecursiveIteratorIterator modes of operation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/array-recursive-iterator.html">RecursiveArrayIterator class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/directory-iteration.html">Directory Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/filesystemiterator.html">FilesystemIterator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/techniques.html">Techniques for Iterators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/techniques.html#composing-iterators">Composing Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/iter-functions.html">Iterator functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/iter-functions.html#iterator-apply-it-callback-array-it">iterator_apply( $it, &#8216;callback&#8217;, array($it) )</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/iter-functions.html#iterator-count">iterator_count()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/iter-functions.html#iterator-to-array">iterator_to_array()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/iter-functions.html#generator-functions">Generator functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/filter-iterator.html">FilterIterator abstract class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/filter-iterator.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/filter-iterator.html#regexiterator">RegexIterator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/limit-iterator.html">LimitIterator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/limit-iterator.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/spl-data-structs.html">SPL Data Structures</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="notes/array-review.html" title="Arrays"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">PHP SPL Iterators 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Kurt Krueckeberg.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

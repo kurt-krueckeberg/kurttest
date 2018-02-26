@@ -1,0 +1,12 @@
+Secure website against local file instrusion
+
+Hello, I would like to inform you that your website is vulnerable to local file inclusion via the following link - http://www.kurttest.com/de/index.php?file=../../../../../../etc/passwd
+
+If I have helped, and you would like to send a donation, my payment info is below.
+
+Paypal: nikopai133742.0@gmail.com
+
+Bitcoin: 1GKnJYyF3ztGEUKKCrWXbQFDEzfT6uY3B8
+
+Have a nice day, and please fix the vulnerability soon.
+See: http://www.esecurityplanet.com/browser-security/how-to-prevent-remote-file-inclusion-rfi-attacks.html

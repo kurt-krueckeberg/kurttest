@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FilterIterator abstract class &mdash; PHP SPL Iterators 1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="PHP SPL Iterators 1 documentation" href="../index.html" />
+    <link rel="next" title="LimitIterator" href="limit-iterator.html" />
+    <link rel="prev" title="Iterator functions" href="iter-functions.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="limit-iterator.html" title="LimitIterator"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="iter-functions.html" title="Iterator functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">PHP SPL Iterators 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">FilterIterator abstract class</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#regexiterator">RegexIterator</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="iter-functions.html"
+                        title="previous chapter">Iterator functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="limit-iterator.html"
+                        title="next chapter">LimitIterator</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/notes/filter-iterator.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="filteriterator-abstract-class">
+<h1>FilterIterator abstract class<a class="headerlink" href="#filteriterator-abstract-class" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Example using foreach without FilterIterator.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+ <span class="nv">$names</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Sam&quot;</span><span class="p">,</span> <span class="s1">&#39;last&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Smith&#39;</span><span class="p">),</span>
+               <span class="k">array</span><span class="p">(</span><span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="s1">&#39;last&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Jones&quot;</span><span class="p">),</span>
+               <span class="k">array</span><span class="p">(</span><span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Sue&#39;</span><span class="p">,</span> <span class="s1">&#39;last&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Smith&#39;</span><span class="p">));</span>
+
+ <span class="k">foreach</span> <span class="p">(</span><span class="nv">$names</span> <span class="k">as</span> <span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="nv">$name</span><span class="p">[</span><span class="s1">&#39;last&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Smith&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+         <span class="k">echo</span> <span class="s2">&quot;Smith: &quot;</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">[</span><span class="s1">&#39;first&#39;</span><span class="p">];</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>Example using FilterIterator implementation:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+ <span class="k">class</span> <span class="nc">LastNameFilter</span> <span class="k">extends</span> <span class="nx">FilterIterator</span> <span class="p">{</span>
+
+    <span class="k">private</span> <span class="nv">$iter</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$name</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">ArrayIterator</span> <span class="nv">$x</span><span class="p">,</span> <span class="nv">$name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">iter</span> <span class="o">=</span> <span class="nv">$x</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// returns true or false</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">accept</span><span class="p">()</span>
+    <span class="p">{</span>
+       <span class="k">return</span> <span class="nv">$iter</span><span class="o">-&gt;</span><span class="na">current</span><span class="p">()[</span><span class="s1">&#39;last&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="c1">// $name as above</span>
+ <span class="nv">$lastNameFilterIter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LastNameFilter</span><span class="p">(</span><span class="k">new</span> <span class="nx">ArrayIterator</span><span class="p">(</span><span class="nv">$names</span><span class="p">),</span> <span class="s2">&quot;Smith&quot;</span> <span class="p">);</span>
+
+ <span class="k">foreach</span> <span class="p">(</span><span class="nv">$names</span> <span class="k">as</span> <span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+
+         <span class="k">echo</span> <span class="s2">&quot;Smith: &quot;</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">[</span><span class="s1">&#39;first&#39;</span><span class="p">];</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>Example 2: filter out based on the last name.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+  <span class="c1">// $names as above</span>
+  <span class="k">class</span> <span class="nc">FilterOut</span> <span class="k">extends</span> <span class="nx">FilterIterator</span> <span class="p">{</span>
+
+     <span class="k">private</span> <span class="nv">$filter</span><span class="p">;</span>
+
+     <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">Iterator</span> <span class="nv">$it</span><span class="p">,</span> <span class="nv">$filter</span><span class="p">)</span>
+     <span class="p">{</span>
+         <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">(</span><span class="nv">$it</span><span class="p">);</span>
+         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filter</span> <span class="o">=</span> <span class="nv">$filter</span><span class="p">;</span>
+     <span class="p">}</span>
+
+     <span class="k">public</span> <span class="k">function</span> <span class="nf">accept</span><span class="p">()</span>
+     <span class="p">{</span>
+         <span class="nv">$key</span>  <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getInnerIterator</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">key</span><span class="p">();</span>
+         <span class="k">return</span> <span class="p">(</span><span class="nv">$key</span> <span class="o">==</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filter</span><span class="p">)</span> <span class="o">?</span> <span class="k">false</span> <span class="o">:</span> <span class="k">true</span><span class="p">;</span>
+     <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nv">$myArray</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;accounting&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Bill Moffatt&quot;</span><span class="p">,</span> <span class="s2">&quot;personnal&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Betty White&quot;</span><span class="p">,</span> <span class="s2">&quot;maintenace&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Bob Wells&quot;</span><span class="p">);</span>
+
+  <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayObject</span><span class="p">(</span><span class="nv">$myArray</span><span class="p">);</span>
+
+  <span class="nv">$iterator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FilterOut</span><span class="p">(</span><span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">getIterator</span><span class="p">(),</span> <span class="s2">&quot;Smith&quot;</span><span class="p">);</span>
+
+  <span class="k">foreach</span><span class="p">(</span><span class="nv">$iterator</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$item</span><span class="p">);</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="regexiterator">
+<h2>RegexIterator<a class="headerlink" href="#regexiterator" title="Permalink to this headline">¶</a></h2>
+<p>RegexIterator is a built-in concrete implementation of FilterIterator that uses regular expressions as the filter in its <code class="docutils literal"><span class="pre">accept()</span></code> method.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayIterator</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="s1">&#39;test2&#39;</span><span class="p">,</span> <span class="s1">&#39;test3&#39;</span><span class="p">));</span>
+
+<span class="cm">/*</span>
+<span class="cm"> *  We pass the ArrayIterator to the constructor along with the regex parameters</span>
+<span class="cm"> */</span>
+<span class="nv">$i</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RegexIterator</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="s1">&#39;/^(test)(\d+)/&#39;</span><span class="p">,</span> <span class="nx">RegexIterator</span><span class="o">::</span><span class="na">REPLACE</span><span class="p">);</span>
+<span class="nv">$i</span><span class="o">-&gt;</span><span class="na">replacement</span> <span class="o">=</span> <span class="s1">&#39;$2:$1&#39;</span><span class="p">;</span>
+
+<span class="nb">print_r</span><span class="p">(</span><span class="nb">iterator_to_array</span><span class="p">(</span><span class="nv">$i</span><span class="p">));</span>
+<span class="cm">/*</span>
+<span class="cm">Array</span>
+<span class="cm">(</span>
+<span class="cm">    [0] =&gt; 1:test</span>
+<span class="cm">    [1] =&gt; 2:test</span>
+<span class="cm">    [2] =&gt; 3:test</span>
+<span class="cm">)</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="limit-iterator.html" title="LimitIterator"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="iter-functions.html" title="Iterator functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">PHP SPL Iterators 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Kurt Krueckeberg.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

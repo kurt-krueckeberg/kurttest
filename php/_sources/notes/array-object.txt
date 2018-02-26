@@ -1,0 +1,176 @@
+.. include:: <isopub.txt>
+
+.. role:: kurt-code
+
+.. _ArrayObject:
+
+ArrayObject
+===========
+
+An ``ArrayObject`` allows us to treat a class like it were also an array, allowing us to access its properties using array syntax. ArrayObject implements ``IteratorAggregate``,
+``ArrayAccess``, ``Serializable``, and ``Countable``. It also implements a number of its own member functions:
+
+.. code-block:: java
+
+    ArrayObject implements IteratorAggregate , ArrayAccess , Serializable , Countable {
+
+        /* Constants */
+        const integer STD_PROP_LIST = 1 ;
+        const integer ARRAY_AS_PROPS = 2 ;
+        /* Methods */
+        public __construct ([ mixed $input = [] [, int $flags = 0 [, string $iterator_class = "ArrayIterator" ]]] )
+ 
+        // ArrayAccess methods
+        public bool offsetExists ( mixed $index )
+        public mixed offsetGet ( mixed $index )
+        public void offsetSet ( mixed $index , mixed $newval )
+        public void offsetUnset ( mixed $index )
+
+        // IteratorAggregate methods  
+        public ArrayIterator getIterator ( void )
+
+        // Serializable methods
+        public void unserialize ( string $serialized )
+        public string serialize ( void )
+
+        // Countable method
+        public int count ( void )
+
+        // other public methods
+        public void append ( mixed $value )
+        public void asort ( void )
+        public array exchangeArray ( mixed $input )
+        public array getArrayCopy ( void )
+        public int getFlags ( void )
+        public string getIteratorClass ( void )
+        public void ksort ( void )
+        public void natcasesort ( void )
+        public void natsort ( void )
+        public void uasort ( callable $cmp_function )
+        public void uksort ( callable $cmp_function )
+
+        public void setFlags ( int $flags )
+
+        public void setIteratorClass ( string $iterator_class )
+    }    
+    
+``ArrayObject::getIterator()`` will return an ``ArrayIterator``. If you extend ``ArrayObject``, you can return your own iterator type, but it must derive
+from ``ArrayIterator``.
+
+ArrayObject Usage
+^^^^^^^^^^^^^^^^^
+
+ArrayObject lets you treat an object like an array: it allows you to access its access properties using array syntax, and it allows iterating them via foreach. When you
+create an ArrayObject from an associative array, the objects properties take on the name of the keys of the array.
+
+.. code-block:: php
+  
+    <?php
+    data = array(
+        "name"  => "John Doe",
+        "email" => "john@domain.com"
+    );
+    
+    $arrayObj = new ArrayObject($data);
+    // access the object properties using an array notation
+    echo "Name is " . $arrayObj["name"] . ". Email is " . $arrayObj["email"];
+
+We can use ArrayObject with nested arrays:
+
+.. code-block:: php
+
+    <?php
+     $company = array(
+                  'name' => 'Chuck Norris', 'position' => 'Account Manager',
+                  'manages' => array(
+                                     'name' => 'Jane Doe', 'position' => 'Project Manager',
+                                     'manages' => array(array( 
+                                                              'name' => 'Cinderella', 'position' => 'Developer', 
+                                                              'manages' => array()
+                                                        ),
+                                                        array(
+                                                              'name' => 'Shrek', 'position' => 'Graphical Designer', 
+                                                              'manages' => array()
+                                                        )
+                                                   ),
+                                                   array(
+                                                      'name' => 'John Doe', 'position' => 'Project Manager',
+                                                       'manages' => array()
+                                                   )
+                               )
+                 );
+
+       $iterator = new RecursiveArrayIterator(new ArrayObject($company));
+
+       $riteriter = new RecursiveIteratorIterator($iterator);
+
+       foreach ($riteriter as $key => $value) {
+
+             echo $key . " = " . $value . PHP_EOL;
+       }
+
+You can also pass an object to the constructor, and it will create properties identical to the names of the properties of the object\ |mdash|\ provided they are public.
+
+.. code-block:: php
+
+    <?php
+    class EmailUser { 
+         public $name; 
+         public $email;
+         public function __construct($name, $email) { $this->name = $name; $this->email = $email; }
+    }    
+    
+    $user = new EmailUser("John Doe", "john@domain.com");
+    
+    // create an instance of the ArrayObject class
+    $arrayObj = new ArrayObject($user);
+    
+    // access the object properties using an array notation
+    // displays the following: Full name: John Doe Email: john@domain.com
+    echo "Full name: " . $arrayObj['name'] . " Email: " . $arrayObj['email'];
+
+    // count the number of properties in the object
+    echo "total properties is " . count($arrayObj);
+
+``new ArrayObject($data)`` is equivalent to ``new ArrayObject($data, ArrayObject::STD_PROP_LIST)`` because ``STD_PROP_LIST`` is the default behavior.
+A good way to understand the usefulness ArrayObject is to compare it to the ``SimpleXML`` extension. ``SimpleXML`` objects are a type of ``ArrayObject`` in that a SimpleXML object 
+also acts like an array which makes it efficient to use because you can just **foreach** or access one of the elements within the list. You don not have to grab an
+array from the object and then iterate over and do something else with it if you want the tag name or an attribute.
+
+When the constant ``ArrayObject::ARRAY_AS_PROPS`` is passed to the constructor or to the ``setFlags()`` method, it’s possible to handle the properties by means of an
+object syntax. For example
+
+.. code-block:: php
+
+   <?php
+    $data = array(
+        ‘name’  => ‘John Doe’,
+        ‘email’ => ‘john@domain.com’
+    );
+    
+    // create an instance of the ArrayObject class
+    $arrayObj = new ArrayObject($data, ArrayObject::ARRAY_AS_PROPS);
+    
+    // access the object properties using an object notation
+    // displays the following: Full name: John Doe Email: john@domain.com
+    echo ‘Full name: ‘ . $arrayObj->name . ‘ Email: ‘ . $arrayObj->email;
+    
+    // count the number of properties in the object
+    echo ‘Number of properties assigned to the object: ‘ . count($arrayObj);
+
+``ArrayObject`` can be extended and its methods overriden, so that something specific is first done before forwarding the call to the parent:
+
+.. code-block:: php
+
+   <?php
+     class MyArrayObject extends ArrayObject {
+
+       public function append(mixed $value) 
+       { 
+             //Do something to $value first
+             //...snip
+             parent::append($value);
+       } 
+     }
+
+**Note:** Since ``ArrayObject`` simply implements ``ArrayAccess`` and adds some additional methods, we can use an ArrayObject like an array, which this is its stated purpose, anyway.

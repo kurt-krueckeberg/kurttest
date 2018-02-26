@@ -1,0 +1,22 @@
+PHP Standard Library Notes
+==========================
+
+.. toctree::
+   
+   notes/array-review.rst
+   notes/basic-iter.rst
+   notes/splfileobject.rst
+   notes/empty-iterator.rst
+   notes/extends-iter.rst
+   notes/array-object.rst
+   notes/array-iterator.rst
+   notes/random-access.rst
+   notes/recursive-iteration.rst
+   notes/array-recursive-iterator.rst
+   notes/directory-iteration.rst
+   notes/filesystemiterator.rst
+   notes/techniques.rst
+   notes/iter-functions.rst
+   notes/filter-iterator.rst
+   notes/limit-iterator.rst
+   notes/spl-data-structs.rst

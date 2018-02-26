@@ -1,0 +1,31 @@
+table.tbl-styl1 {
+margin: 0;
+}
+
+.h3 {
+	font-size: 13pt;
+	font-weight: bold;
+}
+#nav, #navmenu {
+display: none
+}
+
+body {
+margin:0;
+padding:0;
+/*line-height: 1.5em;*/
+font-family: Verdana, Arial, Helvetica, sans-serif;
+/*background-image: url(./background.jpg);*/
+color: black
+}
+
+#maincontainer{
+/*width: 860px;*/  /*Width of main container*/
+width: 100%; /*Width of main container*/
+/* Original: 
+margin: 0 auto; Center container on page; 0 is for top and bottom margins. auto is for left and right margins.
+*/
+margin-top: 10px;
+margin-bottom: 0;
+margin-left: .5em; 
+}

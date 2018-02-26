@@ -1,0 +1,6 @@
+AuthUserFile /home/kurt/.htpasswd-petition
+AuthType Basic
+AuthName "Please Log In to view"
+<Files "petition-data.html">
+   Require valid-user
+</Files>  

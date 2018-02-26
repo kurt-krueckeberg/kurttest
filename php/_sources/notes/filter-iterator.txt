@@ -1,0 +1,117 @@
+.. include:: <isopub.txt>
+
+.. role:: kurt-code
+
+FilterIterator abstract class
+=============================
+
+Examples
+--------
+
+Example using foreach without FilterIterator.
+
+.. code-block:: php
+
+    <?php
+     $names = array(array('first' => "Sam", 'last' => 'Smith'),
+                   array('first' => "Bill", 'last' => "Jones"),
+                   array('first' => 'Sue', 'last' => 'Smith'));
+      
+     foreach ($names as $name) {
+
+         if ($name['last'] == "Smith") {
+
+             echo "Smith: " . $name['first'];
+         } 
+     }
+
+Example using FilterIterator implementation:
+
+.. code-block:: php
+
+    <?php
+
+     class LastNameFilter extends FilterIterator {
+
+        private $iter; 
+        private $name;
+
+        public function __construct(ArrayIterator $x, $name)
+        {
+            $this->iter = $x;
+            $this->name = $name; 
+        } 
+
+        // returns true or false
+        public function accept()
+        {
+           return $iter->current()['last'] == $this->name;
+        } 
+     }
+     
+     // $name as above
+     $lastNameFilterIter = new LastNameFilter(new ArrayIterator($names), "Smith" );
+
+     foreach ($names as $name) {
+
+             echo "Smith: " . $name['first'];
+     }
+
+Example 2: filter out based on the last name.
+
+.. code-block:: php
+
+    <?php
+      // $names as above
+      class FilterOut extends FilterIterator {
+
+         private $filter;
+
+         public function __construct(Iterator $it, $filter)
+         {
+             parent::__construct($it);
+             $this->filter = $filter; 
+         } 
+         
+         public function accept()
+         { 
+             $key  = $this->getInnerIterator()->key();
+             return ($key == $this->filter) ? false : true;
+         }
+      } 
+      $myArray = array("accounting" => "Bill Moffatt", "personnal" => "Betty White", "maintenace" => "Bob Wells");
+
+      $obj = new ArrayObject($myArray);
+
+      $iterator = new FilterOut($obj->getIterator(), "Smith");
+
+      foreach($iterator as $item) {
+
+          var_dump($item);
+      }
+
+RegexIterator
+-------------
+
+RegexIterator is a built-in concrete implementation of FilterIterator that uses regular expressions as the filter in its ``accept()`` method.
+
+.. code-block:: php
+
+    <?php
+    $a = new ArrayIterator(array('test1', 'test2', 'test3'));
+    
+    /*
+     *  We pass the ArrayIterator to the constructor along with the regex parameters
+     */  
+    $i = new RegexIterator($a, '/^(test)(\d+)/', RegexIterator::REPLACE);
+    $i->replacement = '$2:$1';
+          
+    print_r(iterator_to_array($i));
+    /* 
+    Array
+    (
+        [0] => 1:test
+        [1] => 2:test
+        [2] => 3:test
+    )
+    */

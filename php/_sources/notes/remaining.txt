@@ -1,0 +1,238 @@
+.. include:: <isopub.txt>
+
+.. role:: kurt-code
+
+Iterating Recursive Structures
+==============================
+
+How do we iterate a multidimensional array, or any array with a nested subarray? And more generally how do we create iterators for composite objects that model containment hierachies?
+For example, if we call foreach on this array 
+
+.. code-block:: php
+
+    <?php
+    $arr = array(0, 
+            1 => array(10, 20, 30), 
+            2,
+            3 => array(1, 2, 3)
+            );
+
+    foreach($arr as $key => $value) {
+        
+        echo "$key => $value \n";
+    }
+    
+we will get an error when the first subarrays is encountered.
+
+RecursiveIterator
+^^^^^^^^^^^^^^^^^
+
+The first interface used to solve the problem of iterating any array that has at least one subarray is RecursiveIterator.
+It extends Iterator and adds the ``hasChildren()`` and ``getChildren()``. ``hasChildren`` returns **true** if the current element can be iterated, and ``getChildren()`` 
+returns that iterator ``getChildren()``, which must at least be of type RecursiveIterator.
+
+Here is an sample implementation of ``RecursiveIterator``. It extends ``arrayIterator`` implemented :ref:`previously <arrayIterator>`. 
+
+.. code-block:: php
+
+    <?php
+     class MyRecursiveIterator extends arrayIterator implements RecursiveIterator {
+        
+        public function __construct(array &$a) 
+        {
+            parent::__construct($a);
+        }
+      
+        // Returns true if an iterator can be created/returned for the current entry.
+        public function hasChildren() 
+        {
+            return is_array(current($this->a));
+        }
+       
+        // Returns a MyRecursiveIterator for the current entry.
+        public function getChildren() 
+        {
+            $subarray = current($this->a);
+            return new MyRecursiveIterator($subarray);
+        }
+    }
+
+To use ``MyRecursiveIterator`` you need to write a recursive function:
+
+.. code-block:: php
+
+    <?php
+    function recursive_iterate(MyRecursiveIterator $it)
+    {
+      while ($it->valid()) {
+
+        // if there is a subarray, we call getChildren and recurse...  
+        if ($it->hasChildren()) {
+            
+           echo $it->key(). " => (" ;
+           
+           recursive_iterate($it->getChildren());
+           
+           echo "), ";
+
+        } else {
+       
+          // otherwise, print the current key and value.
+          echo $it->key() . " => " . $it->current() . ", ";
+        }
+    
+        $it->next();
+      }
+    }
+
+Finally, we create an array with some subarrays and use our new code:   
+
+.. code-block:: php
+
+    <?php
+    $a2 = array(0, 1, 
+                2 => array(10, 20, 30), 
+                3, 4, 
+                5 => array(1, 2, 3));
+    
+    echo "\n=============\n";
+    
+    $mri = new MyRecursiveIterator($a2);
+    
+    recursive_iterate($mri);
+
+This outputs:
+
+.. code-block:: bash
+
+    0 => 0, 1 => 1, 2 => (0 => 10, 1 => 20, 2 => 30, ), 3 => 3, 4 => 4, 5 => (0 => 1, 1 => 2, 2 => 3, ), 
+
+RecursiveIteratorIterator
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Fortunately, PHP already provides support for recursive iteration of multi-dimensional arrays. We do not have to roll our own.  ``RecursiveIteratorIterator`` allows
+you to iterate a multidimenstional array or tree strcuture with ``foreach``. Its constructor takes a ``RecursiveIterator`` instance <TODO: Actually, the ctor takes
+Iterator or IteratorAggregate or their derivativesi, but is intended to be used with a RecursiveIterator>.  RecursiveIteratorIterator adapts a RecursiveIterator, so that it can be used like a Iterator and used in ``foreach``
+to recurse an entire tree structure.
+
+`PHP 5 in Practice, by White and Einsenhamer <http://books.google.com/books?id=dAbDSG77iZgC&pg=PT527&lpg=PT527&dq=PHP+RecursiveIterator+example&source=bl&ots=AFZrw18M27&sig=Nv3Hyn-5BkQM30Hu0uwdrMjPtgc&hl=en&sa=X&ei=WvqRU5OIFdWxyATl1YGwBw&ved=0CF4Q6AEwBzgK#v=onepage&q=PHP%20RecursiveIterator%20example&f=false>`_ 
+puts it this way
+
+    ``RecursiveIteratorIterator`` implements ``OuterIterator`` and is a wrapper thta will activate Iterators that implement the ``RecursiveIterator`` interface.
+
+.. code-block:: php
+
+    <?php 
+    $it = new RecursiveIteratorIterator(new MyRecusvieIterator($a2)) {
+    foreach($it as $value)
+
+          // print the value.
+          echo $it->current() . ", ";
+    }
+
+If we change ``foreach`` to return both the current key and value, like so
+
+.. code-block:: php
+ 
+    <?php 
+    $it = new RecursiveIteratorIterator(new MyRecusvieIterator($a2)) {
+    foreach($it as $value)
+
+          // print the curren tkey and value.
+         echo $it->key() . " => " . $it->current() . ", ";
+    }
+
+the output is
+
+.. code-block:: bash
+
+    0 => 0, 1 => 1, 0 => 10, 1 => 20, 2 => 30, 3 => 3, 4 => 4, 0 => 1, 1 => 2, 2 => 3, 
+
+Notice the keys 2 and 5 in the outer array were not returned because the default mode of traversal is **RecursiveIteratorIterator::LEAVES_ONLY**. If we passed
+**RecursiveIteratorIterator::SELF_FIRST** as a 2nd parameter to the constructor, this would return the key of 2, when it was first encountered, and its enitre associated arrays as the value. 
+Then, the next time through the loop, the individual elements of the same subarray would be returned (as in the default case). 
+
+**RecursiveIteratorIterator::CHILD_FIRST** behaves just like **RecursiveIteratorIterator::SELF_FIRST** but it first iterates the subarray then (the next time through the loop)
+it returns the entire subarray. 
+
+RecursiveIteratorIterator modes of operation
+++++++++++++++++++++++++++++++++++++++++++++
+
+*    LEAVES_ONLY: Iterates over all nodes that have no children.
+*    SELF_FIRST: When a node with children is found, process it first, then iterate over its children.
+*    CHILD_FIRST: Iterate first over children, then process the node.
+
+.. note:: finish these idea by using this bookmark:
+
+Incorporate this info:
+as well as     
+
+* http://www.giorgiosironi.com/2010/02/practical-php-patterns-iterator.html   Very good overview
+* http://devzone.zend.com/1075/the-standard-php-library-spl/
+* http://www.slideshare.net/slidesharechaos/iterators-in-php  <-- Good3 Very good slides, Good on composing iterators/
+* http://stackoverflow.com/questions/12077177/how-does-recursiveiteratoriterator-work-in-php    <-- Good2 Start reading at "Technical differences" 
+* http://www.sitepoint.com/using-spl-iterators-1/   <-- This is very good. Gives code examples and explains that RecursiveIteratorIterator is a decorator (or is it a bridge)
+* https://learnable.com/books/php-master-write-cutting-edge-code/online/apbs03.html 
+* http://coder-zone.blogspot.com/2013/05/custom-recursiveiterator.html
+
+Good3 below:
+and  this `excellent discussion <http://students.kiv.zcu.cz/doc/php5/^helly/php/ext/spl/main.html>`_ on iterators in PHP, which explains the use of RecursiveIteratorIterator::SELF_FIRST.
+
+RecursiveArrayIterator
+^^^^^^^^^^^^^^^^^^^^^^
+
+RecursiveArrayIterator extends ArrayIterator and implements RecursiveIterator. RecursiveArrayIterator adds implements the two RecursiveIterator interface methods: 
+``getChildren()`` and ``hasChildren()``.
+
+This iterator allows you to unset and modify values and keys while iterating over Arrays and Objects in the same way as the ArrayIterator. Additionally
+it is possible to iterate over the current iterator entry.  The use of ArrayIterator is straight forward, but limited to single dimensional arrays. Sometimes you’ll
+have a multidimensional array and you’ll want to iterate through the nested arrays recursively. In this case you can use RecursiveArrayIterator.
+
+.. code-block:: java
+
+    RecursiveArrayIterator extends ArrayIterator implements RecursiveIterator {
+
+        public ArrayIterator::__construct ([ mixed $array = array(); [, int $flags = 0 ]] );
+        public array ArrayIterator::getArrayCopy ( void );
+
+        /* RecursiveIterator methods */
+        
+        public RecursiveArrayIterator getChildren ( void ); 
+        public bool hasChildren ( void );
+
+        /* Inherited methtods below, categorize by interface */
+
+        // Seekable interface (which extends Iterator) methods
+        public void ArrayIterator::seek ( int $position );
+        public mixed ArrayIterator::key ( void );
+        public void ArrayIterator::next ( void );
+        public bool ArrayIterator::valid ( void );
+        public mixed ArrayIterator::current ( void );
+        public void ArrayIterator::rewind ( void );
+
+        // Countable methods 
+        public int ArrayIterator::count ( void );
+
+        // ArrayAccess methods
+        public void ArrayIterator::offsetExists ( string $index );
+        public mixed ArrayIterator::offsetGet ( string $index );
+        public void ArrayIterator::offsetSet ( string $index , string $newval );
+        public void ArrayIterator::offsetUnset ( string $index );
+
+        // Serializable interface methods
+        public string ArrayIterator::serialize ( void );
+        public string ArrayIterator::unserialize ( string $serialized );
+
+        // other class methods  
+        public void ArrayIterator::append ( mixed $value );
+        public void ArrayIterator::asort ( void );
+        public void ArrayIterator::setFlags ( string $flags );
+        public void ArrayIterator::getFlags ( void );
+        public void ArrayIterator::uasort ( string $cmp_function );
+        public void ArrayIterator::uksort ( string $cmp_function );
+        public void ArrayIterator::ksort ( void );
+        public void ArrayIterator::natcasesort ( void );
+        public void ArrayIterator::natsort ( void );
+    }
+
+IteratorIterator vs RecursiveIteratorIterator

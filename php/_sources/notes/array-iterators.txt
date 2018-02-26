@@ -1,0 +1,165 @@
+.. include:: <isopub.txt>
+
+.. role:: kurt-code
+
+Array Iterator classes
+======================
+
+.. _ArrayIterator-label:
+
+ArrayIterator class
+-------------------
+
+.. code-block:: java
+
+    class  ArrayIterator implements ArrayAccess , SeekableIterator , Countable , Serializable {
+
+        /* Methods */
+        public __construct ([ mixed $array = array() [, int $flags = 0 ]] )
+
+        // Countable
+        public int count ( void )
+
+        // Seekable extends Iteartor
+        public mixed current ( void )
+        public mixed key ( void )
+        public void rewind ( void )
+        public void next ( void )
+        public bool valid ( void )
+        public void seek ( int $position )
+
+        // ArrayAccess methods
+        public void offsetExists ( string $index )
+        public mixed offsetGet ( string $index )
+        public void offsetSet ( string $index , string $newval )
+        public void offsetUnset ( string $index )
+
+        // Serialize
+        public string serialize ( void )
+        public string unserialize ( string $serialized )
+        
+        // unique class methods...
+        // flag options  
+        /*
+          0 = Properties of the object have their normal functionality when accessed as list (var_dump, foreach, etc.).
+          1 = Array indices can be accessed as properties in read/write.
+        */
+        public void setFlags ( string $flags )
+        public void getFlags ( void )
+        public array getArrayCopy ( void )
+
+        public void append ( mixed $value )
+        // sorting methods
+        public void asort ( void )
+        public void uasort ( string $cmp_function )
+        public void uksort ( string $cmp_function )
+        public void ksort ( void )
+        public void natcasesort ( void )
+        public void natsort ( void )
+    }
+
+This iterator allows you to both unset and modify values and keys while iterating over arrays and objects. ``ArrayIterator`` can be created by passing an array to the constructor.
+If you have an ``ArrayObject``, calling ``ArrayObject::getIterator()`` returns an ``ArrayIterator``.  ``ArrayIterator`` instances are created implicitly when **``foreach``** encounters an ArrayObject.
+Example:
+
+.. code-block:: php
+    
+    <?php
+    $fruits = array(
+                    "apple" => "yummy",
+                    "orange" => "ah ya, nice",
+                    "grape" => "wow, I love it!",
+                     "plum" => "nah, not me"
+                    );
+    
+    $grocery = array($fruits);
+
+    foreach (new ArrayIterator($fruits) as $key => $value) {
+
+           echo $key . ' => ' . $value ."\n";
+           $fruits[$key] .= " altered";  
+    }
+ 
+    foreach (new ArrayIterator($fruits) as $key => $value) {
+
+           echo $key . ' => ' . $value ."\n";
+           $fruits[$key] .= " altered";  
+    }
+
+``ArrayIterator`` wraps these PHP functions for built\ |ndash|\ in PHP arrays: ksort, natcasesort, natsort, uasort, and uksort.
+
+.. code-block:: java
+
+    ArrayIterator implements ArrayAccess , SeekableIterator , Countable , Serializable {//...}
+        //. . . snip
+        public function asort ( void );
+        public function ksort ( void );
+        public function natcasesort ( void );
+        public function natsort ( void );
+        public function uasort ( string $cmp_function );
+        public function uksort ( string $cmp_function );
+    } 
+       
+ArrayIterator can only iterate one dimensional arrays. If an array contains subarrays, these are not returned. In order to iterator over a multidimenstional array you
+must use ``RecursiverArrayIterator``.
+
+.. _RecursiveArrayIterator-ref:
+
+RecursiveArrayIterator class
+----------------------------
+
+``RecursiveArrayIterator`` extends :ref:`ArrayIterator <ArrayIterator-label>` and implements ``RecursiveIterator``. ``RecursiveArrayIterator`` adds implements the two RecursiveIterator interface methods: 
+``getChildren()`` and ``hasChildren()``.
+
+This iterator allows you to unset and modify values and keys while iterating over Arrays and Objects in the same way as the ArrayIterator. Additionally
+it is possible to iterate over the current iterator entry.  The use of ArrayIterator is straight forward, but limited to single dimensional arrays. Sometimes you’ll
+have a multidimensional array and you’ll want to iterate through the nested arrays recursively. In this case you can use RecursiveArrayIterator.
+
+.. code-block:: java
+
+    RecursiveArrayIterator extends ArrayIterator implements RecursiveIterator {
+
+        public ArrayIterator::__construct ([ mixed $array = array(); [, int $flags = 0 ]] );
+        public array ArrayIterator::getArrayCopy ( void );
+
+        /* RecursiveIterator methods */
+        
+        public RecursiveArrayIterator getChildren ( void ); 
+        public bool hasChildren ( void );
+
+        /* Inherited methtods below, categorize by interface */
+
+        // Seekable interface (which extends Iterator) methods
+        public void ArrayIterator::seek ( int $position );
+        public mixed ArrayIterator::key ( void );
+        public void ArrayIterator::next ( void );
+        public bool ArrayIterator::valid ( void );
+        public mixed ArrayIterator::current ( void );
+        public void ArrayIterator::rewind ( void );
+
+        // Countable methods 
+        public int ArrayIterator::count ( void );
+
+        // ArrayAccess methods
+        public void ArrayIterator::offsetExists ( string $index );
+        public mixed ArrayIterator::offsetGet ( string $index );
+        public void ArrayIterator::offsetSet ( string $index , string $newval );
+        public void ArrayIterator::offsetUnset ( string $index );
+
+        // Serializable interface methods
+        public string ArrayIterator::serialize ( void );
+        public string ArrayIterator::unserialize ( string $serialized );
+
+        // other class methods  
+        public void ArrayIterator::append ( mixed $value );
+        public void ArrayIterator::asort ( void );
+        public void ArrayIterator::setFlags ( string $flags );
+        public void ArrayIterator::getFlags ( void );
+        public void ArrayIterator::uasort ( string $cmp_function );
+        public void ArrayIterator::uksort ( string $cmp_function );
+        public void ArrayIterator::ksort ( void );
+        public void ArrayIterator::natcasesort ( void );
+        public void ArrayIterator::natsort ( void );
+    }
+
+

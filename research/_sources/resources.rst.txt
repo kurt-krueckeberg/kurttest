@@ -1,0 +1,150 @@
+.. include:: <isopub.txt>
+.. include:: <isonum.txt>
+
+Resources
+=========
+
+How Civil War Draft worked in Indiana
+-------------------------------------
+
+The article `Conscription and Draft in Indiana During the Civil War <https://scholarworks.iu.edu/journals/index.php/imh/article/view/5887/5494>`_ explains how the process of the Civil War draft, both the initial registration and the subsequent draft of some
+as new soldiers into the Army of the United States, was implemented at the county and township level in the state of Indiana.
+
+On\ |ndash|\ Site Database in Genealogy Center
+----------------------------------------------
+
+A list is the Allen County Public library's `Genealogy Center's On-Site Databases <http://www.genealogycenter.org/Databases/OnSiteDatabases.aspx>`_, which includes:
+
+#. ancestry.com
+#. fold3.com
+#. newspapers.com
+#. PERSI
+
+Ship Passenger List Sites
+-------------------------
+`Finding Passenger Lists & Immigration Records 1820-1940s. Arrivals at U.S. ports from Europe <http://www.germanroots.com/passengers.html>`_.
+
+Web: 
+
+#. `Ancestry Search Page: New York, Passenger Lists, 1820-1957 <http://search.ancestry.com/search/db.aspx?dbid=7488&cj=1&sid=grpassnymid&netid=cj&o_xid=0000584978&o_lid=0000584978&o_sch=Affiliate+External>`_
+#. `Castle Garden <http://www.castlegarden.org/searcher.php>`_  passenger list transcriptions. 
+#. `Steve Morse <http://stevemorse.org/>`_, which has powerful phoenic search.
+#.  National Archives\ |apos|\  `German to America 1850-1897 <https://aad.archives.gov/aad/fielded-search.jsp?dt=2102&cat=GP44&tf=F&bc=,sl>`_.
+#. `immigrantships.net <http://www.immigrantships.net>`_
+
+.. note::
+   Bremen Departure lists from before 1920 no longer exist. They were destroyed in WWII.
+
+Results of above searches on Familysearch using www.stevemorse.net
+
+#. https://familysearch.org/search/collection/results?count=75&query=%2Bsurname%3Abehrman~%20%2Bbirth_year%3A1829-1831%20%2Bother_year%3A1850-1860%20&collection_id=1849782
+
+.. todo::
+   Search on children\ |apos|\ s names and look for overlapping matches.
+
+Books:
+
+#. **Germans to America: Lists of Passengers Arriving at US Ports 1850-1897.** Edited by Ira A. Glazier and P. William Filby
+#. **German Immigrants: Lists of Passengers Bound from Bremen to New York with Places of Origin**; compiled by Gary J. Zimmerman and Marion Wolfert; (Baltimore: Genealogical Publishing Co. 1985-1992.) 
+#. `Courthouse Research for Family Historians: Your Guide to Genealogical Treasures 1St Edition Edition by Christine Rose <https://www.amazon.com/Courthouse-Research-Family-Historians-Genealogical/dp/0929626168/ref=sr_1_1?ie=UTF8&qid=1498402699&sr=8-1&keywords=courthouse+research+records+in+books>`_ 
+
+Emigration from Germany
+-----------------------
+
+#. `Deutsche Auswanderer Datebank <http://www.deutsche-auswanderer-datenbank.de/index.php?id=275&L=1>`_.
+
+Missouri Synod History
+----------------------
+
+#. The Zeal of His house; five generations of Lutheran Church-Missouri Synod history (1847-1972), by  Weisheit, Eldon.
+   Call Number: 284.1322 W43Z
+
+Relevant Churches
+-----------------
+
+.. todo::
+   Add links to books in Allen Co. public library card catalog
+
+Emmanuel Lutheran Church Soest, 9909 Wayne Trace, Fort Wayne, IN
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+References below are from `ALLEN COUNTY, INDIANA, CONGREGATIONAL RECORDS, HISTORIES, AND DIRECTORIES, IN THE GENEALOGY CENTER COLLECTION ALLEN COUNTY PUBLIC LIBRARY <www.genealogycenter.org/pdf/allencountyincongregations.pdf>`_.
+
+#. `Emmanuel Lutheran Church records, Marion Township, Allen County, Indiana, 4 vol. 1841-1973. 977.201 AL5em <http://alpl.ent.sirsi.net/client/en_US/default/search/detailnonmodal/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:776364/one?qu=%22+ocm13300127+%22&te=ILS>`_
+#. `Minutes and family register, 1861-1925. 977.201 AL5eqa, oversized <http://alpl.ent.sirsi.net/client/en_US/default/search/detailnonmodal/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:261193/one?qu=AL5eqa&te=ILS>`_
+    Contents: vol.1. Minutes, 1871-1925, vol.2. Constitution, minutes 1861-1873, family register.
+#. Histories. 977.201 AL5eq; 977.201 AL5elz
+#. `Diary of F. W. Husmann. 977.201 AD1hu <http://alpl.ent.sirsi.net/client/en_US/default/search/detailnonmodal/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:372790/one?qu=%22+ocm16387147+%22&te=ILS>`_
+
+.. note::
+   Husmann was the first ministry of the congregation.
+
+Books
+
+#. `The one hundredth anniversary, Emmanuel Lutheran Church, Marion township, Allen county, Indiana: history of the congregation  <http://alpl.ent.sirsi.net/client/en_US/default/search/detailnonmodal/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:1489616/one?qu=%22+ocm55042285+%22&te=ILS>`_
+   Other Title: Emmanuel Lutheran Church, Marion township, Allen county, Indiana. One hundred years, 1845 1945 Emmanuel Lutheran Church Soest, Fort Wayne, Indiana
+   Author: Bouman, Walter H.
+   Call Number: 977.201 AL5ELZ
+
+.. .. hlist:: 
+..   :columns: 1
+     Quotes:
+     * page 14 “...The plan, submitted by L. Peppler, was adopted in a meeting on January 21, 1912. The contract was awarded to Christian Doenges in the sum of ...”
+     * page 15 “...and Theodor Behrman are among those baptized by... Minne Lepper...”
+    
+St. John
+~~~~~~~~
+
+#. `Sankt Johannis Lutherische Kirche, schule, und friedhof : a comprehensive history, Marion Township, Allen County, Indiana, 1841-1907, by Dolores L. Kikuchi <http://alpl.ent.sirsi.net/client/en_US/default/search/results/?q=+Kikuchi%2C+dolores#>`_.
+
+Grace Evangelical Lutheran Church, 2940 S. Anthony Blvd., Fort Wayne, IN (ELCA)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Grace Evangelical Lutheran Church, 2940 S. Anthony Blvd., Fort Wayne, IN (ELCA) was founded by members of St. John\ |apos|\ s Evangelical Lutheran Church of Marion Township
+
+#. Parish registers, 1891-1996. 977.202 F77gelb; 977.202 F77gelc, oversized
+#. Miscellaneous records, pictures. 977.202 F77gel, oversized
+#. Earlier  parish  register,  1858-1907,  from  St.  John's,  Marion Twp.,  977.202 F77gela, oversized
+
+Books on German Genealogical Research
+-------------------------------------
+
+#. `Ancestors in German Archives: A Guide to Family History Sources <https://www.amazon.com/Ancestors-German-Archives-History-Sources/dp/0806317477/ref=sr_1_15?ie=UTF8&qid=1487390612&sr=8-15&keywords=german+genealogy+in+books#customerReviews>`_
+#. `In Search of Your German Roots.: A Complete Guide to Tracing Your Ancestors in the Germanic Areas of Europe 5th Edition <https://www.amazon.com/Search-Your-German-Roots-Ancestors/dp/0806320117/ref=sr_1_6?ie=UTF8&qid=1487390612&sr=8-6&keywords=german+genealogy+in+books>`_
+#. `Our Daily Bread: German Village Life, 1500-1850 Paperback – September 28, 2010 <https://www.amazon.com/Our-Daily-Bread-Village-1500-1850/dp/145372169X/ref=sr_1_5?ie=UTF8&qid=1487390612&sr=8-5&keywords=german+genealogy+in+books>`_
+#. `Trace Your German Roots Online: A Complete Guide to German Genealogy Websites <https://www.amazon.com/Trace-Your-German-Roots-Online/dp/144034518X/ref=pd_sim_14_2?_encoding=UTF8&psc=1&refRID=6GX3E8N4SPTV971TFHN1#reader_144034518X>`_
+#. `The German Language Press of the Americas , 2 vols., Karl J. R. Arndt and May E. Olson <http://alpl.ent.sirsi.net/client/en_US/default/search/results?qu=The+German+Language+Press+of+the+Americas&te=ILS&dt=list&rt=false%7C%7C%7CTITLE%7C%7C%7CTitle#>`_, 2 vols.
+#. `The German Press in Indiana <https://scholarworks.iu.edu/journals/index.php/imh/article/view/8120/9953>`_
+#. `Bibliography of German Genealogy Guides <http://www.genealogycenter.org/Pathfinders/Guides/German.aspx>`_.
+
+General German Genealogy Websites
+---------------------------------
+
+#. `German Club for Computer Genealogy <http://compgen.de/>`_.
+#. `German Regional Research (link from the site above) <http://wiki-de.genealogy.net/Portal:Regionale_Forschung>`_
+#. `Chronik von Ottenstein und Glesse, by Heinrich Rose (1927) <https://www.amazon.de/Chronik-Ottenstein-Glesse-Heinrich-Rose/dp/B0072CT7M6>`_
+#. "Ottensteiner Chronik" by Werner Freist (1986). Available at `www.amazon.de <https://www.amazon.de/Ottensteiner-Chronik/dp/B002XDICI4/ref=sr_1_1?s=books&ie=UTF8&qid=1487957608&sr=1-1&keywords=Ottensteiner+Chronik>`_
+    , and at this `Antiquarian bookseller site <https://www.zvab.com/buch-suchen/titel/ottensteiner-chronik/autor/werner-freist/>`_.
+    See also this `email exchange on list.genealogy.net <http://list.genealogy.net/mm/archiv/hannover-l/2007-11/msg00036.html>`_ 
+
+Other possibilites to look up
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Church, state and local archives in the states of Lower Saxony and others
+#. The Evangelical Central Archives, Berlin
+
+Lippe Auswanderung
+------------------
+
+#. `Lippe Auswanderung <http://www.lippe-auswanderer.de/>`_.
+
+Videos
+------
+
+Teva Sheer interview: https://youtu.be/lUn075XIshc
+
+
+Special Comments
+----------------
+
+The userid I used on `db.genalogy.net <https://db.genealogy.net>`_, I think, is **Kurt.krueckeberg** with capital K.

@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sshpass -pkk0457 ssh kurt@66.172.33.113 

@@ -1,0 +1,8 @@
+SPL Data Structures
+===================
+
+All the SPL data structures implement ``Iterator``. List of excellent articles on Spl Data Structures
+
+1. http://www.sitepoint.com/series/data-structures-for-php-devs/
+2. http://matthewturland.com/2010/05/20/new-spl-features-in-php-5-3/
+3. http://books.google.com/books?id=DjgKJL0q1i0C&pg=PA351&lpg=PA351&dq=splpriorityqueue+example&source=bl&ots=2wJEmzC6Na&sig=fN4jIAneexooCsNCQ2hTzAZFnow&hl=en&sa=X&ei=IITAU92KIOiN8gHelYG4Cw&ved=0CDMQ6AEwAzgU#v=onepage&q=splpriorityqueue%20example&f=false

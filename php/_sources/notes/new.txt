@@ -1,0 +1,71 @@
+Read this http://ramikayyali.com/archives/2005/02/25/iterators
+
+IteratorIterator
+----------------
+
+IteratorIterator seems like an internal class needed for changing a non-Iterator but Traversable--internal class?--
+into an Iterator that the concrete classes need.
+
+Example:
+
+.. code-block:: php
+
+    <?php
+    class Book implements IteratorAggregate, Countable {
+	    // ...
+        function count() 
+        {
+	    return count($this->_chapters);
+        }
+    }
+	     
+    print "Number of chapters in our book: " . count($book) . PHP_EOL;
+
+Since we now have an iterator, it’s easy to add our own filtering, for instance, limiting the foreach() to the first 2 chapters:
+1 2 3 4 5 6 7 8 9 10 11 12 	
+
+Using IteratorIterator to apply filtering
+ 
+.. code-block:: php
+
+    <?php
+    // "change" our IteratorAggregate into a Iterator using IteratorIterator.
+    $it = new IteratorIterator($book);
+
+    // Display the first two chapters only
+    $it = new LimitIterator($it, 0, 2);
+     
+    foreach ($it as $chapter) {
+
+        print "- " . $chapter->getTitle() . PHP_EOL;
+    }
+
+Special Iterators
+-----------------
+
+See http://eide.org/2008/08/05/iterators/
+
+
+AppendIterator
+--------------
+
+Iterates over several iterators one after the other, which have been append() 'ed.
+
+Other Iterators notes below:
+----------------------------
+
+FilterIterator: this is an abstract class that can be extended to filter the elements that are being iterated over (perhaps removing unwanted elements for a search).
+
+ParentIterator: when using a ResursiveIterator, the ParentIterator allows you to filter out elements that do not have children. If, for example, you have a CMS in which documents can be placed anywhere under a tree of categories, the ParentIterator would allow you to recurse the tree but display only the "category nodes", omitting the documents that appear under each category.
+
+LimitIterator: this class allows you to specify a range of elements to Iterator over, starting with a key offset and specifying a number of elements to access from that point. The concept is the same as the LIMIT clause in MySQL.
+CachingIterator: this manages another Iterator (which you pass to its constructor). It allows you to check whether the inner Iterator has more elements, using the hasNext() method, before actually advancing with the next() method. Personally, I’m not 100% sure about the name; perhaps LookAheadIterator would be more accurate?
+
+CachingRecursiveIterator: this is largely the same as the CachingIterator, but allows iteration over hierarchical data structures.
+
+DirectoryIterator: to iterate over a directory in a file system, this Iterator provides a bunch of useful methods like isFile() and isDot() that save a lot of hassle.
+
+RecursiveDirectoryIterator: this class allows iteration over a directory structure so that you can descend into subdirectories.
+
+SimpleXMLIterator: this makes SimpleXML even simpler! Currently, the best examples can be found with the SPL tests — see the files beginning "sxe_*"
+RecursiveIteratorIterator: this helps you do cool stuff like "flatten" a hierarchical data structure so that you can loop through it with a single foreach statement, while still preserving knowledge of the hierarchy. This class could be very useful for rendering tree menus, for example.

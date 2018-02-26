@@ -1,0 +1,126 @@
+body {
+	font-family: verdana, arial, sans-serif;
+}
+
+pre {
+    margin-left: 3em;
+	font-family: "DejaVu Sans Mono";
+}
+
+.mono {
+	font-family: "DejaVu Sans Mono";
+}
+
+.verdana {
+	font-family: "Verdana, arial, sans-serif";
+}
+
+p.p-mono_indent {
+	font-family: "DejaVu Sans Mono";
+	margin-left: 3em;
+	margin-bottom: 2em;
+	margin-top: 2em;
+}
+
+table {
+	margin-left: 2.2em;
+}
+
+/*
+thead.realign {
+
+}
+*/
+
+thead.realign tr th {
+	padding-left: 1em;
+    text-align: left;
+}
+
+table, table td, table th {
+	border-style: none; 
+	border-collapse: collapse;
+}
+
+table tr td del {
+	color: red;
+}
+
+tbody {
+
+	font-family: "DejaVu Sans Mono";
+}
+
+td {
+
+	padding: .3em 1em;
+}
+
+table.border {
+
+	margin-left: 3em;
+	border-style: solid;
+	border-collapse: collapse;
+	margin-top: .6em;        /* trying this on 6/29/09 */
+    margin-bottom: .6em      /* trying this on 8/14/09 */
+}
+
+table.border td, table.border th {
+
+	border-style: solid;
+	border-collapse: collapse;
+    text-align: center; 	 /*  6/11/09 */
+}
+
+table.float-left_border {
+	
+	margin-left: 3em;
+	border-style: solid;
+	border-collapse: collapse;
+	float: left;
+	margin-top: .6em;
+}
+
+table caption {
+
+ margin-bottom: .3em;
+
+}
+
+table.float-left_border td, table.float-left_border th {
+
+	border-style: solid;
+	border-collapse: collapse;
+}
+
+table.float-left_noborder {
+	
+	border-style: none;
+	border-collapse: collapse;
+	float: left;
+	margin-top: .6em;
+}
+
+table.float-left_noborder td, table.float-left_noborder th {
+
+	border-style: none;
+	border-collapse: collapse;
+}
+
+table.mono_indent, table.mono_indent td, table.mono_indent th {
+	
+	font-family: "DejaVu Sans Mono";
+	margin-left: 3em;
+	border-style: none; 
+	border-collapse: collapse;
+}
+
+.clear {
+
+	clear: both; 
+}
+
+p.float-left {
+
+float: left;
+}
