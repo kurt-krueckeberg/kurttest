@@ -1,4 +1,0 @@
-Directory Iteration
-===================
-
-See `Working with Files and Directories <https://learnable.com/books/php-master-write-cutting-edge-code/online/apbs03.html>`_.
