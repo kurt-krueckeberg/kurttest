@@ -1,49 +1,41 @@
-<table class="tbl-styl1">
-<tr><td>der Gehilfe(-n)</td><td> assistent</td></tr>
-<tr><td>die Magd</td><td>das Dienstmädchen</td></tr>
-<tr><td>betreuen</td><td>to supervise, to take care of, to look after (only with things); to look after sb.</td></tr>
-<tr><td>sich kümmern um et.</td><td> to see to smth., to take care of sb.</td></tr>
-<tr><td>besorgen</td><td> to procure; et. besorgen - to attend to sth., to run errands.</td></tr>
-<tr><td>wacklig</td><td>rickety</td></tr>
-<tr><td>kärglich</td><td>scant</td></tr>
-<tr><td>großziehen</td><td>to bring sb. up, to rear</td></tr>
-<tr><td>erziehen</td><td>to rear, to educate, to train, to bring up (Kinder). It means "gut großziehen"</td></tr>
-<tr><td>der Buchdrucker(-)</td><td>book </td></tr>
-<tr><td>imstande (adj)</td><td>to be capable, able; zu imstande sein - to be able to...</td></tr>
-<tr><td>sich zulegen</td><td>to acquire</td></tr>
-<tr><td>Seinen</td><td>his family</td></tr>
-<tr><td>abweisen</td><td>to refuse</td></tr>
-<tr><td>sich abweisend verhalten</td><td>to react negatively; etwas dagegen sein Archaic</td></tr>
-<tr><td>veralten</td><td>to antiquate, to become obsolete</td></tr>
-<tr><td>veraltet</td><td>obsolete</td></tr>
-<tr><td>eingehen</td><td>to arrive; to assume; auf et. eingehen - to agree to sth, to commit o.s. to sth.</td></tr>
-<tr><td>auf et. eingehen</td><td>to agree to smthg.;et. akzeptieren</td></tr>
-<tr><td>nachgeben</td><td>to yield, give in</td></tr>
-<tr><td>mitunter</td><td>every now and them, occasionally, ab und zu</td></tr>
-<tr><td>das Begräbnis(-se)</td><td>burial, funeral</td></tr>
-<tr><td>sich weigern</td><td>to refuse; fig. to dig your heels in, to actively resist</td></tr>
-<tr><td>ablehnen</td><td>to refuse; to turn down, to decline</td></tr>
-<tr><td>aufnehmen</td><td>to incorporate, to assimilate, to take in (z.B. to your home); to record</td></tr>
-<tr><td>aufrecht</td><td>upright, erect, upstanding</td></tr>
-<tr><td>der Umgang (ä-e)</td><td>contact, association; commerce</td></tr>
-<tr><td>aufrechthalten</td><td>to keep up smth., to perpetuate, to maintain</td></tr>
-<tr><td>entnehmen</td><td>to extract, to learn from</td></tr>
-<tr><td>nichts bringen</td><td>to be of no use</td></tr>
-<tr><td>auffallen</td><td>to attract attention, to be conspicuous</td></tr>
-<tr><td>auffällig</td><td>conspicuous, eye-catching</td></tr>
-</table>
-<p>Difficult sentences:</p>
-<p>p. 194: Die Kinder schrieben sich Briefe, über das Problem, was mit ihr zu geschehen hatte.</p>
-<p>The children wrote themselves letters about the problem that had happened to her</p>.
-<p>p. 195: Seine Briefe an meinem Vater, und was dieser bein einem Besuch...</p>
-<p>His letters to my father...</p>.
-		<p>Sample sentences</p>
-<p><strong>aufrechthalten</strong>. Um eine Freundschaft aufrechzuhalten, muß man häufig mit seinen Freuden sprechen.</p>
-<p><strong>sich kümmern um</strong>. Wenn usere Eltern alt werden, brauchen sie mehr Hilfe, und ihre Kinder müssen sich um sie kümmern.</p>
-<p><strong>aufnehmen</strong>. Sie hatte die schlechte Nachricht nicht gut aufgenommen.</p>
-<p><strong>aufnehmen</strong>. Ein Hotel nimmt Gäste auf. Es bringt sie unter.</p>
-<p><strong>sich zulegen</strong>. Der reiche Mann hat sich Zeit seines Lebens</p>
-<p><strong>zulegen</strong>. Der reiche Mann hat sich Zeit seines Lebems viele Sachen zugelegt.</p>
-<p><strong>nichts bringen</strong>. Leider habe ich es als Organisator der Verein zu nichts gebracht.</p>
-<p><strong>auffallen</strong>. Ihr buntes Kleid fiel total auf als sie zur Arbeit ging.  </p>
-<p><strong>auffallen</strong>. Sein Verhaltn war auffällig.</p>
+der Gehilfe(-n) :  assistent
+die Magd : das Dienstmädchen
+betreuen : to supervise, to take care of, to look after (only with things); to look after sb.
+sich kümmern um et. :  to see to smth., to take care of sb.
+besorgen :  to procure; et. besorgen - to attend to sth., to run errands.
+wacklig : rickety
+kärglich : scant
+großziehen : to bring sb. up, to rear
+erziehen : to rear, to educate, to train, to bring up (Kinder). It means "gut großziehen"
+der Buchdrucker(-) : book 
+imstande (adj) : to be capable, able; zu imstande sein - to be able to...
+sich zulegen : to acquire
+Seinen : his family
+abweisen : to refuse
+sich abweisend verhalten : to react negatively; etwas dagegen sein Archaic
+veralten : to antiquate, to become obsolete
+veraltet : obsolete
+eingehen : to arrive; to assume; auf et. eingehen - to agree to sth, to commit o.s. to sth.
+auf et. eingehen : to agree to smthg.;et. akzeptieren
+nachgeben : to yield, give in
+mitunter : every now and them, occasionally, ab und zu
+das Begräbnis(-se) : burial, funeral
+sich weigern : to refuse; fig. to dig your heels in, to actively resist
+ablehnen : to refuse; to turn down, to decline
+aufnehmen : to incorporate, to assimilate, to take in (z.B. to your home); to record
+aufrecht : upright, erect, upstanding
+der Umgang (ä-e) : contact, association; commerce
+aufrechthalten : to keep up smth., to perpetuate, to maintain
+entnehmen : to extract, to learn from
+nichts bringen : to be of no use
+auffallen : to attract attention, to be conspicuous
+auffällig : conspicuous, eye-catching
+aufrechthalten : . Um eine Freundschaft aufrechzuhalten, muß man häufig mit seinen Freuden sprechen.
+sich kümmern um : . Wenn usere Eltern alt werden, brauchen sie mehr Hilfe, und ihre Kinder müssen sich um sie kümmern.
+aufnehmen : . Sie hatte die schlechte Nachricht nicht gut aufgenommen.
+aufnehmen : . Ein Hotel nimmt Gäste auf. Es bringt sie unter.
+sich zulegen : . Der reiche Mann hat sich Zeit seines Lebens
+zulegen : . Der reiche Mann hat sich Zeit seines Lebems viele Sachen zugelegt.
+nichts bringen : . Leider habe ich es als Organisator der Verein zu nichts gebracht.
+auffallen : . Ihr buntes Kleid fiel total auf als sie zur Arbeit ging.  
+auffallen : . Sein Verhaltn war auffällig.

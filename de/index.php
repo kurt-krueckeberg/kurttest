@@ -11,7 +11,7 @@
 <link type="text/css" rel="stylesheet" media="screen" href="./screen.css" />
 <link type="text/css" rel="stylesheet" media="print" href="./print.css" />
 <link rel="icon" type="image/png" href="favicon.ico" />
-<title>Krueckeberg.org</title>
+<title>German Vocabulary</title>
 <!-- This javascript is part of the suckerfish dropdown menu code. It correctss an IE7 CSS bug (in ??).
   See: http://www.htmldog.com/articles/suckerfish/dropdowns/ 
   Vertical menu version: http://www.htmldog.com/articles/suckerfish/dropdowns/example/vertical.html 
@@ -179,7 +179,6 @@ if (!isset($_GET['file'])) {
     $file_substr = substr($file, 0, $slash_index);
     
     $bool = in_array($file_substr, $valid_file_names);
-
 
     if ($bool) {
         
