@@ -71,7 +71,7 @@ der Shrank, die Schränke : cupboard, bookcase;closet
 das Regal, die Realte : shelf
 die Fahne, die Fahnen : flag, standard;banner
 franzen : to fray, frazzle
-der Stgerechnt : 	right, just; fair, equivalent
+der Stgerechnt : right, just; fair, equivalent
 aushalten : 	to endure, suffer, bear
 einreden : talk(or argue) a p. into a thö sich et. ~ talk o.s. into a th.;talk insistently to, buttonhole;urge person
 beneiden : to envy or grudge(j-n um et. a p. a th.)_ be envious (j-n um et. of a p.'s th.)
@@ -100,11 +100,11 @@ feststellen : to establish;state;ascertain, detect, find out
 die Rechenaufabe : (arithmetical) problem; sum
 der Aufsatz : essay
 merkwürdig	 : noteworthy, remarkable
-die Anstalt(-en) : institute;sanatorium; mental institution
-das Sprechzimmer : 	parour, office;(doctor) consulting room
-die Gerechtigkeit : 	justice, righteousness, fairness;legitamcz, justification
-der Gang(ä-e) : 	passage;corridor;hall
-stumm : 	silent,dumb, mute
+die Anstalt, die Anstalten : institute;sanatorium; mental institution
+das Sprechzimmer : parour, office;(doctor) consulting room
+die Gerechtigkeit : justice, righteousness, fairness;legitamcz, justification
+der Gang, die Gänge : passage;corridor;hall
+stumm : silent,dumb, mute
 hinausblicken : 	look (or gaze) out
 der Eingang : 	entrace;doorway;way in
 passieren : 	pass(over, through), go through; to happen, occur, take place
@@ -139,31 +139,31 @@ erhellen : 	to light up; fig. make evident;become evident
 das Stückchen(-) : 	small piece; scrap;shred
 verfolgen : 	pursue;(dream or thouhgt) haunt
 der Shrank(ä-e) : 	cupboard, bookcase;closet
-das Regal(-e) : 	shelf
-die Fahne(-n) : 	flag, standard;banner
-franzen : 	to fray, frazzle
-der Streik(-s) : 	strike; walk out
-der Schulrat(ä-e) : 	school superintendent
-halten : 	für et. halten to think sth. is
-auf et. antworten : 	to answer to sth.
-lauschen : 	to easvesdrop;to list to sth.
-der Klagegesang : 	lamet
-unsichtbar : 	hidden; invisible
-verstecken : 	to hide; shroud; et. ~ to concel sth.
-hersagen : 	to repeat; et. ~ to recite
-das Gitter(-) : 	bars
-stürzen : 	to have a fall, tumble; crash (in acc into)
-umwerfen : 	overthrow, upset, knockdown; fig. kill
-umsonst : 	to no avail
-die Teilnahmslosigkeit(-) : 	apathy, indifference
-der Prüfling(-e) : 	examineee
-die Heiterkeit : 	mirth;gaitz;cheeriness
-verzweifeln : 	to fall into despair
-auffallen : 	fall (auf acc. upon); hit; fig. be conspicuous, attract attention; j-n ~ strike a p.,catch a p.'s eye, astonish
-abfallen : 	fall or drop off; fig. decrease, fall off, drop; fall away; bolt(von from a party)
-die Schüchternheit : 	timidity, shyness, bashfulness
-der Husten(-) : 	cough
-die Kladde(-n) : 	rough draft; rough notebook
+das Regal, die Reale : 	shelf
+die Fahne, die Fahnen : 	flag, standard;banner
+franzen : to fray, frazzle
+der Streik, die Streiks : 	strike; walk out
+der Schulrat, die Schulräte : 	school superintendent
+halten : für et. halten to think sth. is
+auf et. antworten : to answer to sth.
+lauschen : to easvesdrop;to list to sth.
+der Klagegesang : lamet
+unsichtbar : hidden; invisible
+verstecken : to hide; shroud; et. ~ to concel sth.
+hersagen : to repeat; et. ~ to recite
+das Gitter, die Gitter :	bars
+stürzen : to have a fall, tumble; crash (in acc into)
+umwerfen : overthrow, upset, knockdown; fig. kill
+umsonst : to no avail
+die Teilnahmslosigkeit(-) : apathy, indifference
+der Prüfling(-e) : examineee
+die Heiterkeit : mirth;gaitz;cheeriness
+verzweifeln : to fall into despair
+auffallen : fall (auf acc. upon); hit; fig. be conspicuous, attract attention; j-n ~ strike a p.,catch a p.'s eye, astonish
+abfallen : fall or drop off; fig. decrease, fall off, drop; fall away; bolt(von from a party)
+die Schüchternheit : timidity, shyness, bashfulness
+der Husten, die Husten : cough
+die Kladde(-n) :rough draft; rough notebook
 herausreissen&lt;riss heraus, herausgerissen&gt; : 	to tear out
 das Zeugnis(-se) : 	evidence, deposition; grade
 die Beurteilung : 	judgement; critical assesment
