@@ -1,5 +1,5 @@
-das Leine(-n) : linen (textile)
-der Stängel(-n) : stem, stalk
+das Leine, die Leinen : linen (textile)
+der Stängel, die Stängeln : stem, stalk
 wiegen &lt;wog, gewogen&gt; : to weigh
 verlässlich : reliable
 ausbeuten : to exploit
@@ -26,7 +26,7 @@ die Schale : shell, skin, husk
 vorzeigen : to demonstrate, show, produce
 sorgfältig : carefully, meticulous(ly)
 je nach : according to
-das Kraut (Kräuter) :  herb
+das Kraut, die Kräuter :  herb
 der Waldmeister : woodruff
 der Kümmel :  caraway seeds
 der Fingerhut :  thimble; foxglove (herb)
@@ -43,10 +43,10 @@ bezahlen : to pay for, to reimburse
 bemalen : to paint
 malen : to paint, to draw, to depict
 streichen &lt;stich, gestichen&gt; : to cancel, to paint, to delete
-der Korb(Körbe) : basket
-der Sack(ä-e) : sack, bag, bursa
-das Gewicht(-e) : weight
-der Zeiger(-) : indicator, needle, pointer
+der Korb, die Körbe : basket
+der Sack, die Säcke : sack, bag, bursa
+das Gewicht, die Gewichte : weight
+der Zeiger, die Zeiger : indicator, needle, pointer
 der Strich : line, streak, stroke, bar
 die Gerechtigkeit : justice, equity, fairness
 ziehen : haul, pull
@@ -56,9 +56,9 @@ auszahlen : to distribute, to pay sth. out (to so.)
 der Groschen : penny
 das Bonbon : hard candy, candy
 von denen : of these
-das Gesicht(-er) : face
+das Gesicht, die Gesichter : face
 giessen &lt;goss, gegeossen &gt; : to pour, to water
-der Zopf(Zöpfe) : pigtail, plait (of hair)
+der Zopf, die Zöpfe : pigtail, plait (of hair)
 nachdenken : to reflect, ponder
 entstehen &lt;entstand, ist entstanden&gt; : to arise, emerge, to come into being or existence
 achten : to regard, to esteem, to venerate, to think highly of
@@ -71,8 +71,8 @@ abliefern : to deliver something
 verfeinern : to refine, to cultivate
 seitdem (conj.; adv.) : since; since then
 das Mehl : flour, meal
-das Hohlmass(-e) : gallon?
-das Ei(-er) : egg
+das Hohlmass, die Hohlmasse : gallon?
+das Ei, die Eier : egg
 stimmen : to be right; to be in harmony; to be true
 anvertraut : committed, entrusted, confided; entrusted to sb.'s care
 der Fleiß : diligence, application, industry
@@ -84,11 +84,11 @@ in den Adelsstand erboben (werden= : to ennoble; (to receive a knighthood)
 der Riese : giant
 berechnen : sum up; total; determine; value
 schenken : to give; grant; endow; give a person a present.
-die Alle(-n) : avenue, blvd.; tree-lined road
+die Alle, die Allen : avenue, blvd.; tree-lined road
 dorthin : there; to that place, thither
 herrichten : fix up; prepare, get ready; tidy
 vorzählen : enumerate; count out
-die Schale(-n) : 1.shell (of eggs, nuts, etc.); skin; husk, rind;<br />2. bowl; basin; tray, pan
+die Schale, die Schalen : 1.shell (of eggs, nuts, etc.); skin; husk, rind;<br />2. bowl; basin; tray, pan
 liegenbleiben : keep lying; remain on hand; be discontinued
 fassen : to have a capacity of; to accommodate sth.; to grab, grasp, grip
 verkleben : to cement, to glue
@@ -101,7 +101,7 @@ herabkommen : come down; descend
 schötten = giessen : to pour
 zertreten&lt;zertrat, zertreten&gt; : to tread down, crush under foot; fig. crush
 auslachen : laugh at; deride
-der Pfarrer(-) : parson, minister
+der Pfarrer, die Pfarrer : parson, minister
 hindurch : right or straight through
 das Städtchen : small town
 riechen&lt;roch, gerochen&gt; : to smell
@@ -111,7 +111,7 @@ festhalten : to keep hold of sth.; to put sth. on record
 hinhalten : to hold out, proffer, tender
 wüten : to rage, storm; of a person: to rave, foam
 wütend : furious; irate; mad (auf/über at)
-der Zweig(-e) : bough, branch
+der Zweig, die Zweige : bough, branch
 der Pfannkuchen : pancake
 hinstellen : to arrange, to situate; to put down
 sich hinstellen : to position onesself
@@ -122,8 +122,8 @@ liefern : to deliver; to provide so. sth.
 schulden : to owne so. sth.
 die Geschwister : pl. brothers and sisters
 das Wappen : coat of arms
-der Hochruf(-e) : cheer
-der Glückwunsch(-ü-e) : congratulations
+der Hochruf, die Hochrufe : cheer
+der Glückwunsch, die Glückwünsche : congratulations
 wenden&lt;wandte, gewandt/gewendet&gt; : to turn, to turn around
 sich wenden&lt;wandte, gewandt/gewendet&gt; : to turn, to address oneself to sb.
 zuwenden&lt;zuwandte, zugewandt/zugewendet&gt; : to turnwards, to face
