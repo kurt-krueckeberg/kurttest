@@ -96,7 +96,6 @@ riechen&lt;roch, gerochen&gt; : 	to smell
 die Farbe, die Farben : color;hue; tint; tech. paint;dye
 sinken lassen : to let down, drop
 feststellen : to establish;state;ascertain, detect, find out
->>>>>>>>> RESUME
 die Rechenaufabe : (arithmetical) problem; sum
 der Aufsatz : essay
 merkwürdig	 : noteworthy, remarkable
@@ -105,23 +104,23 @@ das Sprechzimmer : parour, office;(doctor) consulting room
 die Gerechtigkeit : justice, righteousness, fairness;legitamcz, justification
 der Gang, die Gänge : passage;corridor;hall
 stumm : silent,dumb, mute
-hinausblicken : 	look (or gaze) out
-der Eingang : 	entrace;doorway;way in
-passieren : 	pass(over, through), go through; to happen, occur, take place
-zukommen : 	approach a p.,befit, be due to
-liebenswürdig : 	amiable, gentle, agreeable
-anreden : 	to address, speak to, accost
-zerscheiden : 	to cut up, cut in two;slice , shred
-das Blech(-e) : 	sheet metal
-aufrichtig : 	candid, frank,honest
+hinausblicken :	look (or gaze) out
+der Eingang : entrace;doorway;way in
+passieren : pass(over, through), go through; to happen, occur, take place
+zukommen : approach a p.,befit, be due to
+liebenswürdig : amiable, gentle, agreeable
+anreden : to address, speak to, accost
+zerscheiden : to cut up, cut in two;slice , shred
+das Blech(-e) : sheet metal
+aufrichtig : candid, frank,honest
 zart : 	tender, gentle, delicate
-die Qual(-en) : 	pain;torment;agaonz;ordeal;tribulation
-die Nachhilfe : 	help, assitence, aid
+die Qual(-en) : pain;torment;agaonz;ordeal;tribulation
+die Nachhilfe : help, assitence, aid
 antreiben&lt;trieb an, angetrieben&gt; : 	drive (or push) on; urge on (a horse), drive, propelö fig. impel, urge(goad, egg) on
-ehrgeizig : 	ambitous
-mittelmäßig : 	middling, indifferent
-die Last(-en) : 	load, weight, tonnage;fig. weight, burden, nuisance, trouble
-der Anspruch(ü-e) : 	clain(to)l demand (for) legal title, legal claim (to; aus dat. under);~ nehmen lay claim to, <br />claim a th.;claim to be
+ehrgeizig : ambitous
+mittelmäßig : middling, indifferent
+die Last(-en) : load, weight, tonnage;fig. weight, burden, nuisance, trouble
+der Anspruch(ü-e) : clain(to)l demand (for) legal title, legal claim (to; aus dat. under);~ nehmen lay claim to, <br />claim a th.;claim to be
 genügen : 	to be enough;to meet(deman, requirements)
 betrachten : 	(have a )look at; view, inspect; examine
 wehen : 	to blow, to waft;drift;to blow along
@@ -203,7 +202,7 @@ der Klagegesang : lamet
 unsichtbar : hidden; invisible
 verstecken : to hide; shroud; et. ~ to concel sth.
 hersagen : to repeat; et. ~ to recite
-das Gitter(-) : bars
+das Gitter, die Gitter : bars
 stürzen : to have a fall, tumble; crash (in acc into)
 umwerfen : overthrow, upset, knockdown; fig. kill
 umsonst : to no avail
@@ -214,14 +213,14 @@ verzweifeln : to fall into despair
 auffallen : fall (auf acc. upon); hit; fig. be conspicuous, attract attention; j-n ~ strike a p.,<br />catch a p.'s eye, astonish
 abfallen : fall or drop off; fig. decrease, fall off, drop; fall away; bolt(von from a party)
 die Schüchternheit : timidity, shyness, bashfulness
-der Husten(-) : cough
+der Husten, die Husten : cough
 die Kladde(-n) : rough draft; rough notebook
 herausreissen&lt;riss heraus, herausgerissen&gt; : to tear out
 das Zeugnis(-se) : evidence, deposition; grade
 die Beurteilung : judgement; critical assesment
 abwenden : turn away; avert one's eyes;sich ~ turn away from
 aus dem Wege gehen :  get out of the way, stand aside;fig. avoid
-der Vorhand(ä-e) : curtain, shade(s)
+der Vorhand, die Vorhände : curtain, shade(s)
 befallen/befällt&lt;befiel, befallen&gt; : to beset; to smite;to afflict
 hoffungslose : hopeless; desperate
 drängen : press;push;shove;fig. press, urge;sich ~ crowd, throng, mill
