@@ -1,0 +1,4375 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Summary of Date’s book Datebase in Depth &#8212; CJ Date Notes 1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Welcome to CJ Date Notes’s documentation!" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="summary-of-date-s-book-datebase-in-depth">
+<h1>Summary of Date’s book Datebase in Depth<a class="headerlink" href="#summary-of-date-s-book-datebase-in-depth" title="Permalink to this headline">¶</a></h1>
+<section id="tuples-and-relations">
+<h2>Tuples and Relations<a class="headerlink" href="#tuples-and-relations" title="Permalink to this headline">¶</a></h2>
+<section id="tuple-or-tuple-value">
+<h3>tuple or tuple value<a class="headerlink" href="#tuple-or-tuple-value" title="Permalink to this headline">¶</a></h3>
+<p>Definition: Let <em>T1, T2, …, Tn</em> (<em>n</em> ≥= 0) be type names, not all
+necessarily distinct. Associate with each type <em>Ti</em> a distinct attribute
+name, <em>Ai</em>; each of the <em>n</em> attribute-name:type-name pairs that results
+is an <em>attribute</em>. Associate with each attribute a value <em>vi</em> of type
+<em>Ti</em>; each of the <em>n</em> attribute:value combinations that results is a
+<em>component</em>. The set of all <em>n</em> components thus defined, <em>t</em> say, is a
+<em>tuple value</em> (or just <em>tuple</em> for short) over the attributes <em>A1, A2,
+…, An</em>. The value <em>n</em> is the <em>degree</em> of <em>t</em>; a tuple of degree one is
+<em>unary</em>, a tuple of degree two is <em>binary</em>, a tuple of degree three is
+<em>ternary</em>, …., and more generally a tuple of degree <em>n</em> is <em>n-ary</em>.
+The set of all attributes is the <em>heading</em> of <em>t</em>.</p>
+<p>To summarize, a component is an attribute plus its value. The set of all
+n components is a <em>tuple</em> or <em>tuple value</em>. The set of all <em>n</em>
+attributes is the <em>Heading</em>. <em>n</em> is the <em>degree</em> of the tuple.</p>
+<p>In TUTORIAL D a <em>tuple type</em> name is written <em>TUPLE {H}</em>, where <em>{H}</em> is
+the heading. If we have, for example, two attributes [STATUS: INTEGER]
+and [SUPPLIER_NAME: NAME], then the tuple type would be written as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TUPLE</span> <span class="p">{</span> <span class="n">STATUS</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">SUPPLIER_NAME</span> <span class="n">NAME</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice, we are putting the attribute’s name first followed by its type.
+This is the practice throughout. A sample tuple (tuple value) might be</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="mi">20</span><span class="p">,</span> <span class="n">NAME</span><span class="p">(</span><span class="s2">&quot;General Electric Corporation&quot;</span><span class="p">)</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>An attribute’s type does not have to be a SQL type (such as VARCHAR). In
+an attribute such as [EMPLOYEE: NAME], where NAME is the type and
+EMPLOYEE is the attribute name, NAME would no doubt be implemented in
+our SQL database as two VARCHAR columns, first_name and last_name, and
+NAME equality would involve comparing both first_name and last_name.</p>
+</section>
+<section id="atomicity">
+<h3>Atomicity<a class="headerlink" href="#atomicity" title="Permalink to this headline">¶</a></h3>
+<p>The value of an attribute should be atomic: it should contain only one
+useful piece of information and must never require further parsing.</p>
+</section>
+<section id="selectors">
+<h3>Selectors<a class="headerlink" href="#selectors" title="Permalink to this headline">¶</a></h3>
+<p>A tuple value is returned or instantiated from a tuple <em>selector</em>
+invocation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TUPLE</span> <span class="p">{</span> <span class="n">STATUS</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">SUPPLIER_NAME</span> <span class="n">NAME</span><span class="p">}</span>            <span class="o">//</span> <span class="nb">type</span> <span class="n">declaration</span>
+<span class="n">TUPLE</span> <span class="p">{</span> <span class="n">STATUS</span> <span class="mi">20</span><span class="p">,</span> <span class="n">SUPPLIER_NAME</span> <span class="n">NAME</span><span class="p">(</span><span class="s1">&#39;Smith&#39;</span><span class="p">)</span> <span class="p">}</span>       <span class="o">//</span> <span class="nb">tuple</span> <span class="n">selector</span> <span class="n">instantiates</span> <span class="n">the</span> <span class="nb">tuple</span>
+</pre></div>
+</div>
+<p>The attribute type is omitted in the selector because it can always be
+inferred from the type of the expression denoting the attribute value.</p>
+</section>
+<section id="a-note-on-notation">
+<h3>A note on notation<a class="headerlink" href="#a-note-on-notation" title="Permalink to this headline">¶</a></h3>
+<p>The keyword TUPLE does double duty in Tutorial D. It’s used both to
+declare tuple <em>type names</em> and in tuple selector invocations.</p>
+</section>
+<section id="extracting-attribute-values-from-tuples">
+<h3>Extracting attribute values from tuples<a class="headerlink" href="#extracting-attribute-values-from-tuples" title="Permalink to this headline">¶</a></h3>
+<p>In Tutorial D the syntax from extracting an attribute value from a tuple
+is <em>attribute-name FROM tuple</em>. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TUPLE</span> <span class="p">{</span> <span class="n">STATUS</span> <span class="mi">20</span><span class="p">,</span> <span class="n">SUPPLIER_NAME</span> <span class="n">NAME</span><span class="p">(</span><span class="s1">&#39;Smith&#39;</span><span class="p">)</span> <span class="p">}</span> <span class="n">t</span><span class="p">;</span> <span class="o">//</span> <span class="n">selector</span> <span class="n">invocation</span>
+<span class="n">STATUS</span> <span class="n">FROM</span>  <span class="n">t</span><span class="p">;</span>                                     <span class="o">//</span> <span class="n">extraction</span> <span class="n">of</span> <span class="nb">tuple</span> <span class="n">attribute</span>
+</pre></div>
+</div>
+</section>
+<section id="the-empty-tuple">
+<h3>The empty tuple<a class="headerlink" href="#the-empty-tuple" title="Permalink to this headline">¶</a></h3>
+<p>A tuple with an empty heading has type TUPLE {} (it has no components).
+It is called the <em>0-tuple</em> to emphasize that it is of degree zero. It is
+also sometimes called an <em>empty tuple</em>.</p>
+</section>
+<section id="tuple-equality">
+<h3>Tuple equality<a class="headerlink" href="#tuple-equality" title="Permalink to this headline">¶</a></h3>
+<p><em>Definition</em>: Tuples <em>t1</em> and <em>t2</em> are <em>equal</em> if and only if they have
+the same attributes <em>A1, A2, …, An</em>. That is, they both are of the
+same tuple type. And for all <em>i (i = 1, 2, …, n)</em>, the value <em>vi</em> of
+<em>Ai</em> in <em>t1</em> is equal to the value in <em>t2</em>.</p>
+</section>
+<section id="relations-and-relation-values">
+<h3>Relations and relation values<a class="headerlink" href="#relations-and-relation-values" title="Permalink to this headline">¶</a></h3>
+<p><em>Definition:</em> Let <em>{H}</em> be a tuple heading and let <em>t1, t2, …, tm</em> be
+distinct tuples with heading <em>{H}</em>. The combination, <em>r</em> say, of <em>{H}</em>
+and the set of tuples <em>{t1, t2, …, tm}</em> is a <em>relation value</em> (or just
+a <em>relation</em> for short) over the attributes <em>A1, A2, …, An,</em> where
+<em>A1, A2, …, An</em> are the attributes in <em>{H}</em>; the <em>heading</em> of <em>r</em> is
+<em>{H}</em>; <em>r</em> has the same attributes (and hence the same attribute names,
+and types) and the same degree as that heading does. The <em>body</em> of <em>r</em>
+is the set of tuples <em>{ t1, t2, …,tm}.</em> The value <em>m</em> is the
+<em>cardinality</em> of <em>r.</em></p>
+<p>The relational model is so called because it deals with certain
+abstractions that we can think of as “tables” but are known, formally,
+as relations in mathematics.</p>
+<p>You define a relation’s type in <strong>TUTORIAL D</strong> as <strong>RELATION {H}</strong>,
+where H is the heading. A <em>relation value</em> (or <em>relation</em> for short) is
+its set of unique tuples. An example of the definition of a relation
+type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RELATION</span> <span class="p">{</span> <span class="n">SNO</span> <span class="n">SNO</span><span class="p">,</span> <span class="n">SNAME</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">STATUS</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">CITY</span> <span class="n">CHAR</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Every relation value is returned by some relation selector invocation;
+for example, the relation type above might have this value.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RELATION</span> <span class="p">{</span> <span class="n">TUPLE</span> <span class="p">{</span><span class="n">SNO</span> <span class="n">SNO</span><span class="p">(</span><span class="s1">&#39;S1&#39;</span><span class="p">),</span> <span class="n">SNAME</span> <span class="n">NAME</span><span class="p">(</span><span class="s1">&#39;Smith&#39;</span><span class="p">),</span> <span class="n">STATUS</span> <span class="mi">20</span><span class="p">,</span> <span class="n">CITY</span> <span class="s1">&#39;London&#39;</span><span class="p">},</span>
+           <span class="n">TUPLE</span> <span class="p">{</span><span class="n">SNO</span> <span class="n">SNO</span><span class="p">(</span><span class="s1">&#39;S2&#39;</span><span class="p">),</span> <span class="n">SNAME</span> <span class="n">NAME</span><span class="p">(</span><span class="s1">&#39;Jones&#39;</span><span class="p">),</span> <span class="n">STATUS</span> <span class="mi">15</span><span class="p">,</span> <span class="n">CITY</span> <span class="s1">&#39;Miami&#39;</span><span class="p">},</span>
+       <span class="o">...</span>
+         <span class="p">}</span>
+</pre></div>
+</div>
+<p>Relations by definition never contain duplicate tuples, and tuples never
+contain NULLs. Relation are by definition in first normal form (1NF)
+because a tuple can have only one value for each of its attribute, which
+is the definition of 1NF. Both relations and their tuples contain no
+sense of ordering.</p>
+</section>
+<section id="empty-relations">
+<h3>Empty relations<a class="headerlink" href="#empty-relations" title="Permalink to this headline">¶</a></h3>
+<p>A relation can be empty, not containing any tuples. For every relation
+type is there is exactly one empty relation (of that paricular relation
+type). Thus, two empty relations will both have equivalent empty bodies,
+but their Heading with be different.</p>
+</section>
+<section id="table-dum-and-table-dee">
+<h3>TABLE_DUM and TABLE_DEE<a class="headerlink" href="#table-dum-and-table-dee" title="Permalink to this headline">¶</a></h3>
+<p>TABLE_DUM and TABLE_DEE are both relations of degree 0, meaning they
+have no attributes. They are of type RELATION {}. TABLE_DUM has no
+tuples. TABLE_DEE has one tuple, the 0-tuple or empty tuple.</p>
+</section>
+</section>
+<section id="relation-variables">
+<h2>Relation Variables<a class="headerlink" href="#relation-variables" title="Permalink to this headline">¶</a></h2>
+<section id="relation-and-relvar">
+<h3>relation and relvar<a class="headerlink" href="#relation-and-relvar" title="Permalink to this headline">¶</a></h3>
+<p>A relation is shorthand for <em>relation value</em> in the same way that
+integer is shorthand for <em>integer value</em>. Relvar is shorthand for
+<em>relation variable</em>. A relvar is a holder for a representation of a
+relation value. Relvars are analgous to variables in a strongly typed
+language like, say, C++, and relations are likewise analogous to the
+values of those variables at a given point in time. Relvars can be
+characterised as <em>base relvars</em> or <em>derived relvars</em> also know as views.
+Here is the definition of a base relvars in Tutorial D.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">S</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">SNO</span> <span class="n">SNO</span><span class="p">,</span> <span class="n">SNAME</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">STATUS</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">CITY</span> <span class="n">CHAR</span> <span class="p">}</span> <span class="n">Key</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="updating-of-relvars-is-a-set-at-a-time-operation">
+<h3>Updating of relvars is a set-at-a-time operation<a class="headerlink" href="#updating-of-relvars-is-a-set-at-a-time-operation" title="Permalink to this headline">¶</a></h3>
+<p>Unlike SQL, operations like INSERT, DELETE and UPDATE are, in the
+relational algebra, set-level operations not tuple-level opertaions: one
+relation value, say <em>r1,</em> is always entirely replaced by another
+relation value, say, <em>r2.</em></p>
+</section>
+<section id="candidate-keys">
+<h3>Candidate keys<a class="headerlink" href="#candidate-keys" title="Permalink to this headline">¶</a></h3>
+<p><em>Definition</em>: A subset of the heading of a <strong>relvar</strong> is a candidate key
+K if it satisfies two conditions:</p>
+<ul class="simple">
+<li><p>The uniqueness property: no possible value of the relvar ever has two
+tuples with the same value for K.</p></li>
+<li><p>The irreducibility property: no proper subset of the the candidate
+key has this uniqueness property.</p></li>
+</ul>
+<p>Keys are defined on relvars not relations. Keys imply certain integrity
+contraints, a uniqueness constraint in particular, and integrity
+contraints apply to variables not values. Key values are tuples. <em>which
+means what????</em>&lt;–</p>
+<p>Given this relation, which represents marriages</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RELATION</span> <span class="p">{</span> <span class="n">SPOUSE_A</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">SPOUSE_B</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">DATE_OF_MARRIAGE</span> <span class="n">DATE</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>if we assume no polygamy and that no couples marry each other more than
+once, then this relvar</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">MARRIAGE</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">SPOUSE_A</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">SPOUSE_B</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">DATE_OF_MARRIAGE</span> <span class="n">DATE</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>would have three candidate keys:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KEY</span> <span class="p">{</span><span class="n">SPOUSE_A</span><span class="p">,</span> <span class="n">SPOUSE_B</span><span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span><span class="n">SPOUSE_A</span><span class="p">,</span> <span class="n">DATE_OF_MARRIAGE</span><span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span><span class="n">SPOUSE_B</span><span class="p">,</span> <span class="n">DATE_OF_MARRIAGE</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>So if this relvar contained a TUPLE of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TUPLE</span> <span class="p">{</span> <span class="n">SPOUSE_A</span> <span class="n">NAME</span><span class="p">(</span><span class="s2">&quot;Betty Smith&quot;</span><span class="p">),</span> <span class="n">SPOUSE_B</span> <span class="n">NAME</span><span class="p">(</span><span class="s2">&quot;John Smith&quot;</span><span class="p">)</span> <span class="n">DATE_OF_MARRIAGE</span> <span class="n">DATE</span><span class="p">(</span><span class="s2">&quot;09-11-1955&quot;</span><span class="p">)</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>the value for the key {SPOUSE_A, SPOUSE_B } would be</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TUPLE</span> <span class="p">{</span> <span class="n">SPOUSE_A</span> <span class="n">NAME</span><span class="p">(</span><span class="s2">&quot;Betty Smith&quot;</span><span class="p">),</span> <span class="n">SPOUSE_B</span> <span class="n">NAME</span><span class="p">(</span><span class="s2">&quot;John Smith&quot;</span><span class="p">)</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="primary-key">
+<h3>Primary key<a class="headerlink" href="#primary-key" title="Permalink to this headline">¶</a></h3>
+<p>Any one of the candidate keys can be chosen as the <strong>primary key</strong>.
+Usually, however, the simplest candidate key is chosen. See pp. 63-64.</p>
+</section>
+<section id="foreign-keys">
+<h3>Foreign keys<a class="headerlink" href="#foreign-keys" title="Permalink to this headline">¶</a></h3>
+<p><em>Definition</em>: Let <em>R1</em> and <em>R2</em> be relvars, not necessarily distinct,
+and let <em>K</em> be a key for <em>R1</em>. Let <em>FK</em> be a subset of <em>R2</em> that,
+possibly after some attribute renaming, involves exactly the same
+attributes as <em>K</em>. Then <em>FK</em> is a <em>foreign key</em> if and only if, at all
+times, every tuple in <em>R2</em> has an <em>FK</em> value that is equal to the <em>K</em>
+value in some (necessarily unique) tuple in <em>R1</em> at the time in
+question.</p>
+<p>Using this example of two relvars BOOKS and BOOK_CHAPTERS</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">BOOKS</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">BOOK_ID</span> <span class="n">ISBN</span><span class="p">,</span> <span class="n">BOOK_TITLE</span> <span class="n">CHAR</span><span class="p">,</span> <span class="n">BOOK_PRICE</span> <span class="n">FLOAT</span><span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span> <span class="n">BOOK_ID</span> <span class="p">};</span>
+
+<span class="n">VAR</span> <span class="n">BOOK_CHAPTERS</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">CHAPTER_ID</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">CHAPTER_NUMBER</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">BOOK_ID</span> <span class="n">ISBN</span><span class="p">,</span> <span class="n">CHAPTER_NAME</span> <span class="n">CHAR</span> <span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span> <span class="n">CHAPTER_ID</span> <span class="p">}</span>
+<span class="n">FOREIGN</span> <span class="n">KEY</span> <span class="p">{</span> <span class="n">BOOK_ID</span><span class="p">}</span> <span class="n">REFERENCES</span> <span class="n">BOOKS</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>BOOK_ID</strong> in BOOK_CHAPTERS is a foreign key. While the same BOOK_ID
+value may occur in multiple tuples of BOOK_CHAPTERS, there is one and
+only one tuple in BOOKS with that same BOOK_ID value. The foreign key
+need not have the same name in the referencing relvar as in the
+referenced relvar. In Tutorial D this fact would be shown using the
+RENAME operator. For example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">BOOKS</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">BOOK_ID</span> <span class="n">ISBN</span><span class="p">,</span> <span class="n">BOOK_TITLE</span> <span class="n">CHAR</span><span class="p">,</span> <span class="n">BOOK_PRICE</span> <span class="n">FLOAT</span> <span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span> <span class="n">BOOK_ID</span> <span class="p">};</span>
+
+<span class="n">VAR</span> <span class="n">BOOK_CHAPTERS</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">CHAPTER_ID</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">CHAPTER_NUMBER</span>
+<span class="n">INTEGER</span><span class="p">,</span> <span class="n">BOOK_ISBN</span> <span class="n">ISBN</span><span class="p">,</span> <span class="n">CHAPTER_NAME</span> <span class="n">CHAR</span> <span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span> <span class="n">CHAPTER_ID</span> <span class="p">}</span>
+<span class="n">FOREIGN</span> <span class="n">KEY</span> <span class="p">{</span> <span class="n">RENAME</span> <span class="p">(</span><span class="n">BOOK_ISBN</span> <span class="n">AS</span> <span class="n">BOOK_ID</span><span class="p">)</span> <span class="p">}</span> <span class="n">REFERENCES</span> <span class="n">BOOKS</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The foreign key can even reference the same relvar. That is, <em>R1</em> and
+<em>R2</em> in the foreign key definition can be the same relvar. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">EMP</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">ENO</span> <span class="n">ENO</span><span class="p">,</span> <span class="o">....</span><span class="p">,</span> <span class="n">MNO</span> <span class="n">ENO</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span> <span class="n">ENO</span> <span class="p">}</span>
+<span class="n">FOREIGN</span> <span class="n">KEY</span> <span class="p">{</span> <span class="n">RENAME</span> <span class="p">(</span> <span class="n">MNO</span> <span class="n">AS</span> <span class="n">ENO</span> <span class="p">)</span> <span class="p">}</span> <span class="n">REFERENCES</span> <span class="n">EMP</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p>Here attribue MNO denotes the employee number of the manager of the
+employee identified by ENO; thus the referencing relvar and the
+referenced relvar are the same. In order for the tuple equality
+comparison to be valid we rename the MNO attribute, so that it is of
+same type, since an attribute’s name, like ENO, is part of its type.</p>
+<p>SQL supports certain referential actions such as CASCADE, which, though
+very useful, even essential, are not strictly part of the relational
+algebra.</p>
+</section>
+</section>
+<section id="base-relvars-and-virtual-relvars-or-views">
+<h2>Base relvars and virtual relvars or views<a class="headerlink" href="#base-relvars-and-virtual-relvars-or-views" title="Permalink to this headline">¶</a></h2>
+<section id="base-relation-and-base-relvar">
+<h3>base relation and base relvar.<a class="headerlink" href="#base-relation-and-base-relvar" title="Permalink to this headline">¶</a></h3>
+<p>A base relation is a relation of some type with an initial value.</p>
+</section>
+<section id="view-or-virtual-relvar">
+<h3>view or virtual relvar<a class="headerlink" href="#view-or-virtual-relvar" title="Permalink to this headline">¶</a></h3>
+<p><em>Definition:</em> A <em>view</em> or <em>virtual relvar V</em> is relvar whose value at
+time <em>t</em> is derived by evaluting a certain relational expression at that
+time <em>t</em>. The expression is specified when <em>V</em> is defined and must
+mention at least one relvar.</p>
+<p>Virtual relvars can be used like base relvars because of <em>closure</em>. We
+can define further views on top of them.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D</p></th>
+<th class="head"><p>SQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>VAR LS VIRTUAL (S WHERE CITY = ‘London’);</p></td>
+<td><p>CREATE VIEW LS AS (SELECT S.* FROM S WHERE S,CITY = ‘London’);</p></td>
+</tr>
+</tbody>
+</table>
+<p>Views can have candidate keys just like base relvars. They can have
+integrity constraints. We can update views (although SQL’s support is
+weak for this). You can discover a MySQL VIEW’s underlying SELECT
+statement with this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span>  <span class="n">CREATE</span> <span class="n">VIEW</span> <span class="n">LS</span> <span class="n">AS</span> <span class="p">(</span><span class="n">SELECT</span> <span class="n">S</span><span class="o">.*</span> <span class="n">FROM</span> <span class="n">S</span> <span class="n">WHERE</span> <span class="n">S</span><span class="p">,</span><span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;London&#39;</span><span class="p">);</span>
+<span class="n">mysql</span><span class="o">&gt;</span>  <span class="n">SELECT</span> <span class="n">LS</span><span class="p">,</span> <span class="n">is_updatable</span><span class="p">,</span> <span class="n">view_definition</span> <span class="n">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="o">.</span><span class="n">VIEWS</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="snapshot-versus-view">
+<h3>snapshot versus view<a class="headerlink" href="#snapshot-versus-view" title="Permalink to this headline">¶</a></h3>
+<p>A snapshot is not a view because it has its own separate copy of the
+data.</p>
+</section>
+</section>
+<section id="relvars-and-predicates">
+<h2>Relvars and Predicates<a class="headerlink" href="#relvars-and-predicates" title="Permalink to this headline">¶</a></h2>
+<p>The heading of a relvar is meant to represent a certain predicate, a
+generic statement about the real world. It is the intended
+interpretation, the meaning, of the relvar, also called the <em>intention</em>.</p>
+<p>A predicate is a truth-valued function that returns TRUE or FALSE. This
+if relvar <em>R</em> has predicate <em>P</em>, then every tuple <em>t</em> in <em>R</em> at some
+given time can be regarded as a certain proposition derived by invoking
+<em>P</em> with the attribute values from <em>t</em> as arguments. Every proposistion
+<em>p</em> obtained by substituting a tuples’s values always evaluates to TRUE.</p>
+<p>So a given relvar contains, at any given time, all and only the tuples
+that represent true propositions (instantiations that return TRUE) of
+the predicate.</p>
+<p>A database should be thought of as a collection of facts or true
+propositions, in which the heading of a relvar represents a description
+of something going on in the real world. This intended intrepretation,
+the real meaning of the relvar, is called the relvar’s <em>Predicate</em>. The
+Predicate can be though of as a truth-value function that when given
+specific values returns TRUE or FALSE. So the heading of every relation
+should have an associated Predicate that describes the relation’s real
+meaning. The Predicate is a function whose arguments are the names of
+the attributes in the heading of the relation, and a relvar’s contents,
+its tuples, then become true propositions (at a given point in time).
+While the tuples may change over time, the Predicate does not.</p>
+<section id="formal-predicate-definition">
+<h3>Formal Predicate Definition<a class="headerlink" href="#formal-predicate-definition" title="Permalink to this headline">¶</a></h3>
+<p><em>Predicate Definition:</em></p>
+<p>Every relvar <em>R</em> has an associated Predicate <em>P</em>. <em>P</em> is the <em>intended
+interpretation</em> or <em>intension</em> for <em>R</em>. It does not change over time.
+When the values of a tuple <em>p</em> are substitued in the revlar’s predicate
+<em>P</em>, the resulting proposition is always true. A relvar, at any given
+time, contains <em>all</em> and <em>only</em> the tuples that represent true
+propostions, true instantions of the predicate.</p>
+<p><em>Extension of a Predicate</em></p>
+<p>If <em>P</em> is the predicate of some relvar <em>R</em> whose value at some given
+time is <em>r</em>, then the body of <em>r</em> constitutes the <em>extension</em> of <em>P</em> at
+that time. The extension varies over time, but the intention, the
+Predicate, does not.</p>
+</section>
+<section id="sample-predicates">
+<h3>Sample predicates<a class="headerlink" href="#sample-predicates" title="Permalink to this headline">¶</a></h3>
+<p>Types are things in the real world we can talk about; relations are true
+statements about those things. Types are to relations as nouns are to
+sentences. If we take, as an example, the relvar for the suppliers
+relation (on pp. 11, 61 in Date’s book)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">S</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">SNO</span> <span class="n">SNO</span><span class="p">,</span> <span class="n">SNAME</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">STATUS</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">CITY</span> <span class="n">CHAR</span> <span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span><span class="n">SNO</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>the Predicate would be the following sentence (recalling that the
+attribute’s name comes first in the declaration above, then its type) :</p>
+<p><em>SNO</em> is a <strong>supplier part number</strong> for <strong>supplier name</strong> <em>SNAME</em> with
+<strong>status</strong> of <em>STATUS</em>, which means …, and is located in <em>CITY</em>
+<strong>city</strong></p>
+<p>Here is another example of the predicate for an email contacts relvar.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">EMAIL_CONTACTS</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">CONTACT_ID</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">NAME</span> <span class="n">NAME</span><span class="p">,</span> <span class="n">EMAIL</span> <span class="n">EMAIL</span><span class="p">,</span> <span class="n">OPT_OUT</span> <span class="n">BOOLEAN</span> <span class="p">}</span>
+<span class="n">KEY</span> <span class="p">{</span><span class="n">CONTACTID</span><span class="p">};</span>
+</pre></div>
+</div>
+<p>The Predicate, the sentence describing the meaning of each attribute,
+would be</p>
+<p><em>CONTACT_ID</em> is the <strong>unique identifier</strong> of someone <strong>named</strong> <em>NAME</em>
+whose <strong>email address</strong> is <em>EMAIL</em> and whose <strong>opt status</strong> is
+<em>OPT_OUT</em>.</p>
+<p>The current value of EMAIL_CONTACTS consists of all tuples that
+currently satisfies this Predicate.</p>
+</section>
+<section id="the-principle-of-orthogonality">
+<h3>The principle of Orthogonality<a class="headerlink" href="#the-principle-of-orthogonality" title="Permalink to this headline">¶</a></h3>
+<p>Database Constraints should not be easy to violate because duplicate
+information, dulicate tuples or subsets of tuples which duplicate part
+of a larger tuple, could result. See the <a class="reference external" href="#orthogonality">principle of orthogonal
+design</a></p>
+</section>
+</section>
+<section id="relational-algebra">
+<h2>Relational Algebra<a class="headerlink" href="#relational-algebra" title="Permalink to this headline">¶</a></h2>
+<p>The relational algebra operators are defined on relations and not
+strictly speaking on relvars, although their application to relvars is
+no different. Relation operators are <em>generic</em>: they apply, in effect,
+to all possible relations. They are also <em>read-only</em>. They read their
+operations and return a result. INSERT, UPDATE and DELETE (and relation
+assignment), while they are relational operators, aren’t technically
+part of the relational algebra.</p>
+<section id="some-differences-between-sql-and-tutorial-d">
+<h3>Some differences between SQL and Tutorial D<a class="headerlink" href="#some-differences-between-sql-and-tutorial-d" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>When a relational algebra operations, like UNION or JOIN, requires a
+correspondence between operand attributes to be established, Tutorial
+D requires the attributes to have the same name.</p></li>
+<li><p>Tutorial D sometimes needs to rename attributes to avoid naming
+clashes or mismatches. SQL usually doesn’t</p></li>
+<li><p>SQL requires most queries to conform to SELECT — FROM — WHERE
+template. Tutorial D has no analogous requirement.</p></li>
+</ul>
+<p>Tutorial D RENAME operator takes one relation as input and returns a
+relation identical to the input except that one of the attributes has a
+different name. For example</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Tutorial D RENAME</strong></p></th>
+<th class="head"><p><strong>SQL equivalent</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S RENAME (CITY AS SCITY)</p></td>
+<td><p>SELECT S.SNO , S.NAME, S.STATUS, S.CITY AS SCITY FROM S</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="restrict">
+<h3>RESTRICT<a class="headerlink" href="#restrict" title="Permalink to this headline">¶</a></h3>
+<p>Let <em>bx</em> be a boolean expression involving zero or more attribute names
+such that all of the attributes mentioned are atrributes of the same
+relation <em>r</em>. Then the <em>restriction</em> of <em>r</em> according to <em>bx</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="n">WHERE</span> <span class="n">bx</span>
+</pre></div>
+</div>
+<p>is the relation with a heading the sameas that of <em>r</em> and a body
+consisting of all typles of <em>r</em>for which <em>bx</em> evaluates to TRUE. For
+example,</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>S WHERE CITY = ‘Paris’</p></td>
+<td><p>SELECT S.* FROM S WHERE S.CITY = ‘Paris’</p></td>
+</tr>
+</tbody>
+</table>
+<p>will not contain any duplicate tuples.</p>
+</section>
+<section id="project">
+<h3>PROJECT<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h3>
+<p>Let relation <em>r</em> have attributex X, Y,…Z (and possibly others). Then
+the <em>projection</em> of <em>r</em> on <em>X, Y,…., Z</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="p">{</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">Z</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>is a relation with (a) a heading derived from the heading of <em>r</em> by
+removing all attributes not mentioned in the set <em>{X, Y, …, Z}</em> and
+(b) a body consistiting of all typles <em>{X x, Y y, …, Z z}</em> such that a
+tuple appears in <em>r</em> with <em>X</em> values <em>x</em>, <em>Y</em> values <em>y</em>, …, and <em>Z</em>
+value <em>z</em>. For example,</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D</p></th>
+<th class="head"><p>MySQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S { SNAME, CITY, STATUS}</p></td>
+<td><p>SELECT DISTINCT S.SNAME, S.CITY, S.STATUS FROM S</p></td>
+</tr>
+</tbody>
+</table>
+<p>DISTINCT is needed in the SQL formulation to insure no duplicates
+occurs. The Tutorial D forumlation can also be expressed in terms of the
+attributes to be discarded. Thus</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="p">{</span> <span class="n">SNAME</span><span class="p">,</span> <span class="n">CITY</span><span class="p">,</span> <span class="n">STATUS</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>is equivalent to</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="p">{</span> <span class="n">ALL</span> <span class="n">BUT</span> <span class="n">CITY</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>PROJECT has a higher precedence than other (all?) operators, so</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="n">JOIN</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span><span class="p">,</span> <span class="n">CITY</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>is equivalent to</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="n">JOIN</span> <span class="p">(</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span><span class="p">,</span> <span class="n">CITY</span> <span class="p">}</span> <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="join">
+<h3>JOIN<a class="headerlink" href="#join" title="Permalink to this headline">¶</a></h3>
+<p><em>Definition:</em> Let relations <em>r</em> and <em>s</em> jave attributes <em>X1, X2, …,
+Xm, Yq, Y2, …, Yn, Z1, Z2, …, Zp,</em> respectively; in other words, the
+<em>Y’s</em> (<em>n</em> of them) are the common attributes, the <em>X’s</em> (<em>m</em> of them)
+are the other attributes of <em>r</em>, and the <em>Z’s</em> (<em>p</em> of them) are the
+other attributes of <em>s</em>. We can assume without loss of generality that
+none of the <em>X’s</em> has the same name as any of the <em>Z’s</em>, thanks to the
+availability of RENAME. Now let the <em>X’s</em> taken together be denoted just
+<em>X</em>, and similarly for the <em>Y’s</em> and the <em>Z’s</em>. Then the <em>natural
+join</em>(<em>join</em> for short) of <em>r</em> and <em>s</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="n">JOIN</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>is a relation with (a) a heading that is the (set-theoretic) union of
+the heading of <em>r</em> and <em>s</em> and (b) a body consisting of of the set of
+all tuples <em>t</em> such that <em>t</em> is the (set -theoretic) union of a tuple
+appearing in <em>r</em> and a tuple appearing in <em>s</em>. In other words the
+heading is <em>(X, Y, Z)</em> and the body consists of all tuples <em>(X x, Y y, Z
+z)</em> such that a tuple appears in <em>r</em> with <em>X</em> value <em>x</em> and <em>Y</em> value
+<em>y</em> and a tuple appears in <em>s</em> with <em>Y</em> value <em>y</em> and <em>Z</em> value <em>z</em>.</p>
+<p>Less formally, JOIN first locates tuples with the same values for the
+shared attribues. It then concatenates, joins, the unshared attribute
+values of those same tuples to produce the result.</p>
+<p>The closest SQL equivalent to the Tutorial D expression P JOIN S would
+be SELECT * FROM P NATURAL JOIN S, though not all SQL products support
+this syntax; otherwise, one would have to list all the attributes</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">P</span><span class="o">.</span><span class="n">PNO</span><span class="p">,</span> <span class="n">P</span><span class="o">.</span><span class="n">PNAME</span><span class="p">,</span> <span class="n">P</span><span class="o">.</span><span class="n">COLOR</span><span class="p">,</span> <span class="n">P</span><span class="o">.</span><span class="n">WIEGHT</span><span class="p">,</span> <span class="n">P</span><span class="o">.</span><span class="n">CITY</span><span class="p">,</span> <span class="n">S</span><span class="o">.</span><span class="n">SNO</span><span class="p">,</span> <span class="n">S</span><span class="o">.</span><span class="n">SNAME</span><span class="p">,</span> <span class="n">S</span><span class="o">.</span><span class="n">STATUS</span> <span class="n">FROM</span> <span class="n">P</span><span class="p">,</span> <span class="n">S</span> <span class="n">WHERE</span> <span class="n">P</span><span class="o">.</span><span class="n">CITY</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">CITY</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><em>Intersection</em> and <em>cartesian product</em> are special cases of JOIN. If <em>m
+= p = 0</em> (meaning there are no <em>X’s</em> and not <em>Z’s</em>, and <em>r</em> and <em>s</em> are
+thus of the same type), then <em>r JOIN s</em> degenerates to <em>r INTERSECT s</em>.
+If <em>n = 0</em>, meaning there are no <em>Y’s</em> and <em>r</em> and <em>s</em> thus have no
+common attributes, <em>r JOIN s</em> degenerates to <em>r TIMES s</em>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 26%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D JOIN</p></th>
+<th class="head"><p>SQL equivalent</p></th>
+<th class="head"><p>SQL equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S JOIN SP</p></td>
+<td><p>SELECT * FROM S NATURAL JOIN SP;</p></td>
+<td><p>SELECT DISTINCT P.PNO, P.NAME, P.COLOR, P.WEIGHT, P.CTY, S.SNO, S.SNAME, S.STATUS
+FROM S,SP WHERE S.SNO = SP.SNO;</p></td>
+</tr>
+</tbody>
+</table>
+<p>NATURAL JOIN does not require the use of DISTINCT because NATURAL JOIN
+will only show one SNO column, and since { SNO, PNO } is the primary key
+of SP, we know the tuples will be distinct, and for a given SNO value,
+the PNO values will always differ.</p>
+<p>SQL supports several types of join: NATURAL JOIN, JOIN, INNER JOIN, LEFT
+(OUTER) JOIN, and RIGHT (OUTER) JOIN. They are explained at <a class="reference external" href="http://www.w3schools.com/Sql/sql_join.asp">SQL
+JOINS</a>. The MySQL JOIN
+syntax is explained at <a class="reference external" href="http://dev.mysql.com/doc/refman/5.1/en/join.html">MySQL JOIN
+SYNTAX</a>. Here are
+some sample MySQL joins queries.</p>
+<p>SELECT * FROM S NATURAL JOIN SP;</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 18%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+<th class="head"><p>PNO</p></th>
+<th class="head"><p>QTY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P3</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P4</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P5</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P6</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+<td><p>P2</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P4</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P5</p></td>
+<td><p>400</p></td>
+</tr>
+</tbody>
+</table>
+<p>SELECT DISTINCT S.* FROM S NATURAL JOIN SP;</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+</tbody>
+</table>
+<p>SELECT * FROM S LEFT JOIN SP USING(SNO);</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+<th class="head"><p>PNO</p></th>
+<th class="head"><p>QTY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P3</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P4</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P5</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P6</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+<td><p>P2</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P4</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+<td><p>P5</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Admans</p></td>
+<td><p>30</p></td>
+<td><p>Athens</p></td>
+<td><p><em>NULL</em></p></td>
+<td><p><em>NULL</em></p></td>
+</tr>
+</tbody>
+</table>
+<p>SELECT DISTINCT S.* FROM S LEFT JOIN SP USING(SNO);</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Admans</p></td>
+<td><p>30</p></td>
+<td><p>Athens</p></td>
+</tr>
+</tbody>
+</table>
+<p>SELECT DISTINCT S.* FROM S LEFT JOIN SP USING(SNO) WHERE SP.SNO IS NOT
+NULL;</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+</tbody>
+</table>
+<p>SELECT DISTINCT S.* FROM S LEFT JOIN SP USING(SNO);</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Admans</p></td>
+<td><p>30</p></td>
+<td><p>Athens</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="semijoin">
+<h3>SEMIJOIN<a class="headerlink" href="#semijoin" title="Permalink to this headline">¶</a></h3>
+<p>Many queries that require JOIN really require an extended form of the
+operator called SEMIJOIN. The <em>semijoin</em> of <em>r</em> and <em>s</em> is the join of
+<em>r</em> and <em>s</em>, projected back on the attributes of <em>r</em>. So, for example, S
+SEMIJOIN SP is equivalent to (S JOIN SP) { SNO, SNAME, STATUS, CITY }.
+An application of SEMIJOIN would be the query “Get suppliers who supply
+at least one part”.</p>
+<p><strong>Tutorial D SEMIJOIN</strong></p>
+<p><strong>SQL equivalents</strong></p>
+<p>S SEMIJOIN SP</p>
+<p>SELECT DISTINCT S.* FROM S NATURAL JOIN SP;</p>
+<p>SELECT DISTINCT S.* FROM S,SP WHERE S.SNO = SP.SNO;</p>
+<p>The output would look like this.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SANME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+</tbody>
+</table>
+<p>A more user-friendly spelling of SEMIJOIN is MATCHING: S MATCHING SP.
+Finally, observe that if the heading of <em>s</em> is a subset of <em>r</em> (that is,
+<em>p = 0</em>. See the definition of JOIN), then <em>r</em> JOIN <em>s</em> degenerates to
+<em>r</em> MATCHING <em>s</em>. Likewise, if <em>m = 0</em>, <em>r</em> JOIN <em>s</em> degenerates to <em>s</em>
+MATCHING <em>r</em>.</p>
+</section>
+<section id="table-dee-is-the-identity-with-respect-to-join">
+<h3>TABLE_DEE is the identity with respect to JOIN<a class="headerlink" href="#table-dee-is-the-identity-with-respect-to-join" title="Permalink to this headline">¶</a></h3>
+<p>The concept pf JOIN can be extended to join several relvars, which would
+be written JOIN { r, s, …, w} and means r JOIN s JOIN … JOIN w. Thus
+<em>r</em> JOIN <em>s</em> can also be written JOIN { r, s }.</p>
+<p>The JOIN of no relations, written JOIN {}, is TABLE_DEE. TABLE_DEE is
+of type RELATION {}; i.e., it has no attributes; and it contains one
+tuple, the <em>0-tuple</em> or empty tuple. The join of any relation <em>r</em> with
+TABLE_DEE is simply <em>r</em>. As a consequence, the join of no relations is
+TABLE_DEE.</p>
+<p>Also <em>r</em> JOIN TABLE_DEE is the same as TABLE_DEE JOIN <em>r</em> because the
+result is simply the cartesian product.</p>
+</section>
+<section id="intersect">
+<h3>INTERSECT<a class="headerlink" href="#intersect" title="Permalink to this headline">¶</a></h3>
+<p>Interest requires the relations or relvars to be of the same type.</p>
+<p>Tutorial D</p>
+<p>MySQL</p>
+<p>S { CITY } INTERSECT P { CITY }</p>
+<p>SELECT DISTINCT S.CITY FROM S INTERSECT SELECT DISTINCT P.CITY FROM P</p>
+<p>Note, DISTINCT is not strictly needed above. INTERSECT will remove
+duplicates.</p>
+</section>
+<section id="union">
+<h3>UNION<a class="headerlink" href="#union" title="Permalink to this headline">¶</a></h3>
+<p>The types of the operands must be the same.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 52%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>S { CITY } UNION P { CITY }</p></td>
+<td><p>SELECT DISTINCT S.CITY FROM S
+UNION DISTINCT
+SELECT DISTINCT P.CITY
+FROM P</p></td>
+</tr>
+</tbody>
+</table>
+<p>Since the default for UNION is UNION DISTINCT, DISTINCT is not strictly
+needed. As a consequence, the DISTINCTs following the two SELECTs aren’t
+needed (note: the default for SELECT is ALL rather than DISTINCT).</p>
+</section>
+<section id="minus-and-semiminus">
+<h3>MINUS and SEMIMINUS<a class="headerlink" href="#minus-and-semiminus" title="Permalink to this headline">¶</a></h3>
+<p>Definition: If <em>r</em> and <em>s</em> are of the same type, then <em>r</em> MINUS <em>s</em>
+consists of all typles that appear in <em>r</em> but not in <em>s</em>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D MINUS</p></th>
+<th class="head"><p>SQL equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S { CITY } MINUS P { CITY }</p></td>
+<td><p>SELECT S.CITY
+FROM S
+EXCEPT
+SELECT P.CITY
+FROM P</p></td>
+</tr>
+</tbody>
+</table>
+<p>EXCEPT is the SQL equivalent of the relational algebra MINUS operator;
+however, not all SQL implementations support EXCEPT, including MySQL. An
+MySQL equivalent expression using a subquery is</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D MINUS</p></th>
+<th class="head"><p>MySQL equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S { CITY } MINUS P { CITY }</p></td>
+<td><p>SELECT S.CITY FROM S WHERE S.CITY NOT IN (SELECT DISTINCT P.CITY FROM P)</p></td>
+</tr>
+</tbody>
+</table>
+<p>We extract those cities from the supplier relvar that are not in the
+parts relvar. MINUS can be done more efficiently in MySQL using LEFT
+JOIN, as <a class="reference external" href="http://www.bitbybit.dk/carsten/blog/?p=71">Doing Intersect and Minus in
+MySQL</a> explains. Using
+LEFT JOIN, the MySQL analogue of MINUS would be</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>MySQL equivalent of MINUS using LEFT JOIN</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SELECT DISTINCT S.* FROM S LEFT JOIN SP USING(SNO) WHERE SP.SNO IS NULL</p></td>
+</tr>
+</tbody>
+</table>
+<p>MINUS is just a special case of the more general SEMIMINUS. SEMIMINUS
+does not require both operands to be of the same type. The definition of
+<em>s</em> SEMIMINUS <em>r</em> is “<em>r</em> MINUS (<em>r</em> SEMIJOIN <em>s</em>)” which is the same as
+“<em>r</em> MINUS (<em>r</em> MATCHING <em>s</em>)”. Consider the query “Get suppliers who
+supply no parts at all”:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D SEMIMINUS</p></th>
+<th class="head"><p>SQL equivalent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S SEMIMINUS SP</p></td>
+<td><p>SELECT S.*
+FROM S
+EXCEPT
+SELECT S.*
+FROM S, SP
+WHERE S.SNO = SP.SNO</p></td>
+</tr>
+</tbody>
+</table>
+<p>Again, MySQL does not support EXCEPT. The MySQL analogue for SEMIMINUS
+would be</p>
+<p>MySQL analogues for SEMIMINUS</p>
+<div class="line-block">
+<div class="line">SELECT DISTINCT S.* FROM S LEFT JOIN SP USING(SNO)</div>
+<div class="line">WHERE SP.SNO IS NULL</div>
+</div>
+<div class="line-block">
+<div class="line">SELECT DISTINCT S.* FROM S WHERE S.SNO NOT IN</div>
+<div class="line">(SELECT DISTINCT S.SNO FROM S NATURAL JOIN SP)</div>
+</div>
+<p>Tutorial D does provide the alternative, more user-friendly syntax of
+ “S NOT MATCHING SP”. Thinking in terms of “NOT MATCHING” makes the
+MySQL expressions above perhaps more understandable.</p>
+</section>
+<section id="divide">
+<h3>DIVIDE<a class="headerlink" href="#divide" title="Permalink to this headline">¶</a></h3>
+<p>In relational algebra, the divisor is another relation S, whose heading
+must be a subset of the heading of R. The division is over the common
+attribute(s), and the set of values used as the actual divisor are the
+values found in S.</p>
+<p>DIVIDE is perhaps easier to first illustrate. The figure below shows a
+simple example of dividing a binary relation R1 by a unary relation R2.
+The division is over the shared attribute I2. The divisor is the set
+{1,2,3}, these being the values found in the shared attribute in R2.
+Inspecting the tuples of R1, the value ‘a’ occurs in tuples such that
+their I2 values (that is, set of values for R1.I2) match the divisor
+(the set of values in the divisor). So ‘a’ is included in the result,
+but ‘b’ is not because there is no tuple with ‘3’ as the I2 value and
+‘b’ as the I1 value.</p>
+<p><em>Definition</em>: Let <em>r</em> and <em>s</em> be such that the heading of <em>s</em> is a
+subset of the heading of <em>r</em>. Then the <em>division</em> of <em>r</em> by <em>s</em>, <em>r</em>
+DIVIDEDBY <em>s</em> is shorthand for the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="p">{</span> <span class="n">X</span> <span class="p">}</span> <span class="n">MINUS</span> <span class="p">(</span> <span class="p">(</span> <span class="n">r</span> <span class="p">{</span> <span class="n">X</span> <span class="p">}</span> <span class="n">TIMES</span> <span class="n">s</span><span class="p">)</span> <span class="n">MINUS</span> <span class="n">r</span> <span class="p">)</span> <span class="p">{</span> <span class="n">X</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>where X is the set-theoretic difference between the heading of <em>r</em> and
+that of <em>s</em>. Let’s use a example from the part and suppliers database.
+Let’s apply this definition to this example.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SP</span> <span class="p">{</span> <span class="n">SNO</span><span class="p">,</span> <span class="n">PNO</span> <span class="p">}</span> <span class="n">DIVIDEBY</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Using the definition, this would be re-written as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SP</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span> <span class="n">MINUS</span> <span class="p">(</span> <span class="p">(</span> <span class="n">SP</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span> <span class="n">TIMES</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span> <span class="p">)</span> <span class="n">MINUS</span> <span class="n">SP</span> <span class="p">{</span> <span class="n">SNO</span><span class="p">,</span> <span class="n">PNO</span> <span class="p">}</span> <span class="p">)</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>If look at these steps one-by-one, we would see the following.</p>
+<p>SP { SNO } <strong>TIMES</strong> P { PNO }</p>
+<p>SP <strong>{ SNO, PNO }</strong></p>
+<p>( SP { SNO } TIMES P { PNO } ) <strong>MINUS</strong> SP { SNO, PNO }</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>PNO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>s1</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>s1</p></td>
+<td><p>p2</p></td>
+</tr>
+<tr class="row-even"><td><p>s1</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>s1</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-even"><td><p>s1</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-odd"><td><p>s1</p></td>
+<td><p>p6</p></td>
+</tr>
+<tr class="row-even"><td><p>s2</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>s2</p></td>
+<td><p>p2</p></td>
+</tr>
+<tr class="row-even"><td><p>s2</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>s2</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-even"><td><p>s2</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-odd"><td><p>s2</p></td>
+<td><p>p6</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+<td><p>p2</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+<td><p>p6</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>s4</p></td>
+<td><p>p2</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>s4</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-odd"><td><p>s4</p></td>
+<td><p>p6</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>PNO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>s1</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>s1</p></td>
+<td><p>p2</p></td>
+</tr>
+<tr class="row-even"><td><p>s1</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>s1</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-even"><td><p>s1</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-odd"><td><p>s1</p></td>
+<td><p>p6</p></td>
+</tr>
+<tr class="row-even"><td><p>s2</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>s2</p></td>
+<td><p>p2</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>s4</p></td>
+<td><p>p2</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-odd"><td><p>s4</p></td>
+<td><p>p5</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>PNO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[STRIKEOUT:<strong>s1</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p1</strong>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>[STRIKEOUT:<strong>s1</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p2</strong>]</p></td>
+</tr>
+<tr class="row-even"><td><p>[STRIKEOUT:<strong>s1</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p3</strong>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>[STRIKEOUT:<strong>s1</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p4</strong>]</p></td>
+</tr>
+<tr class="row-even"><td><p>[STRIKEOUT:<strong>s1</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p5</strong>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>[STRIKEOUT:<strong>s1</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p6</strong>]</p></td>
+</tr>
+<tr class="row-even"><td><p>[STRIKEOUT:<strong>s2</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p1</strong>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>[STRIKEOUT:<strong>s2</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p2</strong>]</p></td>
+</tr>
+<tr class="row-even"><td><p>[STRIKEOUT:<strong>s2</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p3</strong>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>s2</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-even"><td><p>s2</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-odd"><td><p>s2</p></td>
+<td><p>p6</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[STRIKEOUT:<strong>s3</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p2</strong>]</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+<td><p>p6</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[STRIKEOUT:<strong>s4</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p2</strong>]</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>[STRIKEOUT:<strong>s4</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p4</strong>]</p></td>
+</tr>
+<tr class="row-even"><td><p>[STRIKEOUT:<strong>s4</strong>]</p></td>
+<td><p>[STRIKEOUT:<strong>p5</strong>]</p></td>
+</tr>
+<tr class="row-odd"><td><p>s4</p></td>
+<td><p>p6</p></td>
+</tr>
+</tbody>
+</table>
+<p>&lt;==&gt;</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>PNO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>s2</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-odd"><td><p>s2</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-even"><td><p>s2</p></td>
+<td><p>p6</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+<td><p>p4</p></td>
+</tr>
+<tr class="row-even"><td><p>s3</p></td>
+<td><p>p5</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+<td><p>p6</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+<td><p>p1</p></td>
+</tr>
+<tr class="row-odd"><td><p>s4</p></td>
+<td><p>p3</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+<td><p>p6</p></td>
+</tr>
+</tbody>
+</table>
+<p>First, the cartesian product pairs the divisor P { PNO } — the set of
+unique PNO values from P — with each unique value of SNO in the dividend
+SP. Next MINUS finds potential attributes values that are in the final
+result. We can see this by noting that the set of tuples whose SNO value
+is ‘s1’ have (collectively) a set of PNO values that matches the set of
+PNO values in the divisor. MINUS removes these ‘s1’-tuples completely.
+Next we project this intermediate result on SNO, which gives us.</p>
+<p>( ( SP { SNO } TIMES P { PNO } ) MINUS SP { SNO, PNO } ) <strong>{ SNO }</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>s2</p></td>
+</tr>
+<tr class="row-odd"><td><p>s3</p></td>
+</tr>
+<tr class="row-even"><td><p>s4</p></td>
+</tr>
+</tbody>
+</table>
+<p>These are the set of SNO values whose PNO values <em>do not</em> match those of
+the divisor. Finally, we substract these values from SP { SNO }, which
+gives us back the ‘s1’ value in SP.</p>
+<p>SP { SNO } <strong>MINUS</strong> ( ( SP { SNO } TIMES P { PNO } ) MINUS SP { SNO,
+PNO } ) { SNO }</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>s1</p></td>
+</tr>
+</tbody>
+</table>
+<p>So we see that SP { SNO, PNO } DIVIDEBY P { PNO } is:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>s1</p></td>
+</tr>
+</tbody>
+</table>
+<p>The result is loosely “supplier numbers for suppliers who supply all
+parts.” This can be expressed SQL as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">DISTINCT</span> <span class="n">SPX</span><span class="o">.</span><span class="n">SNO</span>
+<span class="n">FROM</span> <span class="n">SP</span> <span class="n">AS</span> <span class="n">SPX</span>
+<span class="n">WHERE</span> <span class="n">NOT</span> <span class="n">EXISTS</span>
+<span class="p">(</span> <span class="n">SELECT</span> <span class="n">P</span><span class="o">.</span><span class="n">PNO</span>
+<span class="n">FROM</span> <span class="n">P</span>
+<span class="n">WHERE</span> <span class="n">NOT</span> <span class="n">EXITS</span>
+    <span class="p">(</span> <span class="n">SELECT</span> <span class="n">SPY</span><span class="o">.</span><span class="n">SNO</span>
+      <span class="n">FROM</span> <span class="n">SP</span> <span class="n">AS</span> <span class="n">SPY</span>
+      <span class="n">WHERE</span> <span class="n">SPY</span><span class="o">.</span><span class="n">SNO</span> <span class="o">=</span> <span class="n">SPX</span><span class="o">.</span><span class="n">SNO</span>
+      <span class="n">AND</span>   <span class="n">SPY</span><span class="o">.</span><span class="n">PNO</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">PNO</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>We claim that this query finds suppliers who supply (ship) all parts.
+Notice we want suppliers who have shipped parts, i.e., those SP.SNO
+values <em>v</em>, such that there does not exist even one part, one P.PNO
+value, that is not found in those tuples of SP whose SP.SNO value is
+<em>v</em>.</p>
+<p>On the other hand, this query is loosely “supplier numbers for suppliers
+who do not supply all parts.”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">DISTINCT</span> <span class="n">SPX</span><span class="o">.</span><span class="n">SNO</span>
+<span class="n">FROM</span> <span class="n">SP</span> <span class="n">AS</span> <span class="n">SPX</span>
+<span class="n">WHERE</span> <span class="n">EXISTS</span>
+<span class="p">(</span> <span class="n">SELECT</span> <span class="n">P</span><span class="o">.</span><span class="n">PNO</span>
+<span class="n">FROM</span> <span class="n">P</span>
+<span class="n">WHERE</span> <span class="n">NOT</span> <span class="n">EXITS</span>
+    <span class="p">(</span> <span class="n">SELECT</span> <span class="n">SPY</span><span class="o">.</span><span class="n">SNO</span>
+      <span class="n">FROM</span> <span class="n">SP</span> <span class="n">AS</span> <span class="n">SPY</span>
+      <span class="n">WHERE</span> <span class="n">SPY</span><span class="o">.</span><span class="n">SNO</span> <span class="o">=</span> <span class="n">SPX</span><span class="o">.</span><span class="n">SNO</span>
+      <span class="n">AND</span>   <span class="n">SPY</span><span class="o">.</span><span class="n">PNO</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">PNO</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice here we want suppliers who have shipped parts, i.e., those SP.SNO
+values <em>v</em>, such that there does exist at least one part, one P.PNO
+value, that is not found in those tuples of SP whose SP.SNO value is
+<em>v</em>.</p>
+<p>Note, any query that uses DIVIDEBY can be reformulated using relational
+comparison, which has the advantage of making the query clearer. A query
+using relational comparison to find “supplier numbers for suppliers who
+supply all parts” would be</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WITH</span> <span class="p">(</span><span class="n">SP</span> <span class="n">RENAME</span> <span class="p">(</span> <span class="n">SNO</span> <span class="n">AS</span> <span class="n">X</span> <span class="p">)</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">R</span><span class="p">:</span>
+<span class="n">S</span> <span class="n">WHERE</span> <span class="p">(</span> <span class="n">R</span> <span class="n">WHERE</span> <span class="n">X</span> <span class="o">=</span> <span class="n">SNO</span> <span class="p">)</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span> <span class="o">=</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>WITH AS is explained below. How relational comparison, using WITH AS,is
+more straightforward (than the SQL analogue for) DIVIDEBY is explained.</p>
+</section>
+<section id="extend-and-summarize">
+<h3>EXTEND and SUMMARIZE<a class="headerlink" href="#extend-and-summarize" title="Permalink to this headline">¶</a></h3>
+<p>Loosely, <em>extend</em> supports computation across tuples and <em>summarize</em>
+supports computation down tuples.</p>
+<p><em>Definition</em>: The <em>extension</em> of relation <em>r</em>, written</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EXTEND</span> <span class="n">r</span> <span class="n">ADD</span> <span class="p">(</span><span class="n">exp</span> <span class="n">AS</span> <span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>is a relation with a heading equal to <em>r</em> extended with the attribute
+<em>X</em> and a body consisting of all tuples <em>t</em> such that <em>t</em> is a typle of
+<em>r</em> extended with a value for attribute <em>X</em> that is computed by
+evaluation <em>exp</em> on that tuple of <em>r</em>. <em>r</em> must not have an attribute
+name <em>X</em> and <em>exp</em> must not refer to <em>X</em>.</p>
+<p>For example, there are 454 grams to a pound. So we can extend a relation
+with a weight ( in lbs. ) attribute.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D</p></th>
+<th class="head"><p>SQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>EXTEND P ADD { WEIGHT * 454 AS GMWT }</p></td>
+<td><p>SELECT P.*, ( P.WEIGHT * 454 ) AS GMWT FROM P</p></td>
+</tr>
+</tbody>
+</table>
+<p>ADD is not addition. It means extend the heading of the relvar with an
+additional attribute, which follows AS. The value of the extended
+attribute is computed by evaluating the expression before AS. Some other
+examples using SQL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">P</span><span class="o">.*</span><span class="p">,</span> <span class="p">(</span> <span class="n">p</span><span class="o">.</span><span class="n">WEIGHT</span> <span class="o">*</span> <span class="mi">454</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">GMWT</span>
+<span class="n">FROM</span> <span class="n">P</span>
+<span class="n">WHERE</span> <span class="n">GMWT</span> <span class="o">&gt;</span> <span class="mf">7000.0</span>
+</pre></div>
+</div>
+<p>Such a query can also be written closer in style to Tutorial D.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">TEMP</span><span class="o">.</span><span class="n">PNO</span><span class="p">,</span> <span class="n">TEMPGMWT</span>
+<span class="n">FROM</span> <span class="p">(</span> <span class="n">SELECT</span> <span class="n">P</span><span class="o">.</span><span class="n">PNO</span><span class="p">,</span> <span class="p">(</span> <span class="n">P</span><span class="o">.</span><span class="n">WEIGHT</span> <span class="o">*</span> <span class="mi">454</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">GMWT</span> <span class="n">FROM</span> <span class="n">P</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">TEMP</span>
+<span class="n">WHERE</span> <span class="n">TEMP</span><span class="o">.</span><span class="n">GMWT</span> <span class="o">&gt;</span> <span class="mf">7000.0</span>
+</pre></div>
+</div>
+</section>
+<section id="summarize">
+<h3>SUMMARIZE<a class="headerlink" href="#summarize" title="Permalink to this headline">¶</a></h3>
+<p><em>Definition</em>: Let <em>r</em> and <em>s</em> be realtions such that <em>s</em> is of the same
+type as some projection of <em>r</em>, and let the attributes of <em>s</em> be <em>A1,
+A2, A3, …</em>. Then the <em>summarization</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="n">r</span> <span class="n">PER</span> <span class="p">{</span> <span class="n">s</span> <span class="p">}</span> <span class="n">ADD</span> <span class="p">{</span> <span class="n">summary</span> <span class="n">AS</span> <span class="n">X</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>is a relation whose heading is equal to the heading of <em>s</em> extended with
+the attribute <em>X</em>, and body consisting of all tuples <em>t</em> such that <em>t</em>
+is a tuple of <em>s</em> extended with a value for attribute <em>X</em>, where <em>X</em> is
+computed by evaluating <em>summary</em> over all tuples of <em>r</em> that have the
+same value for attributes <em>A1, A2, …, An</em> as tuples <em>t</em> does. <em>X</em>
+cannot be an attribute of <em>s</em> and <em>summary</em> must not refer to <em>X</em>. The
+cardinality of the resulting relation is equal to that of <em>s</em>, and the
+degree is equal to that of <em>s</em> plus one.</p>
+<p>As an example take</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="n">SP</span> <span class="n">PER</span> <span class="p">(</span> <span class="n">S</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">COUNT</span><span class="p">()</span> <span class="n">AS</span> <span class="n">P_COUNT</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>whose result would be</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>P_COUNT</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>While S { SNO } is not a projection of SP, it is of the same type as the
+projection SP { SNO }. The result will contain the same tuples as S {
+SNO }, the set of all suppliers, plus the attribute P_COUNT, where
+P_COUNT is the total number of suppliers in SP for that tuple’s SNO
+value.</p>
+<p>SUMMARIZE thus goes down ‘columns’ doing <em>summary</em> per tuple value in
+<em>s</em>. Notice that this analogous SQL statement</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">SP</span><span class="o">.</span><span class="n">PNO</span><span class="p">,</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">AS</span> <span class="n">P_COUNT</span> <span class="n">FROM</span> <span class="n">SP</span> <span class="n">GROUP</span> <span class="n">BY</span> <span class="n">SP</span><span class="o">.</span><span class="n">SNO</span>
+</pre></div>
+</div>
+<p>will only return tuples for suppliers S1, S2, S3 and S4, so it is not
+equivalent to the SUMMARIZE expression. This SQL expression is
+equivalent</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">SP</span><span class="o">.</span><span class="n">SNO</span><span class="p">,</span> <span class="n">TEMP</span><span class="o">.</span><span class="n">PRODUCT_COUNT</span> <span class="n">FROM</span> <span class="n">S</span><span class="p">,</span> <span class="n">LATERAL</span> <span class="p">(</span> <span class="n">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">AS</span> <span class="n">PRODUCT_COUNT</span> <span class="n">FROM</span> <span class="n">SP</span> <span class="n">WHERE</span> <span class="n">SP</span><span class="o">.</span><span class="n">SNO</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">SNO</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">TEMP</span>
+</pre></div>
+</div>
+<p>does not contain a row ( tuple ) for S5, since S5 is not in SP.</p>
+<p>If <em>s</em> is a projection of <em>r</em> (not just “of the same type as” some
+projection of <em>r</em>) then the expression can be simplied slightly; instead
+of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="n">SP</span> <span class="n">PER</span> <span class="p">(</span> <span class="n">SP</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">MAX</span> <span class="p">{</span> <span class="n">QTY</span> <span class="p">}</span> <span class="n">AS</span> <span class="n">MAXQ</span><span class="p">,</span> <span class="n">MIN</span> <span class="p">(</span> <span class="n">QTY</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">MINQ</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>you can write</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="n">SP</span> <span class="n">BY</span> <span class="p">(</span> <span class="n">SNO</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">MAX</span> <span class="p">{</span> <span class="n">QTY</span> <span class="p">}</span> <span class="n">AS</span> <span class="n">MAXQ</span><span class="p">,</span> <span class="n">MIN</span> <span class="p">(</span> <span class="n">QTY</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">MINQ</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Various types of summaries are supported in Tutorial D: COUNT, SUM, AVG,
+MAX, MIN, COUNTD, SUMD, AVGD ( where “D” stands for “eliminate redundant
+duplicate values before summarizing” ).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="n">SP</span> <span class="n">PER</span> <span class="p">(</span> <span class="n">SP</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">MAX</span> <span class="p">(</span> <span class="n">QTY</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">MAXQ</span><span class="p">,</span> <span class="n">MIN</span> <span class="p">(</span> <span class="n">QTY</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">MINQ</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example SUMMARIZE has no PER specification.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="p">(</span> <span class="n">S</span> <span class="n">WHERE</span> <span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;London&#39;</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">COUNT</span> <span class="p">(</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">N</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Since this summarize has no PER specification, the summarizing is done
+per TABLE_DEE, i.e., it is shorthand for</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="p">(</span> <span class="n">S</span> <span class="n">WHERE</span> <span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;London&#39;</span> <span class="p">)</span> <span class="n">PER</span> <span class="p">(</span> <span class="n">TABLE_DEE</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">COUNT</span> <span class="p">(</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">N</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Recall TABLE_DEE is a relation with no attributes and one tupe (the
+0-tuple). TABLE_DEE fits the definitino of SUMMARIZE because it is a
+projection of the relation in question, S, on the empty set of
+attributes. The output of this SUMMARIZE therefore has on attribute and
+one type.</p>
+<p>Finally, there is a difference between</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">N</span> <span class="n">INTEGER</span><span class="p">;</span>
+<span class="n">N</span> <span class="o">:=</span> <span class="n">COUNT</span> <span class="p">(</span> <span class="n">S</span> <span class="n">WHERE</span> <span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;London&#39;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>SUMMARIZE returns a relation, but the aggregate operator above returns a
+scalar. It’s true that it might be thought of as “returning” one scalar
+value for each tuple in the PER relation, but that scalr value is then
+appended to that tuple to produce a tuple in the overall SUMMARIZE
+result.</p>
+<p>SQL does have something analogous to the BY form of SUMMARIZE, but not
+the more general PER form. The SQL analog of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="n">SP</span> <span class="n">BY</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">SUM</span> <span class="p">(</span> <span class="n">QTY</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">TQ</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">SP</span><span class="o">.</span><span class="n">SNO</span><span class="p">,</span> <span class="n">SUM</span> <span class="p">(</span> <span class="n">SP</span><span class="o">.</span><span class="n">QTU</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">TQ</span>
+</pre></div>
+</div>
+<p>Finally, here is an example of EXTEND expression that is logically
+equivalent to SUMMARIZE. The summarization expression of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARIZE</span> <span class="n">SP</span> <span class="n">PER</span> <span class="p">(</span> <span class="n">S</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">COUNT</span> <span class="p">(</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">NP</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>is equivalent to this EXTEND expression, which uses the WITH AS operator
+introduced next.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WITH</span> <span class="p">(</span> <span class="n">SP</span> <span class="n">RENAME</span> <span class="p">(</span> <span class="n">SNO</span> <span class="n">AS</span> <span class="n">X</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">R</span> <span class="p">:</span>
+<span class="n">EXTEND</span> <span class="p">(</span> <span class="n">S</span> <span class="p">{</span> <span class="n">SNO</span> <span class="p">}</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">COUNT</span> <span class="p">(</span> <span class="n">R</span> <span class="n">WHERE</span> <span class="n">X</span> <span class="o">=</span> <span class="n">SNO</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">NP</span> <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="with-as">
+<h3>WITH AS<a class="headerlink" href="#with-as" title="Permalink to this headline">¶</a></h3>
+<p>On p. 104 the Tutorial D <strong>WITH AS</strong> operator’s use is illustrated to
+“get suppliers who supply all parts.”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WITH</span> <span class="p">(</span><span class="n">SP</span> <span class="n">RENAME</span> <span class="p">(</span> <span class="n">SNO</span> <span class="n">AS</span> <span class="n">X</span> <span class="p">)</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">R</span><span class="p">:</span>
+<span class="n">S</span> <span class="n">WHERE</span> <span class="p">(</span> <span class="n">R</span> <span class="n">WHERE</span> <span class="n">X</span> <span class="o">=</span> <span class="n">SNO</span> <span class="p">)</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span> <span class="o">=</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This is a restriction, S WHERE <em>exp1</em> = <em>exp2</em>, where <em>exp1</em> is, ( R
+WHERE X = SNO ) { PNO } and <em>exp2</em> is, P { PNO }. We examine each
+supplier, say, Sx in relvar S, comparing Sx’s associated SNO value to
+the SNO values in SP. That is the meaning of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span> <span class="n">R</span> <span class="n">WHERE</span> <span class="n">X</span> <span class="o">=</span> <span class="n">SNO</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>For example, for the tuple in S with SNO value of ‘S1’, after doing</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span> <span class="n">R</span> <span class="n">WHERE</span> <span class="n">X</span> <span class="o">=</span> <span class="n">SNO</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>the resulting set of PNO values from SP corresponding to the ‘S1’ value
+from S would be: { P1, P2, P3, P4, P5, P6 }. Next we project this result
+on PNO, which yields the same set of values, the set of unique part
+numbers supplied by ‘S1’. Next we compare this result to P { PNO }, the
+set of all unique part numbers.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span> <span class="n">R</span> <span class="n">WHERE</span> <span class="n">X</span> <span class="o">=</span> <span class="n">SNO</span> <span class="p">)</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span> <span class="o">=</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Continuing the example using ‘S1’, the expression ( R WHERE X = SNO ) {
+PNO } = P { PNO } would evaluate to TRUE. So the tuple of S containing
+the SNO value of ‘S1’ would be in the final result. Thus, the resulting
+relation will be those tuples of S that represent suppliers who supply
+(have shipped parts to customers) all parts. In the sample database
+there is only one such suppliers. Thus, the result is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RELATION</span> <span class="p">{</span> <span class="n">TUPLE</span> <span class="p">{</span> <span class="n">SNO</span> <span class="n">SNO</span><span class="p">(</span><span class="s1">&#39;S1&#39;</span><span class="p">),</span> <span class="n">SNAME</span> <span class="n">NAME</span><span class="p">(</span><span class="s1">&#39;Smith&#39;</span><span class="p">),</span> <span class="n">STATUS</span> <span class="mi">20</span><span class="p">,</span> <span class="n">CITY</span> <span class="s1">&#39;London&#39;</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>So the forgoing query found “suppliers who supply all parts”. And it is
+simplier than the earlier DIVIDEBY query, which was actually a
+relational formulation of the query, “Get supplier numbers for supplier
+who <em>supply at least one part and in fact</em> supply all parts.”</p>
+<p>Here is another example a query using WITH AS that answers: “Get paris
+of supplier numbers, <em>Sx</em> and <em>Sy</em> say, such that <em>Sx</em> and <em>Sy</em> supply
+exactly the same set of parts.”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WITH</span> <span class="p">(</span> <span class="n">S</span> <span class="n">RENAME</span> <span class="p">(</span> <span class="n">SNO</span> <span class="n">AS</span> <span class="n">SX</span> <span class="p">)</span> <span class="p">{</span> <span class="n">SX</span> <span class="p">}</span> <span class="n">AS</span> <span class="n">RX</span><span class="p">,</span>
+<span class="p">(</span> <span class="n">S</span> <span class="n">RENAME</span> <span class="p">(</span> <span class="n">SNO</span> <span class="n">AS</span> <span class="n">SY</span> <span class="p">)</span> <span class="p">{</span> <span class="n">SY</span> <span class="p">}</span> <span class="n">AS</span> <span class="n">RY</span> <span class="p">:</span>
+<span class="p">(</span> <span class="n">RX</span> <span class="n">JOIN</span> <span class="n">RY</span> <span class="p">)</span> <span class="n">WHERE</span> <span class="p">(</span> <span class="n">SP</span> <span class="n">WHERE</span> <span class="n">SNO</span> <span class="o">=</span> <span class="n">SX</span> <span class="p">)</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span> <span class="o">=</span> <span class="p">(</span> <span class="n">SP</span> <span class="n">WHERE</span> <span class="n">SNO</span> <span class="o">=</span> <span class="n">SY</span> <span class="p">)</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Again, this is a restriction of the result of a JOIN: the outermost
+operation is ( RX JOIN RY ) WHERE <em>exp1</em> = <em>expr2</em>.</p>
+<p>Appending “SX &lt; SY” to the WHERE clause here would produce a slightly
+tidier result: it would eliminate pairs of the form (Sx, Sx) and ensure
+that the pairs (Sx, Sy) and (Sy, Sx) don’t appear (since JOIN is
+effectively the cartesian product).</p>
+</section>
+<section id="expression-transformation">
+<h3>Expression Transformation<a class="headerlink" href="#expression-transformation" title="Permalink to this headline">¶</a></h3>
+<p>Distributive, associate and commutative laws apply to various operations
+as mentioned on pp. 100-101. This allows an optimizer to rewrite queries
+in such a way the performance is optimal.</p>
+</section>
+<section id="insert-delete-and-update">
+<h3>INSERT, DELETE and UPDATE<a class="headerlink" href="#insert-delete-and-update" title="Permalink to this headline">¶</a></h3>
+<p>Strictly speaking relational algreba has no updateing (assignment) or
+comparison operators and no notion relvars. Operations like UPDATE,
+INSERT and DELETE are shorthand for algebraic assigment operations. For
+example, given</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR</span> <span class="n">PQ</span> <span class="n">BASE</span> <span class="n">RELATION</span> <span class="p">{</span> <span class="n">PNO</span> <span class="n">PNO</span><span class="p">,</span> <span class="n">QTY</span> <span class="n">QTY</span> <span class="p">}</span> <span class="n">KEY</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>Inserting into PQ</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INSERT</span> <span class="n">PQ</span> <span class="p">(</span> <span class="n">SUMMARIZE</span> <span class="n">SP</span> <span class="n">PER</span> <span class="p">(</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">SUM</span> <span class="p">(</span> <span class="n">QTY</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">QTY</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>is equivalent to the longhand assigment of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PQ</span> <span class="o">:=</span> <span class="n">PQ</span> <span class="n">UNION</span> <span class="p">(</span> <span class="n">SUMMARIZE</span> <span class="n">SP</span> <span class="n">PER</span> <span class="p">(</span> <span class="n">P</span> <span class="p">{</span> <span class="n">PNO</span> <span class="p">}</span> <span class="p">)</span> <span class="n">ADD</span> <span class="p">(</span> <span class="n">SUM</span> <span class="p">(</span> <span class="n">QTY</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">QTY</span> <span class="p">)</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>A DELETE of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DELETE</span> <span class="n">S</span> <span class="n">WHERE</span> <span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;Athens&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>is equivalent to</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">:=</span> <span class="n">S</span> <span class="n">WHERE</span> <span class="n">NOT</span> <span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;Athens&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>and an UPDATE of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UPDATE</span> <span class="n">P</span> <span class="n">WHERE</span> <span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;London&#39;</span> <span class="p">(</span> <span class="n">WEIGHT</span> <span class="o">:=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">WEIGHT</span><span class="p">,</span> <span class="n">CITY</span> <span class="o">:=</span> <span class="s1">&#39;Oslo&#39;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>has the longhand equivalent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">P</span> <span class="o">:=</span> <span class="n">WITH</span> <span class="p">(</span> <span class="n">P</span> <span class="n">WHERE</span> <span class="n">CITY</span> <span class="o">=</span> <span class="s1">&#39;London&#39;</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">R1</span><span class="p">,</span>
+   <span class="p">(</span> <span class="n">EXTEND</span> <span class="n">R1</span> <span class="n">ADD</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">WEIGHT</span> <span class="n">AS</span> <span class="n">NEW_WEIGHT</span><span class="p">,</span> <span class="s1">&#39;Oslo&#39;</span> <span class="n">AS</span> <span class="n">NEW_CITY</span> <span class="p">)</span> <span class="p">)</span> <span class="n">AS</span> <span class="n">R2</span><span class="p">,</span>
+   <span class="n">R2</span> <span class="p">{</span> <span class="n">ALL</span> <span class="n">BUT</span> <span class="n">WEIGHT</span><span class="p">,</span> <span class="n">CITY</span> <span class="p">}</span> <span class="n">AS</span> <span class="n">R3</span><span class="p">,</span>
+   <span class="n">R3</span> <span class="n">RENAME</span> <span class="p">{</span> <span class="n">NEW_WEIGHT</span> <span class="n">AS</span> <span class="n">WEIGHT</span><span class="p">,</span> <span class="n">NEW_CITY</span> <span class="n">AS</span> <span class="n">CITY</span> <span class="p">}</span> <span class="n">AS</span> <span class="n">R4</span><span class="p">,</span>
+   <span class="n">P</span> <span class="n">MINUS</span> <span class="n">R1</span> <span class="n">AS</span> <span class="n">R5</span> <span class="p">:</span>
+   <span class="n">R5</span> <span class="n">UNION</span> <span class="n">R4</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>First, R1 is the set of tuples to be updated, extended with the new
+weight and new city as R2. Then we throw away from R2 everything but the
+weight and the city. This is R3. Then we rename the new weight and city
+with the proper attribute names of WEIGHT and CITY. This is R4. Then we
+identify those tuples not to be updated (but to be retained). This is
+R5. Finally, the result is the union of R5 and R4.</p>
+</section>
+<section id="the-basic-sql-conceptual-algorithm">
+<h3>The basic SQL conceptual algorithm<a class="headerlink" href="#the-basic-sql-conceptual-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>A SQL expression can be thought of as being implemented (at least
+conceptually) in three steps.</p>
+<ol class="arabic simple">
+<li><p>The FROM clause …</p></li>
+<li><p>Next, the WHERE clause …</p></li>
+</ol>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>These are examples of Tutorial D and SQL analogues of various queries</p>
+<p>Get supplier numbers for suppliers who supply part P1.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 61%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>(SP WHERE SNO = PNO(‘P1’)) { SNO }</p></td>
+<td><p>SELECT DISTINCT SP.SNO FROM SP WHERE SP.PNO = PNO(‘P1’);</p></td>
+</tr>
+</tbody>
+</table>
+<p>Get suppliers with status in the range 15 to 25 inclusive.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 65%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>S WHERE STATUS ≥ 15 AND STATUS ≤ 25</p></td>
+<td><p>SELECT DISTINCT S.STATUS FROM S WHERE S.STATUS ≥ 15 AND STATUS ≤ 25</p></td>
+</tr>
+</tbody>
+</table>
+<p>Get part numbers for parts supplied by a supplier in London.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 59%" />
+<col style="width: 41%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>(SP MATCHING ( S WHERE CITY = ‘London’ )) { PNO }</p></td>
+<td><p>SELECT DISTINCT SP.PNO FROM SP, S
+WHERE S.CITY = CITY(‘London’)
+AND
+SP.PNO = S.PNO;</p></td>
+</tr>
+</tbody>
+</table>
+<p>Comments: SP MATCHING ( S WHERE CITY = ‘London’ ) is SP JOIN S, with the
+result project back onto the attributes of SP. Since we only want PNO,
+JOIN would have worked just as well.</p>
+<p>Get part numbers for parts not supplied by any supplier in London.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 55%" />
+<col style="width: 45%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>(SP NOT MATCHING ( S WHERE CITY = ‘London’ )) { PNO }</p></td>
+<td><p>SELECT P.PNO FROM P
+EXCEPT
+SELECT SP.PNO
+FROM SP, S
+WHERE SP.SNO = S.SNO AND S.CITY = ‘London’;</p></td>
+</tr>
+</tbody>
+</table>
+<p>Comments: NOT MATCHING is equivalent to SP SEMIMINUS (SP MATCHING (S
+WHERE CITY = ‘London’)), which is SP MINUS (SP MATCHING S). This query
+could also be expresse, if Tutorial D supports “not equal”, as SP
+MATCHING (S WHERE CITY NOT = CITY(‘London’).</p>
+<p>Get city names for suppliers in which at least two two suppliers are
+located.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 54%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>(SUMMARIZE S BY CITY ADD (COUNT() AS CNUM)) WHERE CNUM &gt; 1</p></td>
+<td><p>SELECT TEMP.CITY
+FROM (SELECT S.CITY, COUNT(*) AS CNUM FROM S GROUP BY S.CITY) AS TEMP
+WHERE TEMP.CNUM &gt; 1</p></td>
+</tr>
+</tbody>
+</table>
+<p>Comment: For the Tutorial D, we do a restrict on the result of
+summarize. For the SQL analogue, we also do COUNT(*) per city. GROUP BY
+specifies how the count should be done; withtout it, we would simply get
+a total count of cities in each row of the result.</p>
+<p>Get all pairs of part numbers such that some supplier supplies both of
+the indicated parts.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>WITH SP { SNO, PNO } AS Z:
+( (Z RENAME (PNO AS X))
+     JOIN
+  (Z RENAME (PNO AS Y)) ) { X, Y }
+SELECT XX.PNO AS X, YY.PNO AS Y
+FROM SP AS XX, SP AS YY
+WHERE XX.SNO = YY.SNO;</p></td>
+</tr>
+</tbody>
+</table>
+<p>Comments: From looking at relation SP it is clear that supplier S1
+supplies every part listed in P; consequently, for any pairing of part
+numbers (Px, Py) there will always exist a supplier, namely S1, who
+supplies both part numbers. Now how does the query ensure this? The SQL
+query select pairs of part numbers, PNO, such that their suppliers are
+the same, XX.SNO = YY.SNO, i.e., these parts are both supplied by the
+same supplier. Note, DISTINCT is not needed because distinct values X
+and Y are being returned.</p>
+<p>In the Tutorial D query, we, in essence, join two copies of SP, SP1 JOIN
+SP2, where the PNO attribute has been renamed in each copy, so that the
+join occurs on SNO, the only remaining common attribute. The other two
+“PNO” columns are both included, as X and Y, giving pairs of part
+numbers (Px, Py) such that they share a common supplier value, a common
+SNO value. So for, say the SNO value of ‘S2’, we would have the pairs
+(P1, P1), (P1, P2), (P2, P1) and (P2, P2). For ‘S4’ we would have the
+pairs: (P2, P2), (P2, P4), (P4, P2) and (P4, P4). For SNO value of ‘S1’,
+we would have all possible combinations of P1 through P6. Finally, we
+take the join result and project it onto { X, Y }. This eliminates
+duplicate tuples, duplicate pairs.</p>
+<p>Get the total number of parts supplied by supplier S1.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 59%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>WITH (SP WHERE SNO = SNO(‘S1’)) AS R:
+SUMMARIZE SP PER R { SNO } ADD (COUNT() AS TOTAL)</p></td>
+<td><p>SELECT SP.SNO, TEMP.TOTAL FROM SP, LATERAL
+   (SELECT COUNT(*) AS TOTAL FROM SP WHERE SP.SNO = SNO(‘S1’)) AS TEMP</p></td>
+</tr>
+</tbody>
+</table>
+<p>or with the count by itselfi</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 51%" />
+<col style="width: 49%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EXTEND TABLE_DEE ADD (COUNT(SP WHERE SNO = ‘S1’) AS TOTAL)</p></td>
+<td><p>SELECT COUNT(*) AS TOTAL FROM SP WHERE SNO = SNO(‘S1’);</p></td>
+</tr>
+</tbody>
+</table>
+<p>Comments: Tutorial D also allows for the later expression to be written</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">COUNT</span> <span class="p">(</span><span class="n">SP</span> <span class="n">WHERE</span> <span class="n">SNO</span> <span class="o">=</span> <span class="n">SNO</span><span class="p">(</span><span class="s1">&#39;S1&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Get supplier numbers for suppliers with a STATUS lower than that of
+supplier S1.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 55%" />
+<col style="width: 45%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>(S WHERE STATUS &lt; STATUS FROM ( TUPLE FROM (S WHERE SNO = SNO(‘S1’) )) { SNO }</p></td>
+<td><p>SELECT S.SNO FROM S WHERE STATUS &lt; (SELECT S.STATUS FROM S WHERE
+S.SNO = SNO(‘S1’) ) ))</p></td>
+</tr>
+</tbody>
+</table>
+<p>Comments: The Tutorial D “TUPLE FROM” operator extracts a tuple from the
+restriction. Then the FROM operator extracts the STATUS attribute from
+the tuple. So we restrict S to the tuples where STATUS is always less
+than the STATUS of any of the tuples whose SNO value is S1.Integrity
+Constraints</p>
+<p>An integrity constraint, or just constraint, is just a formal name for
+<em>business rules</em>. Contraints guarantee consistentency. They cannot
+quarantee correctness, which involves insuring that every relvar’s
+predicate, it’s fundamental meaning, has never been violated.</p>
+</section>
+<section id="type-constraints">
+<h3>Type Constraints<a class="headerlink" href="#type-constraints" title="Permalink to this headline">¶</a></h3>
+<p>Type constraints are simply the set of legal values for the type. They
+are checked when the type’s selector is invoked. In Tutorial D a type
+contraint looks like this</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>TYPE POINT POSSREP CARTESIAN { X NUMERIC, Y NUMERIC CONSTRAINT SQRT (X ** 2, Y ** 2) ≤ 100.0 };
+</pre></div>
+</div>
+<p>POSSREP here stands for “possible representation”. If omitted, the
+POSSREP defaults to the same name as the type. The constraint is that
+points must lie within circle whose radius is 100. SQL does not support
+type constraints.</p>
+</section>
+<section id="the-operators">
+<h3>THE_Operators<a class="headerlink" href="#the-operators" title="Permalink to this headline">¶</a></h3>
+<p>The THE_operators (there is one for each component) return the
+components of the type. Given this POINT</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POINT</span> <span class="n">P</span><span class="p">(</span><span class="n">NUMERIC</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">NUMERIC</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>THE_X(P) returns the X component’s value, and THE_Y(P) returns the Y
+component’s value.</p>
+</section>
+<section id="database-constraints">
+<h3>Database constraints<a class="headerlink" href="#database-constraints" title="Permalink to this headline">¶</a></h3>
+<p>Database constraints are constraints on the values that can appear in a
+given database. They should be checked at the end of any statement that
+assigns a value to some relvar in the database: in SQL at any INSERT or
+UPDATE. Attributes have a built-in type constaint because the attribute
+is always of a certain type. Together with type constraints they form
+the business rules of an application. A relvar constraint that involves
+just one relvar is a single-relvar constraint. In SQL database
+constaints are expressed by means of CREATE ASSERTION statements. This
+single-relvar constaints checks that “status values must be in the range
+1 to 100 inclusive”:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D</p></th>
+<th class="head"><p>SQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CONSTRAINT C1 IS_EMPTY (S WHERE STATUS &lt; 1 OR STATUS &gt; 100)</p></td>
+<td><p>CREATE ASSERTION C1 CHECK
+(NOT EXISTS (SELECT S.* FROM S WHERE S.STATUS &lt; 1 OR S.STATUS &gt; 100));</p></td>
+</tr>
+</tbody>
+</table>
+<p>This constraint involves just a single attribute of a single relvar. The
+constraint “supplies in London must have status 20” would be written</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D</p></th>
+<th class="head"><p>SQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CONSTRAINT C1 IS_EMPTY (S WHERE CITY = ‘London’ AND STATUS ≠ 20);</p></td>
+<td><p>CREATE ASSERTION C1 CHECK
+(NOT EXISTS (SELECT S.* FROM S WHERE S.CITY = ‘London’ AND S.STATUS &lt;&gt; 20));</p></td>
+</tr>
+</tbody>
+</table>
+<p>Although it involves two attributes, this is still a single-relvar
+constraint. Here is constraint that involves two revlars, a multi-relvar
+constraint: “no supplier with status less than 20 can supply part P6.”</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D</p></th>
+<th class="head"><p>SQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CONSTRAINT C1 IS_EMPTY ((S JOIN SP) WHERE STATUS &lt; 20 AND PNO = PNO(‘P6’));</p></td>
+<td><p>CREATE ASSERTION C1 CHECK
+(NOT EXISTS (SELECT S.* FROM S, SP WHERE S.SNO = SP.SNO AND S.STATUS &lt; 20 AND SP.PNO = PNO(‘P6’)));</p></td>
+</tr>
+</tbody>
+</table>
+<p>All the constraints (AND’ed together) involving a relvar R is the
+“relvar constraint” for R. The databse constraint for a given database
+DB is the AND of all of the relvar constraints for the relvars in DB.</p>
+</section>
+<section id="constraint-examples">
+<h3>Constraint examples<a class="headerlink" href="#constraint-examples" title="Permalink to this headline">¶</a></h3>
+<p>All red parts must weight less than 50 lbs.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 39%" />
+<col style="width: 61%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D</p></th>
+<th class="head"><p>SQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CONSTRAINT C1 IS_EMPTY (P WHERE COLOR = COLOR(‘Red’)
+AND WEIGHT ≥ WEIGHT(50.0));</p></td>
+<td><p>CREATE ASSERTION C1 CHECK (NOT EXISTS (SELECT P.* FROM P WHERE P.COLOR = COLOR(‘Red’)
+AND P.WEIGHT ≤ 50));</p></td>
+</tr>
+</tbody>
+</table>
+<p>Every London supplier must supply part P2.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial D</p></th>
+<th class="head"><p>SQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CONSTRAINT C1 IS_EMPTY
+(WITH (SP RENAME (SNO AS X)) AS R:
+ S WHERE CITY = ‘London’
+ AND
+ TUPLE {PNO PNO(‘P2’)} ∉ (R WHERE X = SNO) {PNO} );</p></td>
+<td><p>CREATE ASSERTION C1 CHECK (NOT EXISTS
+(SELECT * FROM S WHERE S.CITY = ‘London’ AND NOT EXISTS (SELECT * FROM SP WHERE SP.SNO = S.SNO
+ AND SP.PNO = PNO(‘P2’))  );</p></td>
+</tr>
+</tbody>
+</table>
+<p>For further examples, see the answers to 6-16.</p>
+</section>
+</section>
+<section id="database-design-theory">
+<h2>Database Design Theory<a class="headerlink" href="#database-design-theory" title="Permalink to this headline">¶</a></h2>
+<p>The intent of DB design theory is to reduce redundancy so that the
+database never is in an inconsistent state. While database design is
+ultimately a subjective endeavor, there are certain formal principles to
+keep in mind.</p>
+<section id="functional-dependency">
+<h3>Functional Dependency<a class="headerlink" href="#functional-dependency" title="Permalink to this headline">¶</a></h3>
+<p>A functional dependency is a special type of single-relvar integrity
+constraint important in database normalization. If an attribute’s value
+depends on the value of another attribute, it is functionaly dependent
+on the other attribute. The formal definition is:</p>
+<p><em>Definition:</em> Let <em>A</em> and <em>B</em> be subsets of the heading of relvar <em>R</em>,
+then <em>R</em> satisfies the functional dependency (<em>FD</em>) <em>A</em> → <em>B</em> (read “<em>B</em>
+is functionally dependent on <em>A</em>” or “<em>A</em> functionaly determines <em>B</em>”)
+if (and only if), in every relation that is a legal value for <em>R</em>,
+whenever two tulpes have the same value for <em>A</em>, they also have the same
+value for <em>B</em>.</p>
+<p><em>A</em> and(or) <em>B</em> can be sets of attributes. As an example of a functional
+dependency integrity constraint suppose we require that if two suppliers
+are in the same city, then they must have the same status, or { CITY } →
+{ STATUS }.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Admans</p></td>
+<td><p>30</p></td>
+<td><p>Athens</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: S</p>
+<p>In Tutorial D, this FD constraint can be expressed as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONSTRAINT</span> <span class="n">C1</span> <span class="n">COUNT</span><span class="p">(</span><span class="n">S</span> <span class="p">{</span> <span class="n">CITY</span> <span class="p">})</span> <span class="o">=</span> <span class="n">COUNT</span><span class="p">(</span><span class="n">S</span> <span class="p">{</span> <span class="n">CITY</span><span class="p">,</span> <span class="n">STATUS</span> <span class="p">});</span>
+</pre></div>
+</div>
+<p>That is, whenever two cities are identical, the pair &lt;city, status&gt; will
+always identical.</p>
+<p>A functional dependency (FD) clearly continues to remains valid if you
+add attributes to <em>A</em> (to the left side of the functional dependency) or
+substract them from <em>B</em> (the right side of the functional dependency).
+Obviously, every relvar candidate key represents a functional dependency
+constraint (from the key to the set of all the attributes of <em>R</em>, as
+well as from the key to every subset of attributes). As just noted, this
+functional dependency remains valid if we add elements to the key.
+Adding attributes to a key creates what is called a <em>superkey</em>. A
+<em>superkey</em> has the uniqueness property (as only one distinct tuple
+contains the superkey) that all keys must have, but it does not have the
+irreducibility property that a key must also have.</p>
+</section>
+<section id="boyce-codd-normal-form">
+<h3>Boyce/Codd Normal Form<a class="headerlink" href="#boyce-codd-normal-form" title="Permalink to this headline">¶</a></h3>
+<p><em>Definition:</em> Relvar <em>R</em> is in BCNF if and only if, for every
+non-trivial functional dependency <em>A</em> → <em>B</em> satisfied by <em>R</em>, <em>A</em> is a
+superkey for <em>R</em>.</p>
+<p>Trivial functional dependencies are the obvious sorts of FDs, in which
+the attributes on the left are a superset of the attributes on the
+right, like these:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{ CITY } → { CITY }
+{ SNO }  → { SNO }
+{ CITY, STATUS } → { CITY}
+</pre></div>
+</div>
+<p>The functional dependencies of a relvar in Boyce/Codd Normal Form
+(besides the trivial functional dependencies) are always <em>from</em>
+superkeys: a key or a set of attributes containing a key. To decompose a
+relvar <em>R</em> into BCNF, we decompose it into smaller relvars with fewer
+attributes. To ensure that no information is lost (which ultimatly means
+the predicate remains valid), we must restrict the decomposition to
+projections of <em>R</em> that when joined return the original relvar. So we
+use project as the decomposition operator for achieving Boyce-Codd
+NormalForm, and join as the recomposition operator.</p>
+<p>We can decomposed RS, with its FD { CITY } → { STATUS }, into the
+following two projections:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Admans</p></td>
+<td><p>30</p></td>
+<td><p>Athens</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: RS</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">=&gt;</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 37%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Admans</p></td>
+<td><p>Athens</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SNC</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CITY</p></th>
+<th class="head"><p>STATUS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>London</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-odd"><td><p>Paris</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-even"><td><p>Athens</p></td>
+<td><p>30</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: CS</p>
+<p>SNC still has SNO as a key. Its only functional dependencies are from
+its key. The FD { CITY } → { STATUS } makes CITY the candidate key for
+CS. So both SNC and CS are in BCNF. We have eliminated the redundant
+STATUS values from RS, and we have not lost any information: RS = SNC
+JOIN CS.</p>
+<p>As another example, suppose we started with a suppliers relvar that
+included quanity:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 32%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>PNO</p></th>
+<th class="head"><p>QTY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P3</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P4</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P5</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P6</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>10</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>10</p></td>
+<td><p>P2</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>30</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>20</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S4</p></td>
+<td><p>20</p></td>
+<td><p>P4</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>20</p></td>
+<td><p>P5</p></td>
+<td><p>400</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: STP</p>
+<p>Its key is still { SNO, PNO }. But this new suppliers relvar satisfies a
+FD of { SNO } → { STATUS }, and therefore it has duplicate STATUS
+values. To eliminate these redundant status values we decompose it into
+these two projections:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 32%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>PNO</p></th>
+<th class="head"><p>QTY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P3</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P4</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P5</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>20</p></td>
+<td><p>P6</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>10</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>10</p></td>
+<td><p>P2</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>30</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>20</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S4</p></td>
+<td><p>20</p></td>
+<td><p>P4</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>20</p></td>
+<td><p>P5</p></td>
+<td><p>400</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: STP</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">=&gt;</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>PNO</p></th>
+<th class="head"><p>QTY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>P1</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>P3</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>P4</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>P5</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>P6</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>P1</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>P2</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>P2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S4</p></td>
+<td><p>P4</p></td>
+<td><p>300</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>P5</p></td>
+<td><p>400</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SP</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>STATUS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>20</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SS</p>
+<p>STP was not in BCNF because the FD { SNO } → { STATUS } was not from a
+superkey. In relvar SS the functional dependency is now from a superkey
+(in fact, a key), so SS is in BCNF, as is SP because { SNO, PNO } is the
+key. The decomposition is lossless: STP = JOIN (SP, SS).</p>
+</section>
+<section id="lossles-decomposition-and-the-heath-theorem">
+<h3>Lossles Decomposition and the Heath Theorem<a class="headerlink" href="#lossles-decomposition-and-the-heath-theorem" title="Permalink to this headline">¶</a></h3>
+<p>Decomposition is, as shown above, the process of taking projections of
+the original relvar. We must ensure, though, that information is not
+lost: the join of the resulting relvars should be the original relvar.
+For example, consider this decomposition of RS which loses information:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Admans</p></td>
+<td><p>30</p></td>
+<td><p>Athens</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: RS</p>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">=&gt;</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 37%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Admans</p></td>
+<td><p>30</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SNS</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CITY</p></th>
+<th class="head"><p>STATUS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>London</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-odd"><td><p>Paris</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-even"><td><p>Athens</p></td>
+<td><p>30</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: CS</p>
+<p>We have lost information: RS ≠ JOIN(SNS, CS). We no longer know the city
+of the supplier. Is S2 located in Paris or Athens? Just like the first
+example we decomposed the orginal relvar using project. What
+condition(s) <em>must</em> be met in order for our projections to always be
+equal to their join, ensuring our decompositions lossless.</p>
+<p>The Heath Theorem provides a sufficient condition for lossless
+decomposition. It tells us, if we meet the theorem’s conditions, the
+decomposition will be lossless. The theorem states:</p>
+<p><em>Heath Theorem</em>: If we take subsets of the heading of <em>R</em>, say, <em>A</em>,
+<em>B</em>, and <em>C</em> such that their union is equal to the heading, and if <em>R</em>
+satisfies the functional dependency constraint <em>A</em> → <em>B</em>, then <em>R</em> is
+equal to the join of its projections on <em>AB</em> and <em>AC</em>, where <em>AB</em> is the
+union of <em>A</em> and <em>B</em> and <em>AC</em> is the union of <em>A</em> and <em>C</em>.</p>
+<p>If you think about it, this theorem is just a formal statement of
+something obvious: if you decompose a relvar into two projections such
+that both of the projections contain the “left side” of the functional
+dependency (the <em>A</em> in <em>A</em> → <em>B</em>), and one of the projections also
+contains the “right side” (the <em>B</em> in <em>A</em> → <em>B</em>) and the other also
+contains the remaining attributes, those on neither side of the FD, then
+join always gives you back the original relvar.</p>
+<p>The Heath theorem gives us a sufficient condition to ensure the
+decomposition is lossles. If the conditions of the Heath Theorem are
+met, we know that our decomposition is lossless. It does not give a
+necessary condition: it does not tell us however if other decompositions
+will be lossey or lossless. What the necessary condition is for lossless
+decomposition is discussed in the answers section of chapter 7.</p>
+<p>The RS and STP decomposition examples above are both instances where
+Heath’s theorem tells us the decomposition will be lossless; we will not
+lose information. In the case of relvar STP, for example, STP satisfies
+the FD { SNO } → { STATUS }. { SNO } corresponds to <em>A</em> in the theorem,
+{ STATUS } corresponds to B, and { PNO, QTY } to C. The union of A, B
+and C is clearly the heading of STP. { SNO, STATUS } corresponds to AB,
+the union of A and B. { SNO, PNO, QTY } corresponds to AC, the union of
+A and B. Finally, we applying the theorem, we see that</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">JOIN</span><span class="p">(</span><span class="n">STP</span> <span class="p">{</span> <span class="n">SNO</span><span class="p">,</span> <span class="n">STATUS</span> <span class="p">},</span> <span class="n">STP</span> <span class="p">{</span> <span class="n">SNO</span><span class="p">,</span> <span class="n">PNO</span><span class="p">,</span> <span class="n">QTY</span> <span class="p">})</span> <span class="o">=</span> <span class="n">STP</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Likewise, in the case of relvar RS, we have the FD { CITY } → { STATUS
+}. { CITY } is A, { STATUS } is B, { STATUS, CITY } is AB, and { SNO,
+SNAME, CITY } is AC. Again, we see that</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">JOIN</span><span class="p">(</span><span class="n">RS</span> <span class="p">{</span> <span class="n">SNO</span><span class="p">,</span> <span class="n">SNAME</span><span class="p">,</span> <span class="n">CITY</span> <span class="p">},</span> <span class="n">RS</span> <span class="p">{</span> <span class="n">STATUS</span><span class="p">,</span> <span class="n">CITY</span> <span class="p">})</span> <span class="o">=</span> <span class="n">RS</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here is another decomposition example. We have a relvar in first normal
+form: all values are atomic. But we have a lot of redundancy.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 17%" />
+<col style="width: 35%" />
+<col style="width: 17%" />
+<col style="width: 7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>questionID</p></th>
+<th class="head"><p>answertype</p></th>
+<th class="head"><p>answer</p></th>
+<th class="head"><p>answercode</p></th>
+<th class="head"><p>id</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>experience1</p></td>
+<td><p>radio</p></td>
+<td><p>Very experienced</p></td>
+<td><p>very</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>experience1</p></td>
+<td><p>radio</p></td>
+<td><p>Somewhat experienced</p></td>
+<td><p>somewhat</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>experience1</p></td>
+<td><p>radio</p></td>
+<td><p>Little experience</p></td>
+<td><p>little</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>experience1</p></td>
+<td><p>radio</p></td>
+<td><p>No experience</p></td>
+<td><p>none</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>experience2</p></td>
+<td><p>radio</p></td>
+<td><p>Very experienced</p></td>
+<td><p>very</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>experience2</p></td>
+<td><p>radio</p></td>
+<td><p>Somewhat experienced</p></td>
+<td><p>somewhat</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>experience2</p></td>
+<td><p>radio</p></td>
+<td><p>Little experience</p></td>
+<td><p>little</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>experience2</p></td>
+<td><p>radio</p></td>
+<td><p>No experience</p></td>
+<td><p>none</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>experience3</p></td>
+<td><p>radio</p></td>
+<td><p>Very experienced</p></td>
+<td><p>very</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>experience3</p></td>
+<td><p>radio</p></td>
+<td><p>Somewhat experienced</p></td>
+<td><p>somewhat</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>experience3</p></td>
+<td><p>radio</p></td>
+<td><p>Little experience</p></td>
+<td><p>little</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>experience3</p></td>
+<td><p>radio</p></td>
+<td><p>No experience</p></td>
+<td><p>none</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>easeofuse1</p></td>
+<td><p>radio</p></td>
+<td><p>Very simple to use</p></td>
+<td><p>vsimple</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>easeofuse1</p></td>
+<td><p>radio</p></td>
+<td><p>Somewhat simple to use</p></td>
+<td><p>simple</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>easeofuse1</p></td>
+<td><p>radio</p></td>
+<td><p>Somewhat difficult to use</p></td>
+<td><p>diff</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>usefulness1</p></td>
+<td><p>radio</p></td>
+<td><p>Very useful</p></td>
+<td><p>very</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>usefulness1</p></td>
+<td><p>radio</p></td>
+<td><p>Somewhat useful</p></td>
+<td><p>somewhat</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>usefulness1</p></td>
+<td><p>radio</p></td>
+<td><p>Not that useful</p></td>
+<td><p>little</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>usefulness1</p></td>
+<td><p>radio</p></td>
+<td><p>Not useful at all</p></td>
+<td><p>none</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>relevance1</p></td>
+<td><p>radio</p></td>
+<td><p>Very relevant</p></td>
+<td><p>very</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>relevance1</p></td>
+<td><p>radio</p></td>
+<td><p>Somewhat relevant</p></td>
+<td><p>somewhat</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>relevance1</p></td>
+<td><p>radio</p></td>
+<td><p>A little relevant</p></td>
+<td><p>little</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>relevance1</p></td>
+<td><p>radio</p></td>
+<td><p>Not relevant at all</p></td>
+<td><p>none</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>understand1</p></td>
+<td><p>radio</p></td>
+<td><p>Yes</p></td>
+<td><p>yes</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-even"><td><p>understand1</p></td>
+<td><p>radio</p></td>
+<td><p>No</p></td>
+<td><p>no</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td><p>recommend1</p></td>
+<td><p>radio</p></td>
+<td><p>Yes</p></td>
+<td><p>yes</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>recommend1</p></td>
+<td><p>radio</p></td>
+<td><p>No</p></td>
+<td><p>no</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>compare1</p></td>
+<td><p>radio</p></td>
+<td><p>More useful</p></td>
+<td><p>more</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-even"><td><p>compare1</p></td>
+<td><p>radio</p></td>
+<td><p>Equally useful</p></td>
+<td><p>equal</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>compare1</p></td>
+<td><p>radio</p></td>
+<td><p>Less useful</p></td>
+<td><p>less</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-even"><td><p>review1</p></td>
+<td><p>textarea</p></td>
+<td><p>NULL</p></td>
+<td></td>
+<td><p>12</p></td>
+</tr>
+<tr class="row-odd"><td><p>useremotelabs</p></td>
+<td><p>radio</p></td>
+<td><p>Yes</p></td>
+<td><p>yes</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>useremotelabs</p></td>
+<td><p>radio</p></td>
+<td><p>No</p></td>
+<td><p>no</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>whynotremotelabs</p></td>
+<td><p>textarea</p></td>
+<td><p>NULL</p></td>
+<td></td>
+<td><p>5</p></td>
+</tr>
+</tbody>
+</table>
+<p>We first notice that this relvar has the following functional
+dependencies:</p>
+<div class="line-block">
+<div class="line">{ id } → { questionID }.</div>
+<div class="line">{ questionID } → { answertype }.</div>
+<div class="line">{ id } → { answertype }.</div>
+</div>
+<p>The last dependency is due to the transitivity of these first two
+dependencies. We can normalize survey_answers by splitting it into two
+relations: survey_questions and survey_answers.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 35%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>questionID</p></th>
+<th class="head"><p>answertype</p></th>
+<th class="head"><p>id</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>experience1</p></td>
+<td><p>radio</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>experience2</p></td>
+<td><p>radio</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>experience3</p></td>
+<td><p>radio</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>easeofuse1</p></td>
+<td><p>radio</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>usefulness1</p></td>
+<td><p>radio</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>relevance1</p></td>
+<td><p>radio</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>understand1</p></td>
+<td><p>radio</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td><p>recommend1</p></td>
+<td><p>radio</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>compare1</p></td>
+<td><p>radio</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>review1</p></td>
+<td><p>textarea</p></td>
+<td><p>12</p></td>
+</tr>
+<tr class="row-even"><td><p>useremotelabs</p></td>
+<td><p>radio</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>whynotremotelabs</p></td>
+<td><p>textarea</p></td>
+<td><p>5</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: survey_questions</p>
+<p>survey_answers</p>
+<p>answer</p>
+<p>answercode</p>
+<p>id</p>
+<p>Very experienced</p>
+<p>very</p>
+<p>1</p>
+<p>Somewhat experienced</p>
+<p>somewhat</p>
+<p>1</p>
+<p>Little experience</p>
+<p>little</p>
+<p>1</p>
+<p>No experience</p>
+<p>none</p>
+<p>1</p>
+<p>Very experienced</p>
+<p>very</p>
+<p>2</p>
+<p>Somewhat experienced</p>
+<p>somewhat</p>
+<p>2</p>
+<p>Little experience</p>
+<p>little</p>
+<p>2</p>
+<p>No experience</p>
+<p>none</p>
+<p>2</p>
+<p>Very experienced</p>
+<p>very</p>
+<p>3</p>
+<p>Somewhat experienced</p>
+<p>somewhat</p>
+<p>3</p>
+<p>Little experience</p>
+<p>little</p>
+<p>3</p>
+<p>No experience</p>
+<p>none</p>
+<p>3</p>
+<p>Very simple to use</p>
+<p>vsimple</p>
+<p>6</p>
+<p>Somewhat simple to use</p>
+<p>simple</p>
+<p>6</p>
+<p>Somewhat difficult to use</p>
+<p>diff</p>
+<p>6</p>
+<p>Very useful</p>
+<p>very</p>
+<p>7</p>
+<p>Somewhat useful</p>
+<p>somewhat</p>
+<p>7</p>
+<p>Not that useful</p>
+<p>little</p>
+<p>7</p>
+<p>Not useful at all</p>
+<p>none</p>
+<p>7</p>
+<p>Very relevant</p>
+<p>very</p>
+<p>8</p>
+<p>Somewhat relevant</p>
+<p>somewhat</p>
+<p>8</p>
+<p>A little relevant</p>
+<p>little</p>
+<p>8</p>
+<p>Not relevant at all</p>
+<p>none</p>
+<p>8</p>
+<p>Yes</p>
+<p>yes</p>
+<p>9</p>
+<p>No</p>
+<p>no</p>
+<p>9</p>
+<p>Yes</p>
+<p>yes</p>
+<p>10</p>
+<p>No</p>
+<p>no</p>
+<p>10</p>
+<p>More useful</p>
+<p>more</p>
+<p>11</p>
+<p>Equally useful</p>
+<p>equal</p>
+<p>11</p>
+<p>Less useful</p>
+<p>less</p>
+<p>11</p>
+<p>NULL</p>
+<p>NULL</p>
+<p>12</p>
+<p>Yes</p>
+<p>yes</p>
+<p>4</p>
+<p>No</p>
+<p>no</p>
+<p>4</p>
+<p>NULL</p>
+<p>NULL</p>
+<p>5</p>
+<p>The functional dependencies for the new survery_questions revlar are
+still the same:</p>
+<div class="line-block">
+<div class="line">{ id } → { questionID }.</div>
+<div class="line">{ questionID } → { answertype }.</div>
+<div class="line">{ id } → { answertype }.</div>
+</div>
+<p>And since the candidate keys for the new survey_questions relvar are {
+questionID } and {id}, this means survery_questions is in BCNF: all its
+functional dependencies are <em>from</em> attributes that contain candidate
+keys. Functional dependencies can be from sets of attributes (more than
+one), but here the FDs are from sets containing only one attribute.</p>
+<p>What about the relvar survey_answers? First, we notice there is an
+entity integrity problem with id values of 12 and 5, but we can just
+delete those tuples because id is not a candidate key here. It is a
+foreign key referring to the candidate key for survey_questions. As
+long as there is an existing id in survey_questions for every id in
+survey_answers referential integrety will not be violated. So there is
+no danger in deleting these two tuples.</p>
+<p>The new survey_answers appears to have the function dependency { answer
+} → { answercode}. Boyce Codd Normal Form requires all functional
+dependencies to be <em>from</em> supersets, but { answer } contains neither one
+of the two candidate keys for survey_answers, {answer, id} and
+{answercode, id}, meaning our new survery_answers is still not in BCNF.
+We need to decompose this survey_answers relvar further. Consider this
+decomposition of survey_answers into survey_answer and
+answer_choices:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 70%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>answercode</p></th>
+<th class="head"><p>id</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>very</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>somewhat</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>little</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>none</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>very</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>somewhat</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>little</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>none</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>very</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>somewhat</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>little</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>none</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>vsimple</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>simple</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>diff</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>very</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>somewhat</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>little</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>none</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>very</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>somewhat</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>little</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>none</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>yes</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-even"><td><p>no</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td><p>yes</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>no</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>more</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-even"><td><p>equal</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>less</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-even"><td><p>yes</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>no</p></td>
+<td><p>4</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: survey_answers</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 67%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>answer</p></th>
+<th class="head"><p>answercode</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Very experienced</p></td>
+<td><p>very</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat experienced</p></td>
+<td><p>somewhat</p></td>
+</tr>
+<tr class="row-even"><td><p>Little experience</p></td>
+<td><p>little</p></td>
+</tr>
+<tr class="row-odd"><td><p>No experience</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Very simple to use</p></td>
+<td><p>vsimple</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat simple to use</p></td>
+<td><p>simple</p></td>
+</tr>
+<tr class="row-even"><td><p>Somewhat difficult to use</p></td>
+<td><p>diff</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat useful</p></td>
+<td><p>somewhat</p></td>
+</tr>
+<tr class="row-even"><td><p>Not that useful</p></td>
+<td><p>little</p></td>
+</tr>
+<tr class="row-odd"><td><p>Not useful at all</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Very relevant</p></td>
+<td><p>very</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat relevant</p></td>
+<td><p>somewhat</p></td>
+</tr>
+<tr class="row-even"><td><p>A little relevant</p></td>
+<td><p>little</p></td>
+</tr>
+<tr class="row-odd"><td><p>Not relevant at all</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Yes</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>No</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>More useful</p></td>
+<td><p>more</p></td>
+</tr>
+<tr class="row-odd"><td><p>Equally useful</p></td>
+<td><p>equal</p></td>
+</tr>
+<tr class="row-even"><td><p>Less useful</p></td>
+<td><p>less</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: answer_choices</p>
+<p>Both relvars appear to be in BCNF. The only candidate key for
+survery_answers is its entire heading { answercode, id }. But since
+survery_answers only has trivial functional dependencies, it is in
+BCNF. The only candidate key for answer_choices is { answer }. Since
+answer_choices has the FD { answer } → { answercode}, which is a
+dependency <em>from</em> a key, it also is in BCNF. But we now have a different
+soft of problem. If we tried to join these two relations together on the
+common foreign key answercode, we would have no idea whether id 1
+corresponds to answer “Very experienced” or answer “Very relevant”. We
+have lost information, making this a lossy decomposition.</p>
+<p>So we try yet again.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 83%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>answer</p></th>
+<th class="head"><p>id</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Very experienced</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat experienced</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Little experience</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>No experience</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Very experienced</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat experienced</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>Little experience</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>No experience</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>Very experienced</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat experienced</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>Little experience</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>No experience</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>Very simple to use</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat simple to use</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>Somewhat difficult to use</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>Very useful</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>Somewhat useful</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>Not that useful</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>Not useful at all</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>Very relevant</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>Somewhat relevant</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>A little relevant</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>Not relevant at all</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>Yes</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-even"><td><p>No</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td><p>Yes</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>No</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>More useful</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-even"><td><p>Equally useful</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>Less useful</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-even"><td><p>Yes</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>No</p></td>
+<td><p>4</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: survey_answers</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 67%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>answer</p></th>
+<th class="head"><p>answercode</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Very experienced</p></td>
+<td><p>very</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat experienced</p></td>
+<td><p>somewhat</p></td>
+</tr>
+<tr class="row-even"><td><p>Little experience</p></td>
+<td><p>little</p></td>
+</tr>
+<tr class="row-odd"><td><p>No experience</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Very simple to use</p></td>
+<td><p>vsimple</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat simple to use</p></td>
+<td><p>simple</p></td>
+</tr>
+<tr class="row-even"><td><p>Somewhat difficult to use</p></td>
+<td><p>diff</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat useful</p></td>
+<td><p>somewhat</p></td>
+</tr>
+<tr class="row-even"><td><p>Not that useful</p></td>
+<td><p>little</p></td>
+</tr>
+<tr class="row-odd"><td><p>Not useful at all</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Very relevant</p></td>
+<td><p>very</p></td>
+</tr>
+<tr class="row-odd"><td><p>Somewhat relevant</p></td>
+<td><p>somewhat</p></td>
+</tr>
+<tr class="row-even"><td><p>A little relevant</p></td>
+<td><p>little</p></td>
+</tr>
+<tr class="row-odd"><td><p>Not relevant at all</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>Yes</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>No</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>More useful</p></td>
+<td><p>more</p></td>
+</tr>
+<tr class="row-odd"><td><p>Equally useful</p></td>
+<td><p>equal</p></td>
+</tr>
+<tr class="row-even"><td><p>Less useful</p></td>
+<td><p>less</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: answer_choices</p>
+<p>This time, not only are both relations in BCNF, but if you join them
+together on answer, you get back the exact relation we had before. This
+is a nonloss decomposition, and we note that this decomposition complies
+with the criteria of Heath’s theorem. To confirm that both the new
+survey_answers and answer_choices are in BCNF, we see that</p>
+</section>
+<section id="join-dependencies">
+<h3>Join dependencies<a class="headerlink" href="#join-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>A join dependency or <strong>JD</strong> is a set of projections on a relation which,
+when joined together, returns the original relation. The formal
+definition of a join dependency is:</p>
+<p><em>Definition</em>: Let <em>A</em>, <em>B</em>, <em>C</em>, …, <em>Z</em> be subsets of the heading of a
+relvar <em>R</em>. Then <em>R</em> satisfies the <em>join dependency</em> (JD)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>∗ { A, B, ..., Z }
+</pre></div>
+</div>
+<p>if and only if every relation that is a valid value for <em>R</em> is equal to
+the join of its projections on <em>A</em>, <em>B</em>, <em>C</em>, …, <em>Z</em>, or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">JOIN</span> <span class="p">(</span> <span class="n">R</span> <span class="p">{</span> <span class="n">A</span> <span class="p">},</span> <span class="n">R</span> <span class="p">{</span> <span class="n">B</span> <span class="p">},</span> <span class="o">...</span><span class="p">,</span> <span class="n">R</span> <span class="p">{</span> <span class="n">Z</span> <span class="p">}</span> <span class="p">)</span> <span class="o">=</span> <span class="n">R</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>To say a relvar <em>R</em> can be losslessly decomposed into certain
+projections on <em>A</em>, <em>B</em>, <em>C</em>, …, <em>Z</em> is to say that it satisfies the
+JD ∗ { A, B, …, Z }. Join dependencies are just another way of
+describing nonlossless decompositions of a relvar.</p>
+<p>It also follows from the the Heath theorem that every FD is a JD. Take
+the revlar RS above. It has the FD { CITY } → { STATUS }. We first
+decomposed it into the relvars SNC and CS, with attributes of { SNO,
+SNAME, CITY } and { CITY, STATUS }, respectively. RS has thus satisfied
+the join dependency ∗ { { SNO, SNAME, CITY }, { CITY, STATUS } }.
+Likewise, when survey_answers had three attributes—{id, answer,
+answercode}— it really had only one join dependency:  ∗ {{id, answer},
+{answer, answer_code}}.</p>
+<p>The existence of FDs and multi–valued dependencies (MVDs) implies that
+certain decompositions have lossless join. That is, FDs and MVDs imply
+corresponding JDs. JDs, therefore, constitute a generalization of FDs
+and MVDs. As such, while every FD and MVD can be stated as an equivalent
+JD, there can be JDs which are not FDs or MVDs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>∗ { {id, answer}, {answer,answercode} }
+</pre></div>
+</div>
+<p>This means that { id, answer } and { answer, answercode } were the only
+two subsets in the original survey_answers that could be nonlossly
+decomposed into two separate relations. So, in order to satisfy
+Boyce/Codd Normal Form, that’s just what we did.</p>
+</section>
+<section id="fifth-normal-form">
+<h3>Fifth Normal Form<a class="headerlink" href="#fifth-normal-form" title="Permalink to this headline">¶</a></h3>
+<p>Superkeys always imply certain functional dependencies (from the
+superkeys). Since every FD is also a JD (according to the Heath
+Theorem), superkeys always imply certain join dependencies. Take our
+suppliers relvar SS for example. { SNO } is a superkey (actually a key).
+SS satisfies the JD of</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>∗ { {SNO, SNAME}, { SNO, STATUS }, { SNO, CITY } }
+</pre></div>
+</div>
+<p>The definition of 5th Normal Form (5NF) is:</p>
+<p><em>Definition</em>: Relvar <em>R</em> is in 5NF if and only if every non-trivial join
+dependency satisfied by <em>R</em> is implied by the superkeys of <em>R</em></p>
+<p>A trivial join dependency is a join dependency in which one of the
+subsets of the heading is the entire heading. Obviously every relvar has
+trivial join dependencies because a subset consisting of the entire
+header of a relvar can be joined with any other subset of the relvar.
+Also the same subset consisting of all the attributes of the header can
+be joined with TABLE_DEE.</p>
+<p>Most relvars that are in BCNF are also in 5NF. The exceptions are small.
+The following theorem explains that the only time when a BCNF relvar
+could possibly not be in 5NF, could possibly have a nontrivial JD that
+does not consist entirely of superkeys, is when there are keys with more
+than one attribute.</p>
+<p><em>Theorem</em>: Let <em>R</em> be a relvar in BCNF (or even just a 3NF relvar) and
+let <em>R</em> have no composite keys (that is, keys consisting of two or more
+attributes), then <em>R</em> is in 5NF.</p>
+<p>So if you can get to BCNF (which is easy enough) and there aren’t any
+composite keys in your BCNF relvar, you don’t have to worry about the
+complexities of general JDs and 5NF: you know without have to think
+about the matter any further that the relvar is simply in 5NF.</p>
+</section>
+<section id="what-does-5nf-mean">
+<h3>What does 5NF mean?<a class="headerlink" href="#what-does-5nf-mean" title="Permalink to this headline">¶</a></h3>
+<p>If a relvar is in 5NF, the only nontrivial JDs are those implied by
+superkeys. The only lossless projection decompostions are ones in which
+every projection is on the attributes of some superkeys; each such
+projection includes some key of <em>R</em>. As a consequence, the corresponding
+“recomposition” joins are all <strong>one-to-one (from one tuple to one
+tuple)</strong>, and no redunancies are or can be eliminated by the
+decompostions (“joins are all one-to-one” means: “the recomposition join
+is a <a class="reference external" href="http://mathworld.wolfram.com/Bijection.html">bijection</a>. In
+other words A JOIN B means A and B have some superkey in common (not
+necessarily just one attribute) and each tuple in A corresponds to
+exactly one tuple in B and vice versa.” See <a class="reference external" href="f=%22http://tinyurl.com/ll8f3d%22">Dbforums
+reply</a>:)</p>
+<p>5NF does not necessarily mean that all possible redundancy has been
+eliminated, however. It says that further nonloss decomposition of a 5NF
+relvar <em>R</em> into projections, while it might be possible, won’t eliminate
+any redundancies. But this does not mean that <em>R</em> is redundancy free.
+Certain types of redundancies cannot be reduced through projections.
+Consider the following 5NF relvar SPJ which suffers from redundancy. Its
+predicate is: Supplier SNO supplies part PNO to project JNO in quanity
+QTY. The sole key is { SNO, PNO, JNO }.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>PNO</p></th>
+<th class="head"><p>JNO</p></th>
+<th class="head"><p>QTY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>P1</p></td>
+<td><p>J1</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>P3</p></td>
+<td><p>J4</p></td>
+<td><p>700</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>P3</p></td>
+<td><p>J1</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>P3</p></td>
+<td><p>J2</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>P3</p></td>
+<td><p>J3</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>P3</p></td>
+<td><p>J4</p></td>
+<td><p>500</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>P3</p></td>
+<td><p>J5</p></td>
+<td><p>600</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>P3</p></td>
+<td><p>J6</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>P3</p></td>
+<td><p>J7</p></td>
+<td><p>800</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>P5</p></td>
+<td><p>J1</p></td>
+<td><p>100</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SPJ</p>
+<p>We see the fact that supplier S2 supplies part P3 repeated several
+times. There are other another redundancies. The fact that part P3 is
+supplied to project J4 (JNO stands for project number) is repeated. So
+is the fact that J1 is supplied by supplier S2. The only nontrivial
+functional dependency satisfied by this relvar is this functional
+dependency:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{ SNO, PNO, JNO } → { QTY }
+</pre></div>
+</div>
+<p>which is an arrow out of a superkey. In other words, QTY depends on all
+three of SNO, PNO and JNO, and it can’t appear in a relvar with anything
+less than all three. Hence, there is no nonloss decomposition that can
+remove the redundancies. The only JD the relvar satisfies is the trivial
+JD ∗ { {SNO, PNO, JNO, QTY} }.</p>
+<p>It is always possible to decompose a non-5NF. Because 5NF is the final
+normal form with respect to projection as the decomposition operator, it
+is sometimes called <em>projection/join</em> normal form to stress that the
+point so long as we limit ourselves to projection as the decomposion
+operator and join as the recomposition operator.</p>
+<p>Finally, keep in mind to say that a revlar is in BCNF does not mean that
+it is not in 5NF (though it usually is).</p>
+<p>Join dependency means that an table, after it has been decomposed into
+two or more smaller tables, must be capable of being joined again on
+common keys to form the original table. Stated another way, 5NF
+indicates when an entity cannot be further decomposed using projections.</p>
+<p>If we examine survery_questions again, which was in BCNF</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 35%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>questionID</p></th>
+<th class="head"><p>answertype</p></th>
+<th class="head"><p>id</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>experience1</p></td>
+<td><p>radio</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>experience2</p></td>
+<td><p>radio</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>experience3</p></td>
+<td><p>radio</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>easeofuse1</p></td>
+<td><p>radio</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>usefulness1</p></td>
+<td><p>radio</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>relevance1</p></td>
+<td><p>radio</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>understand1</p></td>
+<td><p>radio</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td><p>recommend1</p></td>
+<td><p>radio</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>compare1</p></td>
+<td><p>radio</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>review1</p></td>
+<td><p>textarea</p></td>
+<td><p>12</p></td>
+</tr>
+<tr class="row-even"><td><p>useremotelabs</p></td>
+<td><p>radio</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>whynotremotelabs</p></td>
+<td><p>textarea</p></td>
+<td><p>5</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: survey_questions</p>
+<p>we notice that it has these join dependencies:</p>
+<div class="line-block">
+<div class="line">∗{ {id, questionID}, {questionID,answertype} }</div>
+<div class="line">∗{ {questionID, id}, {id,answertype} }</div>
+</div>
+<p>survey_questions could easily be further nonloss decomposed into two
+separate relations—in two different ways! So why don’t we need to
+decompose it? Well, not only is survey_questions already in BCNF, but
+it’s also in 5th Normal Form. This means that each join dependency is
+satisfied by superkeys: {id, questionID} is a superkey,
+{questionID,answertype} is also a superkey, and so are the two attribute
+sets in the second JD.</p>
+</section>
+<section id="more-on-the-meaning-of-5nf">
+<h3>More on the meaning of 5NF<a class="headerlink" href="#more-on-the-meaning-of-5nf" title="Permalink to this headline">¶</a></h3>
+<p>What does a JD really mean intuitively? Take this simplify version of
+SPJ without the QTY attribute? The predicate for SPJ is: Supplier SNO
+supplies part PNO to project JNO. The sole key is { SNO, PNO, JNO }.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>PNO</p></th>
+<th class="head"><p>JNO</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>P1</p></td>
+<td><p>J2</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>P2</p></td>
+<td><p>J1</p></td>
+</tr>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>P1</p></td>
+<td><p>J1</p></td>
+</tr>
+<tr class="row-odd"><td><p>S1</p></td>
+<td><p>P1</p></td>
+<td><p>J1</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SPJ</p>
+<p>Let’s attach a real-world meaning to SPJ. Suppose SPJ tells us that all
+three of the following are true propostions:</p>
+<ol class="arabic simple">
+<li><p>Smith supplies monkey wrenches to some project (think of S1 as Smith
+and P1 as monkey wrenches).</p></li>
+<li><p>Somebody supplies monkey wrenches to the Manhattan project (think of
+P1 as monkey wrenches and J1 as the Manhattan project).</p></li>
+<li><p>Something is supplied to the Manhattan project by Smith (think of J1
+as the Manhattan project and S1 as Smith)</p></li>
+</ol>
+<p>Then is the following proposition true?</p>
+<ol class="arabic simple" start="4">
+<li><p>Smith supplies monkey wrenches to the Manhattan project (S1 supplies
+P1 to project J1).</p></li>
+</ol>
+<p>Normally, propositions 1, 2 and 3 would not imply proposition 4. We know
+that Smith supplies wrenches to <em>some</em> project (say, project <em>z</em>) from
+proposition 1, that some supplier (say, supplier <em>x</em>) supplies monkey
+wrenches to the Manhattan project (from proposition 2), and that Smith
+supplies some part (say, part <em>y</em>) to the Manhattan project—but we
+cannot validly infer, just on the basis of the three propositions, that
+<em>x</em> is Smith or <em>y</em> is monkey wrenches or <em>z</em> is the Manhattan project.</p>
+<p>Here is how a join dependency helps supply the answer. SPJ satisfies the
+join dependency ∗ { { SNO, PNO }, { PNO, JNO }, { SNO, JNO } }, which we
+will abbreviate as ∗ { SP, PJ, SJ }. This JD tell us that SPJ satisfies
+the following obvious constraint:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>IF &lt;s,p&gt; ∈ SP AND &lt;p,j&gt; ∈ PJ AND &lt;s,j&gt; ∈ SJ THEN &lt;s,p,j&gt; ∈ SPJ
+</pre></div>
+</div>
+<p>For example, the tuples &lt;S1, P1&gt;, &lt;P1, J1&gt; and &lt;S1, J1&gt; appear in SP,
+PJ, and SJ, respectively, therefore the tuple &lt;S1, P1, J1&gt; will
+obviously appear in their join SPJ. If we look at it from a different
+slightly different angle, we see that the tuple &lt;s, p&gt; appears in SP if
+(and only if) there exists some value <em>z</em> such that &lt;s, p, z&gt; appears in
+SPJ. Likewise, the tuple &lt;p, j&gt; appears in PJ if (and only if) there
+exists some value <em>x</em> such that &lt;x, p, j&gt; appears in PJ, and the tuple
+&lt;s, j&gt; appears in SJ if (and only if) &lt;s, y, j&gt; appears in SJ for some
+<em>y</em>. So we see that the earlier constraint is logically equivalent to
+this one:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>IF for some x, y, z   &lt;s,p,z&gt; ∈ SPJ AND
+                      &lt;x,p,j&gt; ∈ SPJ AND
+                      &lt;s,y,j&gt; ∈ SPJ
+THEN                  &lt;s,p,j&gt; ∈ SPJ
+</pre></div>
+</div>
+<p>Given SPJ above, tuples &lt;<strong>S1</strong>,<strong>P1</strong>,J2&gt;, &lt;S2,**P1**,<strong>J1</strong>&gt; and
+&lt;<strong>S1</strong>,P2,<strong>J1</strong>&gt; all appear in SPJ, and therefore so does
+&lt;<strong>S1</strong>,<strong>P1</strong>,<strong>J1</strong> &gt;. The join dependecy ∗ { SP, PJ, SJ } tells
+us that, given propositions 1, 2 and 3, proposition 4 is also true. We
+can validly infer proposition 4 from propositions 1, 2, and 3.</p>
+<p>This constraint has a cyclic nature (IF <em>s</em> is connect to <em>p</em> and <em>p</em> is
+connected to <em>j</em> and <em>j</em> is connected back to <em>s</em> again, THEN <em>s</em> and
+<em>p</em> and <em>j</em> must all be directly connected, in the sense that they must
+all appear together in the same tuple). Such cyclic constraints are
+instances when we might have a relvar that is in BCNF but not in 5NF.
+Such cyclic constraints are, though, quite rare in practice.</p>
+</section>
+<section id="order-of-normalization">
+<h3>Order of Normalization<a class="headerlink" href="#order-of-normalization" title="Permalink to this headline">¶</a></h3>
+<p>Well, unless we get a data set into First Normal Form, we aren’t dealing
+with relations at all—so it must go first. And if a relation is in 5th
+Normal Form, it’s also in BCNF, so theoretically we could try to skip
+BCNF altogether. However, generally it’s much easier to deal with
+functional dependencies than join dependencies (can you imagine figuring
+out all JDs for the original survey_answers?), so going for Boyce/Codd
+Normal Form is the natural progression.</p>
+<p>And once relations are in BCNF, most of the time they will also be in
+5th Normal Form—in fact, if a BCNF relation has a primary key which
+contains only one attribute, you can bet on it. But still, it’s good to
+use 5th Normal Form as a final check.</p>
+</section>
+<section id="normalization-and-common-sense">
+<h3>Normalization and Common sense<a class="headerlink" href="#normalization-and-common-sense" title="Permalink to this headline">¶</a></h3>
+<p>Normalization theory formalizes, explicitly describes, what are certain
+commonsense principles of design.</p>
+</section>
+<section id="normalization-and-dependency-preservation">
+<h3>Normalization and Dependency Preservation<a class="headerlink" href="#normalization-and-dependency-preservation" title="Permalink to this headline">¶</a></h3>
+<p>The objective of reducing redundancy can conflict with the objective of
+dependency preservation. Consider the following relvar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ADDR</span> <span class="p">{</span> <span class="n">STREET</span><span class="p">,</span> <span class="n">CITY</span><span class="p">,</span> <span class="n">STATE</span><span class="p">,</span> <span class="n">ZIP</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Assume ADDR has these FDs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{ STREET, CITY, STATE } → { CITY }
+{ ZIP } → { CITY, STATE }
+</pre></div>
+</div>
+<p>Since ZIP is not a key ADDR is not in BNCF. If we apply Heath’s theorem
+and decompose it into BCNF projections:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ZCS</span> <span class="p">{</span> <span class="n">ZIP</span><span class="p">,</span> <span class="n">CITY</span><span class="p">,</span> <span class="n">STATE</span> <span class="p">}</span>
+    <span class="n">KEY</span> <span class="p">{</span> <span class="n">ZIP</span> <span class="p">}</span>
+
+<span class="n">ZS</span>  <span class="p">{</span> <span class="n">ZIP</span><span class="p">,</span> <span class="n">STREET</span> <span class="p">}</span>
+    <span class="n">KEY</span> <span class="p">{</span> <span class="n">ZIP</span><span class="p">,</span> <span class="n">STREET</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>The original FD of { STREET, CITY, STATE } → { CITY } is gone. It is
+satisfied by the join of ZCS and ZS, but not by either of those
+projections. As a result, ZCS and CS cannot be independently updated.
+For example, if ZCS and CS have these values:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 40%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ZIP</p></th>
+<th class="head"><p>CITY</p></th>
+<th class="head"><p>STATE</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>10003</p></td>
+<td><p>New York</p></td>
+<td><p>NY</p></td>
+</tr>
+<tr class="row-odd"><td><p>10111</p></td>
+<td><p>New York</p></td>
+<td><p>NY</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: ZCS</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ZIP</p></th>
+<th class="head"><p>STREET</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>10003</p></td>
+<td><p>Broadway</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: CS</p>
+<p>If we attempt to insert the tuple &lt;10111, Broadway&gt; into ZS, we will
+violate the “missing” FD, which says there can only be on zip code for
+any given street in the same city and state. However, this fact can’t be
+determined without examining projection ZCS as well as projection ZS.
+For precisely this kind of reason, the dependency preservation objective
+says: <em>don’t split dependencies acrosss projections</em>.</p>
+<p>A FD is a single relvar constraint. When a FD is eliminated during
+decomposition, it changes to become a multi-relvar constraint. The
+dependency preservation principle is revelant when you need the
+restraint to remain a single-relvar restraint.</p>
+</section>
+<section id="orthogonality">
+<h3>Orthogonality<a class="headerlink" href="#orthogonality" title="Permalink to this headline">¶</a></h3>
+<p>Normalization is intended to reduce redundancy <em>within</em> relvars.
+Orthogonality refers to avoiding redundancy <em>across</em> relvars, avoiding
+duplicate tuples in two or more distinct relvars. Duplicate tuples can
+occur when constraints overlap. For example, if relvar SA below consists
+of suppliers who are in Paris, and relvar SB is suppliers who either
+aren’t in Paris or who have STATUS of 30, this overlap leads to
+duplicate tuples.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 29%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SA</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Jones</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S5</p></td>
+<td><p>Adams</p></td>
+<td><p>30</p></td>
+<td><p>Athens</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SB</p>
+<p>Tuple S3 must appear in both relvars. If it didn’t it would violate
+their constraints. Obviously, if we never have relvars of the same type,
+we will never have duplicate tuples. But we must also take into account
+subsets of the attributes of a tuple. For example,</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 35%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>STATUS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Adams</p></td>
+<td><p>30</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SX</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 35%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>SNO</p></th>
+<th class="head"><p>SNAME</p></th>
+<th class="head"><p>CITY</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>S1</p></td>
+<td><p>Smith</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-odd"><td><p>S2</p></td>
+<td><p>Jones</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-even"><td><p>S3</p></td>
+<td><p>Blake</p></td>
+<td><p>Paris</p></td>
+</tr>
+<tr class="row-odd"><td><p>S4</p></td>
+<td><p>Clark</p></td>
+<td><p>London</p></td>
+</tr>
+<tr class="row-even"><td><p>S5</p></td>
+<td><p>Adams</p></td>
+<td><p>Athens</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table: SY</p>
+<p>If we take just the two attributes [SNO, SNAME] from each tuple of SX
+and SY, we see they are identical. This type of redundancy also leads to
+update anomalies. The principle of orthogonal design can be put this
+way:</p>
+<p><em>The principle of Orthogonal Design:</em> If <em>A</em> and <em>B</em> are distinct
+relvars in the same database, then there must not exist nonlossless
+decompositions of <em>A</em> and <em>B</em> into <em>A1</em>, <em>A2</em>, … <em>Am</em> and <em>B1</em>, <em>B2</em>,
+… <em>Bm</em>, respectively, such that the relvar constraints for some
+projection <em>Ai</em> in the set <em>A1</em>, <em>A2</em>, … <em>Am</em> and some projection <em>Bj</em>
+in the set <em>B1</em>, <em>B2</em>, … <em>Bm</em>, permit the same tuple to appear in
+both.</p>
+<p>That is, such decompositions “must not exist” because they introduce
+redundacy across the resulting relvars. Since one “nonloss
+decomposition” is the identity projection (the projection of a relvar on
+all its attributes), this definition also covers the case illustrated by
+the first example of SA and SB.</p>
+<p>Like the principles of normalization, the principle of Orthogonal Design
+is basically just common sense. Normalization is intended to reduce
+redundancy within relvars, and the principle of orthogonality is
+intended to reduce redundancy across relvars.</p>
+<p>The example of SX and SY illustrates a lossless decomposition of S. SX
+is the projection S { SNO, SNAME, STATUS}, and SY is the projection S
+{SNO, SNAME, CITY }. Both SX and SY are in 5NF. Yet the decomposition is
+bad because SX and SY contain duplicate tuples.</p>
+<section id="to-do">
+<h4>TO DO:<a class="headerlink" href="#to-do" title="Permalink to this headline">¶</a></h4>
+<p>Add key points from lesson 8 and 9, having to do with PHP/SQL
+implementation issues:</p>
+<ol class="arabic simple">
+<li><p>protecting against injection attacks</p></li>
+<li><p>???</p></li>
+</ol>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">CJ Date Notes</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Summary of Date’s book Datebase in Depth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tuples-and-relations">Tuples and Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#relation-variables">Relation Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#base-relvars-and-virtual-relvars-or-views">Base relvars and virtual relvars or views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#relvars-and-predicates">Relvars and Predicates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#relational-algebra">Relational Algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database-design-theory">Database Design Theory</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Welcome to CJ Date Notes’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Kurt Krueckeberg.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notes/cjdate.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
