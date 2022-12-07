@@ -1,0 +1,4 @@
+/* See the furo documentation */
+figure.with-border, img.with-border {
+	border: 2px solid var(--color-foreground-border);
+}
