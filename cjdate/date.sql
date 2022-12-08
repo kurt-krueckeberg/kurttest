@@ -1,5 +1,7 @@
 create datbase if not exists sample;
 
+use sample;
+
 create table if not exists s (
    sno CHAR[2],
    sname VARCHAR[8],
