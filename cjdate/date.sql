@@ -23,7 +23,7 @@ create table p (
 primary key(pno)
 );
 
-insert into p values();
+insert into p values
 
 create table sp (
    sno CHAR,
@@ -32,8 +32,8 @@ create table sp (
 primary key(sno)
 );
 
-insert into sp values 
-( todo: add supply o 'P1', 300),
+insert into sp values TODO: Add supply numbers
+(  'P1', 300),
 ( 'P2', 200),
 ( 'P2', 400),
 ( 'P3', 400),
