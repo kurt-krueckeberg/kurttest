@@ -1,6 +1,6 @@
-create database sample;
+create datbase if not exists sample;
 
-create table s (
+create table if not exists s (
    sno CHAR[2],
    sname VARCHAR[8],
    status int,
@@ -14,7 +14,7 @@ insert into s values
 ('S3', 'Blake', 30, 'Paris'),
 ('S4', 'Clark', 20, 'London');
 
-create table p (
+create table if not exists p (
    pno CHAR[2],
    pname CHAR,
    color VARCHAR[8],
@@ -25,11 +25,11 @@ primary key(pno)
 
 insert into p values
 
-create table sp (
-   sno CHAR,
-   pno CHAR,
+create table  if not exists sp (
+   sno CHAR[2],
+   pno CHAR[2],
    qty CHAR,
-primary key(sno)
+primary key(sno, pno)
 );
 
 insert into sp values TODO: Add supply numbers
@@ -40,5 +40,3 @@ insert into sp values TODO: Add supply numbers
 ( 'P4', 200),
 ( 'P5', 100),
 ( 'P6', 100);
-
-
